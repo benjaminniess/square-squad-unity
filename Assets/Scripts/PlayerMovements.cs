@@ -23,7 +23,8 @@ public class PlayerMovements : MonoBehaviour
 
         float horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+	 
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
         {
             isJumping = true;
         }
@@ -33,6 +34,7 @@ public class PlayerMovements : MonoBehaviour
         Flip(rb.velocity.x);
 
         float characterVelocity = Mathf.Abs(rb.velocity.x);
+	Debug.Log(characterVelocity);
         animator.SetFloat("Speed", characterVelocity);
     }
 

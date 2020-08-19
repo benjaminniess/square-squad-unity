@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 21755331}
   - component: {fileID: 21755330}
   - component: {fileID: 21755332}
+  - component: {fileID: 21755333}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -12052,7 +12053,7 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21755328}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -12061,6 +12062,32 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!61 &21755333
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21755328}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -39, y: -12.274854}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 171, y: 16.450293}
+  m_EdgeRadius: 0
 --- !u!1 &130487064
 GameObject:
   m_ObjectHideFlags: 0
@@ -12271,7 +12298,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471479330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -80.565, y: 0.86, z: 0}
+  m_LocalPosition: {x: -80.565, y: -0.1, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2019164857}
@@ -12337,7 +12364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086b70d44f2f8477baa80b6fa225549e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 250
+  moveSpeed: 1000
   jumpForce: 10
   groundCheckLeft: {fileID: 2019164857}
   groundCheckRight: {fileID: 130487065}
