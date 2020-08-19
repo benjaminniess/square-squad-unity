@@ -2,16 +2,21 @@
 
 public class PlayerMovements : MonoBehaviour
 {
-    public float moveSpeed;
-    public float jumpForce;
+    public float reactorForce;
 
-    private bool isJumping;
     private bool isGrounded;
 
     public Transform groundCheckLeft;
     public Transform groundCheckRight;
 
     public Rigidbody2D rb;
+    public Rigidbody2D rightReactor;
+    public Rigidbody2D leftReactor;
+
+    public GameObject topCenterPoint;
+    public GameObject bottomCenterPoint;
+    public Vector2 currentVector;
+
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
@@ -21,33 +26,28 @@ public class PlayerMovements : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
 
-        float horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-
-	 
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
-        {
-            isJumping = true;
+        currentVector = topCenterPoint.transform.position - bottomCenterPoint.transform.position;
+        if ( IsPushingLeft() ) {
+            leftReactor.AddForce(currentVector * reactorForce * Time.deltaTime);
         }
-
-        MovePlayer(horizontalMovement);
+        if ( IsPushingRight() ) {
+            rightReactor.AddForce(currentVector * reactorForce * Time.deltaTime);
+        }
+    
 
         Flip(rb.velocity.x);
 
         float characterVelocity = Mathf.Abs(rb.velocity.x);
-	Debug.Log(characterVelocity);
+	
         animator.SetFloat("Speed", characterVelocity);
     }
 
-    void MovePlayer(float _horizontalMovement)
-    {
-        Vector3 targetVelocity = new Vector2(_horizontalMovement, rb.velocity.y);
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
+    static bool IsPushingRight() {
+        return Input.GetKey("right");
+    }
 
-        if(isJumping == true)
-        {
-            rb.AddForce(new Vector2(0f, jumpForce));
-            isJumping = false;
-        }
+    static bool IsPushingLeft() {
+        return Input.GetKey("left");
     }
 
     void Flip(float _velocity)
