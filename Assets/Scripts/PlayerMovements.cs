@@ -17,9 +17,6 @@ public class PlayerMovements : MonoBehaviour
     public GameObject bottomCenterPoint;
     public Vector2 currentVector;
 
-    public Animator animator;
-    public SpriteRenderer spriteRenderer;
-
     private Vector2 resetPos;
 
     private Vector3 velocity = Vector3.zero;
@@ -31,85 +28,61 @@ public class PlayerMovements : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
 
-        if (Input.touchCount > 2) {
+        if (Input.touchCount > 2 || Input.GetKey("up")) {
             resetPos = new Vector2(-98.69f,3.63f );
             rb.transform.position = resetPos;
             rb.rotation = 0f;
         }
 
         currentVector = topCenterPoint.transform.position - bottomCenterPoint.transform.position;
-        if ( IsPushingLeft() ) {
-            leftReactor.AddForce(currentVector * reactorForce * Time.deltaTime);
-        }
-        if ( IsPushingRight() ) {
-            rightReactor.AddForce(currentVector * reactorForce * Time.deltaTime);
-        }
-
-        if ( Input.GetKey("up") ) {
-            Debug.Log("Reset");
-            resetPos = new Vector2(-98.69f,3.63f );
-            rb.transform.position = resetPos;
-            rb.rotation = 0f;
-        }
-    
-
-        Flip(rb.velocity.x);
-
-        float characterVelocity = Mathf.Abs(rb.velocity.x);
-	
-        animator.SetFloat("Speed", characterVelocity);
+        
+        leftReactor.AddForce(currentVector * reactorForce * Time.deltaTime * getLeftReactorLevel());
+        rightReactor.AddForce(currentVector * reactorForce * Time.deltaTime * getRightReactorLevel());
     }
 
-    static bool IsPushingRight() {
-        if (Input.touchCount > 0) {
-            Touch touch = Input.GetTouch(0);
+    static float getRightReactorLevel() {
+        if ( Input.GetKey("right") == true ) {
+            return 1f;
+        }
+
+        int touchCount = Input.touchCount;
+        if ( touchCount <= 0) {
+            return 0f;
+        }
+
+        for ( int i = 0; i <= touchCount; i++) {
+            Touch touch = Input.GetTouch(i);
             Vector2 pos = touch.position;
             if ( pos.x > ( Screen.width / 2 ) ) {
-                return true;
-            } else {
-                if (Input.touchCount > 1) {
-                    Touch touch2 = Input.GetTouch(1);
-                    Vector2 pos2 = touch2.position;
-                    if ( pos2.x > ( Screen.width / 2 ) ) {
-                        return true;
-                    } else {
-                        return false; 
-                    }
-                }
+                continue;
             }
+
+            return pos.y / Screen.height;
         }
-        return Input.GetKey("right");
+
+        return 0f;
     }
 
-    static bool IsPushingLeft() {
-        if (Input.touchCount > 0) {
-            Touch touch = Input.GetTouch(0);
+    static float getLeftReactorLevel() {
+          if ( Input.GetKey("left") == true ) {
+            return 1f;
+        }
+
+        int touchCount = Input.touchCount;
+        if ( touchCount <= 0) {
+            return 0f;
+        }
+
+        for ( int i = 0; i <= touchCount; i++) {
+            Touch touch = Input.GetTouch(i);
             Vector2 pos = touch.position;
             if ( pos.x < ( Screen.width / 2 ) ) {
-                return true;
-            } else {
-            if (Input.touchCount > 1) {
-                Touch touch3 = Input.GetTouch(1);
-                Vector2 pos3 = touch3.position;
-                if ( pos3.x < ( Screen.width / 2 ) ) {
-                    return true;
-                } else {
-                    return false;
-                }
+                continue;
             }
-            }
-        }
-        return Input.GetKey("left");
-    }
 
-    void Flip(float _velocity)
-    {
-        if (_velocity > 0.1f)
-        {
-            spriteRenderer.flipX = false;
-        }else if(_velocity < -0.1f)
-        {
-            spriteRenderer.flipX = true;
+            return pos.y / Screen.height;
         }
+
+        return 0f;
     }
 }
