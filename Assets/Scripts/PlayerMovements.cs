@@ -23,6 +23,7 @@ public class PlayerMovements : MonoBehaviour
 
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
+        Debug.developerConsoleVisible = true;
     }
     void FixedUpdate()
     {
@@ -45,6 +46,7 @@ public class PlayerMovements : MonoBehaviour
             return 1f;
         }
 
+
         int touchCount = Input.touchCount;
         if ( touchCount <= 0) {
             return 0f;
@@ -53,7 +55,7 @@ public class PlayerMovements : MonoBehaviour
         for ( int i = 0; i <= touchCount; i++) {
             Touch touch = Input.GetTouch(i);
             Vector2 pos = touch.position;
-            if ( pos.x > ( Screen.width / 2 ) ) {
+            if ( pos.x < ( Screen.width / 2 ) ) {
                 continue;
             }
 
@@ -63,8 +65,8 @@ public class PlayerMovements : MonoBehaviour
         return 0f;
     }
 
-    static float getLeftReactorLevel() {
-          if ( Input.GetKey("left") == true ) {
+    static float getLeftReactorLevel() {  
+        if ( Input.GetKey("left") == true ) {
             return 1f;
         }
 
@@ -76,7 +78,7 @@ public class PlayerMovements : MonoBehaviour
         for ( int i = 0; i <= touchCount; i++) {
             Touch touch = Input.GetTouch(i);
             Vector2 pos = touch.position;
-            if ( pos.x < ( Screen.width / 2 ) ) {
+            if ( pos.x > ( Screen.width / 2 ) ) {
                 continue;
             }
 
