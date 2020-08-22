@@ -9,36 +9,72 @@ public class PlayerMovements : MonoBehaviour
     public Transform groundCheckLeft;
     public Transform groundCheckRight;
 
-    public Rigidbody2D rb;
     public Rigidbody2D rightReactor;
     public Rigidbody2D leftReactor;
 
+    public Rigidbody2D rb;
+
     public GameObject topCenterPoint;
     public GameObject bottomCenterPoint;
-    public Vector2 currentVector;
+    public Vector2 currentVectorLeft;
+    public Vector2 currentVectorRight;
 
     private Vector2 resetPos;
 
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 lastPosition = Vector3.zero;
+    private float speed;
+    private float rotationSpeed;
+    private float rotationLast = 0;
+    private float rotationDelta;
 
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         Debug.developerConsoleVisible = true;
     }
+
     void FixedUpdate()
     {
+        // Speed calculation
+        speed = (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
+
+        // Rotation calculation
+        float currentRotation = transform.rotation.eulerAngles.z;
+        if ( currentRotation > 180 ) {
+            currentRotation = - (360 - currentRotation );
+        }
+
+        // Rotation delta calculation
+        rotationDelta = currentRotation - rotationLast;
+        rotationLast = currentRotation;
+        rotationDelta = rotationDelta < 0 ? -rotationDelta : rotationDelta;
+
+        //Debug.Log(speed);
+        //rb.AddTorque(-currentRotation * Time.deltaTime * 600 );
         isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
 
         if (Input.touchCount > 2 || Input.GetKey("up")) {
             resetPos = new Vector2(-98.69f,3.63f );
-            rb.transform.position = resetPos;
-            rb.rotation = 0f;
+            transform.position = resetPos;
+            //rb.transform.rotation = 0f;
         }
 
-        currentVector = topCenterPoint.transform.position - bottomCenterPoint.transform.position;
+        currentVectorLeft = ( topCenterPoint.transform.position - groundCheckLeft.transform.position ).normalized;
+       // Debug.Log(currentVectorLeft);
+        currentVectorRight = ( topCenterPoint.transform.position - groundCheckRight.transform.position ).normalized;
         
-        leftReactor.AddForce(currentVector * reactorForce * Time.deltaTime * getLeftReactorLevel());
-        rightReactor.AddForce(currentVector * reactorForce * Time.deltaTime * getRightReactorLevel());
+        leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * getLeftReactorLevel());
+        rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * getRightReactorLevel());
+
+        //leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * getLeftReactorLevel());
+        //leftReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * getRightReactorLevel());
+
+        if ( currentRotation > 25 ) {
+            //rb.transform.rotation = Quaternion.Euler(new Vector3(0,0,18));
+        }
+        else if ( currentRotation < -25 ) {
+            //rb.transform.rotation = Quaternion.Euler(new Vector3(0,0,-18));
+        }
     }
 
     static float getRightReactorLevel() {
