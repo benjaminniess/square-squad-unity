@@ -29,11 +29,8 @@ public class PlayerMovements : MonoBehaviour
     private float rotationLast = 0;
     private float rotationDelta;
 
-    public TextMeshProUGUI debugText;
-
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        Debug.developerConsoleVisible = true;
     }
 
     void Update()
@@ -53,24 +50,13 @@ public class PlayerMovements : MonoBehaviour
         rotationLast = currentRotation;
         rotationDelta = rotationDelta < 0 ? -rotationDelta : rotationDelta;
 
-        //Debug.Log(speed);
-        //rb.AddTorque(-currentRotation * Time.deltaTime * 600 );
         isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);        
 
         currentVectorRight = ( topCenterPoint.transform.position - groundCheckRight.transform.position ).normalized;
         currentVectorLeft = ( topCenterPoint.transform.position - groundCheckLeft.transform.position ).normalized;
-       // Debug.Log(currentVectorLeft);
-        
         
         rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * getRightReactorLevel());
         leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * getLeftReactorLevel());
-
-        if ( currentRotation > 25 ) {
-            //rb.transform.rotation = Quaternion.Euler(new Vector3(0,0,18));
-        }
-        else if ( currentRotation < -25 ) {
-            //rb.transform.rotation = Quaternion.Euler(new Vector3(0,0,-18));
-        }
     }
 
     float getRightReactorLevel() {
@@ -121,9 +107,5 @@ public class PlayerMovements : MonoBehaviour
         }
 
         return 0f;
-    }
-
-    void customLog( string message) {
-        debugText.text = message;          
     }
 }
