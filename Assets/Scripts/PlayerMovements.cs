@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovements : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class PlayerMovements : MonoBehaviour
     public Vector2 currentVectorLeft;
     public Vector2 currentVectorRight;
 
-    private Vector2 resetPos;
+    
 
     private Vector3 lastPosition = Vector3.zero;
     private float speed;
@@ -27,12 +29,14 @@ public class PlayerMovements : MonoBehaviour
     private float rotationLast = 0;
     private float rotationDelta;
 
+    public TextMeshProUGUI debugText;
+
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         Debug.developerConsoleVisible = true;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // Speed calculation
         speed = (transform.position - lastPosition).magnitude;
@@ -51,23 +55,15 @@ public class PlayerMovements : MonoBehaviour
 
         //Debug.Log(speed);
         //rb.AddTorque(-currentRotation * Time.deltaTime * 600 );
-        isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
+        isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);        
 
-        if (Input.touchCount > 2 || Input.GetKey("up")) {
-            resetPos = new Vector2(-98.69f,3.63f );
-            transform.position = resetPos;
-            //rb.transform.rotation = 0f;
-        }
-
+        currentVectorRight = ( topCenterPoint.transform.position - groundCheckRight.transform.position ).normalized;
         currentVectorLeft = ( topCenterPoint.transform.position - groundCheckLeft.transform.position ).normalized;
        // Debug.Log(currentVectorLeft);
-        currentVectorRight = ( topCenterPoint.transform.position - groundCheckRight.transform.position ).normalized;
         
-        leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * getLeftReactorLevel());
+        
         rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * getRightReactorLevel());
-
-        //leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * getLeftReactorLevel());
-        //leftReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * getRightReactorLevel());
+        leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * getLeftReactorLevel());
 
         if ( currentRotation > 25 ) {
             //rb.transform.rotation = Quaternion.Euler(new Vector3(0,0,18));
@@ -77,18 +73,19 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    static float getRightReactorLevel() {
+    float getRightReactorLevel() {
         if ( Input.GetKey("right") == true ) {
             return 1f;
         }
 
 
         int touchCount = Input.touchCount;
+        
         if ( touchCount <= 0) {
             return 0f;
         }
 
-        for ( int i = 0; i <= touchCount; i++) {
+        for ( int i = 0; i < touchCount; i++) {
             Touch touch = Input.GetTouch(i);
             Vector2 pos = touch.position;
             if ( pos.x < ( Screen.width / 2 ) ) {
@@ -101,19 +98,21 @@ public class PlayerMovements : MonoBehaviour
         return 0f;
     }
 
-    static float getLeftReactorLevel() {  
+    float getLeftReactorLevel() {  
         if ( Input.GetKey("left") == true ) {
             return 1f;
         }
 
         int touchCount = Input.touchCount;
+        
         if ( touchCount <= 0) {
             return 0f;
         }
 
-        for ( int i = 0; i <= touchCount; i++) {
+        for ( int i = 0; i < touchCount; i++) {
             Touch touch = Input.GetTouch(i);
             Vector2 pos = touch.position;
+
             if ( pos.x > ( Screen.width / 2 ) ) {
                 continue;
             }
@@ -122,5 +121,9 @@ public class PlayerMovements : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    void customLog( string message) {
+        debugText.text = message;          
     }
 }
