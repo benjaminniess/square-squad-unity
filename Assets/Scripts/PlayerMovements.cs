@@ -66,17 +66,26 @@ public class PlayerMovements : MonoBehaviour
 
         float rightReactorLevel = getRightReactorLevel();
         float leftReactorLevel = getLeftReactorLevel();
-        rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * rightReactorLevel); 
-        if ( rightReactorLevel > 0 && leftReactorLevel < 0.3f ) {
-            float helpLevel = rightReactorLevel /3;
-            leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * helpLevel); 
+
+        if ( rightReactorLevel == 0 && leftReactorLevel == 0 ) {
+            //rb.MoveRotation( 0f - (currentRotation / 4500 ));
+            //rb.velocity = rb.velocity * 0.8f; 
         }
 
-        leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * leftReactorLevel);
-        if ( leftReactorLevel > 0 && rightReactorLevel < 0.3f ) {
-            float helpLevel = rightReactorLevel /3;
-            rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * helpLevel); 
+        if ( rightReactorLevel > 0 ) {
+            rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * rightReactorLevel); 
+        } else if ( rightReactorLevel < 0 ) {
+            rb.AddTorque(Time.deltaTime * rightReactorLevel * 1000);
         }
+
+        if ( leftReactorLevel > 0 ) {
+            leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * leftReactorLevel);
+        } else if ( leftReactorLevel < 0 ) {
+            rb.AddTorque(Time.deltaTime * -leftReactorLevel * 1000);
+        }
+    
+
+        
 
         
         //rightReactor.AddForce( new Vector2( bottomCenterPoint.transform.position, groundCheckRight.transform.position ).normalized * (reactorForce / 10) * Time.deltaTime * rightJoystick.Horizontal);
@@ -87,15 +96,13 @@ public class PlayerMovements : MonoBehaviour
         if ( Input.GetKey("right") == true ) {
             return 1f;
         }
-
-
-        return rightJoystick.Vertical > 0 ? rightJoystick.Vertical : 0;
+        return rightJoystick.Vertical;
     }
 
     float getLeftReactorLevel() {  
         if ( Input.GetKey("left") == true ) {
             return 1f;
         }
-        return leftJoystick.Vertical > 0 ? leftJoystick.Vertical : 0;
+        return leftJoystick.Vertical;
     }
 }
