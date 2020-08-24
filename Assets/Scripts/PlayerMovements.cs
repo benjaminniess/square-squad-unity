@@ -14,6 +14,9 @@ public class PlayerMovements : MonoBehaviour
     public Rigidbody2D rightReactor;
     public Rigidbody2D leftReactor;
 
+    public Joystick leftJoystick;
+    public Joystick rightJoystick;
+
     public Rigidbody2D rb;
 
     public GameObject topCenterPoint;
@@ -50,13 +53,34 @@ public class PlayerMovements : MonoBehaviour
         rotationLast = currentRotation;
         rotationDelta = rotationDelta < 0 ? -rotationDelta : rotationDelta;
 
-        isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);        
+        isGrounded = Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
 
         currentVectorRight = ( topCenterPoint.transform.position - groundCheckRight.transform.position ).normalized;
         currentVectorLeft = ( topCenterPoint.transform.position - groundCheckLeft.transform.position ).normalized;
+
+
+        // = new Vector2( - leftJoystick.Horizontal,  leftJoystick.Vertical < 0 ? -leftJoystick.Vertical : 0 ).normalized;
+        //currentVectorLeft = new Vector2(  - rightJoystick.Horizontal,  rightJoystick.Vertical < 0 ? -rightJoystick.Vertical : 0 ).normalized;
         
-        rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * getRightReactorLevel());
-        leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * getLeftReactorLevel());
+        //Debug.Log(leftJoystick.Vertical);
+
+        float rightReactorLevel = getRightReactorLevel();
+        float leftReactorLevel = getLeftReactorLevel();
+        rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * rightReactorLevel); 
+        if ( rightReactorLevel > 0 && leftReactorLevel < 0.3f ) {
+            float helpLevel = rightReactorLevel /3;
+            leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * helpLevel); 
+        }
+
+        leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * leftReactorLevel);
+        if ( leftReactorLevel > 0 && rightReactorLevel < 0.3f ) {
+            float helpLevel = rightReactorLevel /3;
+            rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * helpLevel); 
+        }
+
+        
+        //rightReactor.AddForce( new Vector2( bottomCenterPoint.transform.position, groundCheckRight.transform.position ).normalized * (reactorForce / 10) * Time.deltaTime * rightJoystick.Horizontal);
+        //leftReactor.AddForce( new Vector2( bottomCenterPoint.transform.position, groundCheckLeft.transform.position ).normalized * (reactorForce / 10) * Time.deltaTime * leftJoystick.Horizontal);
     }
 
     float getRightReactorLevel() {
@@ -65,47 +89,13 @@ public class PlayerMovements : MonoBehaviour
         }
 
 
-        int touchCount = Input.touchCount;
-        
-        if ( touchCount <= 0) {
-            return 0f;
-        }
-
-        for ( int i = 0; i < touchCount; i++) {
-            Touch touch = Input.GetTouch(i);
-            Vector2 pos = touch.position;
-            if ( pos.x < ( Screen.width / 2 ) ) {
-                continue;
-            }
-
-            return pos.y / Screen.height;
-        }
-
-        return 0f;
+        return rightJoystick.Vertical > 0 ? rightJoystick.Vertical : 0;
     }
 
     float getLeftReactorLevel() {  
         if ( Input.GetKey("left") == true ) {
             return 1f;
         }
-
-        int touchCount = Input.touchCount;
-        
-        if ( touchCount <= 0) {
-            return 0f;
-        }
-
-        for ( int i = 0; i < touchCount; i++) {
-            Touch touch = Input.GetTouch(i);
-            Vector2 pos = touch.position;
-
-            if ( pos.x > ( Screen.width / 2 ) ) {
-                continue;
-            }
-
-            return pos.y / Screen.height;
-        }
-
-        return 0f;
+        return leftJoystick.Vertical > 0 ? leftJoystick.Vertical : 0;
     }
 }
