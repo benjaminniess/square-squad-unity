@@ -140792,7 +140792,7 @@ MonoBehaviour:
   rightJoystick: {fileID: 816900257}
   rb: {fileID: 1471479334}
   topCenterPoint: {fileID: 810500583}
-  bottomCenterPoint: {fileID: 230628753}
+  bottomCenterPoint: {fileID: 230628755}
   currentVectorLeft: {x: 0, y: 0}
   currentVectorRight: {x: 0, y: 0}
 --- !u!95 &1471479336
