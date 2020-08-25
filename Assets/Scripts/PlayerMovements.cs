@@ -20,7 +20,7 @@ public class PlayerMovements : MonoBehaviour
     public Rigidbody2D rb;
 
     public GameObject topCenterPoint;
-    public GameObject bottomCenterPoint;
+    public Rigidbody2D bottomCenterPoint;
     public Vector2 currentVectorLeft;
     public Vector2 currentVectorRight;
 
@@ -58,30 +58,27 @@ public class PlayerMovements : MonoBehaviour
         currentVectorRight = ( topCenterPoint.transform.position - groundCheckRight.transform.position ).normalized;
         currentVectorLeft = ( topCenterPoint.transform.position - groundCheckLeft.transform.position ).normalized;
 
-
-        // = new Vector2( - leftJoystick.Horizontal,  leftJoystick.Vertical < 0 ? -leftJoystick.Vertical : 0 ).normalized;
-        //currentVectorLeft = new Vector2(  - rightJoystick.Horizontal,  rightJoystick.Vertical < 0 ? -rightJoystick.Vertical : 0 ).normalized;
-        
-        //Debug.Log(leftJoystick.Vertical);
-
         float rightReactorLevel = getRightReactorLevel();
         float leftReactorLevel = getLeftReactorLevel();
 
         if ( rightReactorLevel == 0 && leftReactorLevel == 0 ) {
-            //rb.MoveRotation( 0f - (currentRotation / 4500 ));
+            //Debug.Log(currentRotation);
+            //rb.MoveRotation( 0f - (currentRotation / 4500 ) * Time.deltaTime);
+            //rb.AddTorque(-currentRotation * Time.deltaTime * 10); 
             //rb.velocity = rb.velocity * 0.8f; 
         }
 
+        bottomCenterPoint.AddForce(new Vector2(0f, -1f) * Time.deltaTime / 20);  
         if ( rightReactorLevel > 0 ) {
             rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * rightReactorLevel); 
         } else if ( rightReactorLevel < 0 ) {
-            rb.AddTorque(Time.deltaTime * rightReactorLevel * 1000);
+            rb.AddTorque(Time.deltaTime * rightReactorLevel * 600);
         }
 
         if ( leftReactorLevel > 0 ) {
             leftReactor.AddForce(currentVectorLeft * reactorForce * Time.deltaTime * leftReactorLevel);
         } else if ( leftReactorLevel < 0 ) {
-            rb.AddTorque(Time.deltaTime * -leftReactorLevel * 1000);
+            rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
         }
     
 
