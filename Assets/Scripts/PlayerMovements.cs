@@ -68,7 +68,7 @@ public class PlayerMovements : MonoBehaviour
             //rb.velocity = rb.velocity * 0.8f; 
         }
 
-        bottomCenterPoint.AddForce(new Vector2(0f, -1f) * Time.deltaTime / 20);  
+        
         if ( rightReactorLevel > 0 ) {
             rightReactor.AddForce(currentVectorRight * reactorForce * Time.deltaTime * rightReactorLevel); 
         } else if ( rightReactorLevel < 0 ) {
@@ -81,7 +81,7 @@ public class PlayerMovements : MonoBehaviour
             rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
         }
     
-
+        bottomCenterPoint.gravityScale = -0.55f;  
         
 
         
