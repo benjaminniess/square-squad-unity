@@ -5,6 +5,8 @@ using TMPro;
 public class PlayerMovements : MonoBehaviour
 {
     public float reactorForce;
+    public float maxSpeed;
+    public float forceLimit;
     public Joystick leftJoystick;
     public Joystick rightJoystick;
     public Rigidbody2D rb;
@@ -49,21 +51,52 @@ public class PlayerMovements : MonoBehaviour
         }
         
         float torqueLevel = 0;
+        float speedAttenuation = 1 - ( speed / maxSpeed );
+        
+        if ( speedAttenuation < 0 ) {
+            //Debug.Log(speedAttenuation);
+            speedAttenuation = 0;
+        }
+
+        if ( speed < maxSpeed ) {
+            
+        }
+
+        float speedPercentage = speed * 100 / maxSpeed;
+        
         if ( rightReactorLevel > 0 ) {
             torqueLevel += rightReactorLevel;
-            bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * rightReactorLevel);
+
+            float totalForceRight = reactorForce * Time.deltaTime * rightReactorLevel;
+            
+            
+            if ( totalForceRight > forceLimit ) {
+                totalForceRight = forceLimit;
+            }
+
+            
+            totalForceRight = totalForceRight / speedPercentage;
+            
+            bottomCenterPoint.AddForce(currentVector * totalForceRight);
+            
         } else if ( rightReactorLevel < 0 ) {
             rb.AddTorque(Time.deltaTime * rightReactorLevel * 600);
         }
 
         if ( leftReactorLevel > 0 ) {
             torqueLevel -= leftReactorLevel;
-            bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * leftReactorLevel);
+            float totalForceLeft = reactorForce * Time.deltaTime * leftReactorLevel;
+            
+            if ( totalForceLeft > forceLimit ) {
+                totalForceLeft = forceLimit;
+            }
+            totalForceLeft = totalForceLeft / speedPercentage;
+            bottomCenterPoint.AddForce(currentVector * totalForceLeft);
         } else if ( leftReactorLevel < 0 ) {
             rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
         }
 
-        Debug.Log(speed);
+        
         rb.AddTorque(torqueLevel * Time.deltaTime * 300);
     }
 
