@@ -6,7 +6,7 @@ public class PlayerMovements : MonoBehaviour
 {
     public float reactorForce;
     public float maxSpeed;
-    public float forceLimit;
+    
     public Joystick leftJoystick;
     public Joystick rightJoystick;
     public Rigidbody2D rb;
@@ -51,33 +51,21 @@ public class PlayerMovements : MonoBehaviour
         }
         
         float torqueLevel = 0;
-        float speedAttenuation = 1 - ( speed / maxSpeed );
-        
-        if ( speedAttenuation < 0 ) {
-            //Debug.Log(speedAttenuation);
-            speedAttenuation = 0;
-        }
 
-        if ( speed < maxSpeed ) {
-            
+        Debug.Log(rb.velocity.y);
+        if ( rb.velocity.y > maxSpeed ) {
+            rb.velocity = new Vector2( rb.velocity.x, maxSpeed );
+            //float capedVelocityX = Mathf.Min(Mathf.Abs(rb.velocity.x, maxSpeed);
+            //float capedVelocityY = Mathf.Min(rb.velocity.y, maxSpeed);
+            //rb.velocity = new Vector2( capedVelocityX, capedVelocityY );
         }
 
         float speedPercentage = speed * 100 / maxSpeed;
         
         if ( rightReactorLevel > 0 ) {
             torqueLevel += rightReactorLevel;
-
-            float totalForceRight = reactorForce * Time.deltaTime * rightReactorLevel;
             
-            
-            if ( totalForceRight > forceLimit ) {
-                totalForceRight = forceLimit;
-            }
-
-            
-            totalForceRight = totalForceRight / speedPercentage;
-            
-            bottomCenterPoint.AddForce(currentVector * totalForceRight);
+            bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * rightReactorLevel);
             
         } else if ( rightReactorLevel < 0 ) {
             rb.AddTorque(Time.deltaTime * rightReactorLevel * 600);
@@ -85,13 +73,8 @@ public class PlayerMovements : MonoBehaviour
 
         if ( leftReactorLevel > 0 ) {
             torqueLevel -= leftReactorLevel;
-            float totalForceLeft = reactorForce * Time.deltaTime * leftReactorLevel;
-            
-            if ( totalForceLeft > forceLimit ) {
-                totalForceLeft = forceLimit;
-            }
-            totalForceLeft = totalForceLeft / speedPercentage;
-            bottomCenterPoint.AddForce(currentVector * totalForceLeft);
+
+            bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * leftReactorLevel);
         } else if ( leftReactorLevel < 0 ) {
             rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
         }
