@@ -27,7 +27,7 @@ public class PlayerMovements : MonoBehaviour
     void Update()
     {
         // Speed calculation
-        speed = (transform.position - lastPosition).magnitude;
+        speed = 10 * (transform.position - lastPosition).magnitude;
         lastPosition = transform.position;
 
         // Rotation calculation
@@ -47,17 +47,15 @@ public class PlayerMovements : MonoBehaviour
         float leftReactorLevel = getLeftReactorLevel();
 
         if ( rightReactorLevel == 0 && leftReactorLevel == 0 ) {
-            // No joystick touched?
+            //Quaternion q = Quaternion.Look(torqueLevel * 50 * Time.deltaTime / speedAttenuation, Vector3.forward);
+            //rb.transform.rotation = q;
         }
         
         float torqueLevel = 0;
 
-        Debug.Log(rb.velocity.y);
+        
         if ( rb.velocity.y > maxSpeed ) {
             rb.velocity = new Vector2( rb.velocity.x, maxSpeed );
-            //float capedVelocityX = Mathf.Min(Mathf.Abs(rb.velocity.x, maxSpeed);
-            //float capedVelocityY = Mathf.Min(rb.velocity.y, maxSpeed);
-            //rb.velocity = new Vector2( capedVelocityX, capedVelocityY );
         }
 
         float speedPercentage = speed * 100 / maxSpeed;
@@ -79,8 +77,19 @@ public class PlayerMovements : MonoBehaviour
             rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
         }
 
+        // Accentuation of retro rotation when angle is too high
+        if ( rightReactorLevel > leftReactorLevel && currentRotation < -25 && Mathf.Abs(rb.velocity.x) > 20 ) {
+            torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
+        }
+        if ( rightReactorLevel < leftReactorLevel && currentRotation > 25 && Mathf.Abs(rb.velocity.x) > 20 ) {
+            torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
+        }
         
-        rb.AddTorque(torqueLevel * Time.deltaTime * 300);
+       // torqueLevel = torqueLevel * -currentRotation * 2;
+        Quaternion q = Quaternion.AngleAxis(torqueLevel * 50 * Time.deltaTime, Vector3.forward);
+        rb.transform.rotation *= q;
+        //rb.transform.Rotate(Quaternion.Slerp (rb.transform.rotation, torqueLevel, Time.deltaTime));
+        //rb.AddTorque(torqueLevel * Time.deltaTime * 300);
     }
 
     float getRightReactorLevel() {
