@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using Mirror;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerMovements : MonoBehaviour
+public class PlayerMovements : NetworkBehaviour
 {
     public float reactorForce;
     public float maxSpeed;
@@ -24,8 +25,13 @@ public class PlayerMovements : MonoBehaviour
         Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
+    [Client]
     void Update()
     {
+        if ( ! hasAuthority ) {
+            return;
+        }
+
         // Speed calculation
         speed = 10 * (transform.position - lastPosition).magnitude;
         lastPosition = transform.position;
