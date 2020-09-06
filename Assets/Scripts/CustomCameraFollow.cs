@@ -29,11 +29,8 @@ public class CustomCameraFollow : MonoBehaviour
         // Speed calculation
         speed = 10 * (rb.transform.position - lastPosition).magnitude;
         lastPosition = rb.transform.position;
-    
-        Debug.Log(speed);
         
         if ( speed > 4 && ! isZooming && isMin ) {
-            Debug.Log("Enter");
             isZooming = true;
             targetZoom = maxZoom;
         } else if ( speed > 0 && speed < 1.5f && ! isZooming && ! isMin ) {
@@ -46,7 +43,7 @@ public class CustomCameraFollow : MonoBehaviour
         if ( isZooming ) {
             float targetSize = originalSize * targetZoom;
             if (targetSize != thisCamera.orthographicSize) {
-                thisCamera.orthographicSize = Mathf.Lerp(thisCamera.orthographicSize, targetSize, Time.deltaTime * zoomSpeed);
+                //thisCamera.orthographicSize = Mathf.Lerp(thisCamera.orthographicSize, targetSize, Time.deltaTime * zoomSpeed);
             } else {
                 isZooming = false;
                 isMin = isMin == true ? false : true;

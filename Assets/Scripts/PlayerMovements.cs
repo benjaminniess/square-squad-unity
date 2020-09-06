@@ -7,8 +7,6 @@ public class PlayerMovements : MonoBehaviour
     public float reactorForce;
     public float maxSpeed;
     
-    public Joystick leftJoystick;
-    public Joystick rightJoystick;
     public Rigidbody2D rb;
     public GameObject topCenterPoint;
     public Rigidbody2D bottomCenterPoint;
@@ -18,7 +16,9 @@ public class PlayerMovements : MonoBehaviour
     private float speed;
     private float rotationSpeed;
     private float rotationLast = 0;
+    private float maxRotation = 30f;
     private float rotationDelta;
+    private float timeCount = 0.0f;
 
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -47,62 +47,68 @@ public class PlayerMovements : MonoBehaviour
         float leftReactorLevel = getLeftReactorLevel();
 
         if ( rightReactorLevel == 0 && leftReactorLevel == 0 ) {
-            //Quaternion q = Quaternion.Look(torqueLevel * 50 * Time.deltaTime / speedAttenuation, Vector3.forward);
-            //rb.transform.rotation = q;
+            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, Quaternion.Euler(0, 0, 0), timeCount);
+            timeCount = timeCount + Time.deltaTime / 100;
+
         }
         
         float torqueLevel = 0;
-
         
+        // Limit vertical up speed
         if ( rb.velocity.y > maxSpeed ) {
-            rb.velocity = new Vector2( rb.velocity.x, maxSpeed );
+            //rb.velocity = Vector3.Normalize(rb.velocity) * Mathf.Sqrt(50);
+            //rb.velocity = new Vector2( rb.velocity.x, maxSpeed );
         }
-
-        float speedPercentage = speed * 100 / maxSpeed;
         
         if ( rightReactorLevel > 0 ) {
             torqueLevel += rightReactorLevel;
-            
             bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * rightReactorLevel);
-            
-        } else if ( rightReactorLevel < 0 ) {
-            rb.AddTorque(Time.deltaTime * rightReactorLevel * 600);
-        }
-
+        } 
         if ( leftReactorLevel > 0 ) {
             torqueLevel -= leftReactorLevel;
-
             bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * leftReactorLevel);
-        } else if ( leftReactorLevel < 0 ) {
-            rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
+        }
+
+        // MAX ROTATION LIMIT
+        if ( currentRotation > maxRotation && leftReactorLevel >= 0 ) {
+           //rb.transform.rotation = Quaternion.Euler(0f, 0f, maxRotation - 2);
+        } else if ( currentRotation < -maxRotation && rightReactorLevel >= 0 ) {
+           //rb.transform.rotation = Quaternion.Euler(0f, 0f, -maxRotation + 2);
+        } 
+
+        // INVERSE ROTATION WHEN JOYSTICK GOES DOWN
+        if ( rightReactorLevel < 0 ) {
+            //rb.AddTorque(Time.deltaTime * rightReactorLevel * 600);
+        }
+        if ( leftReactorLevel < 0 ) {
+            //rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
         }
 
         // Accentuation of retro rotation when angle is too high
         if ( rightReactorLevel > leftReactorLevel && currentRotation < -25 && Mathf.Abs(rb.velocity.x) > 20 ) {
-            torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
+            //torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
         }
         if ( rightReactorLevel < leftReactorLevel && currentRotation > 25 && Mathf.Abs(rb.velocity.x) > 20 ) {
-            torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
+            //torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
         }
         
-       // torqueLevel = torqueLevel * -currentRotation * 2;
-        Quaternion q = Quaternion.AngleAxis(torqueLevel * 50 * Time.deltaTime, Vector3.forward);
+        Quaternion q = Quaternion.AngleAxis(torqueLevel * 70 * Time.deltaTime, Vector3.forward);
         rb.transform.rotation *= q;
-        //rb.transform.Rotate(Quaternion.Slerp (rb.transform.rotation, torqueLevel, Time.deltaTime));
-        //rb.AddTorque(torqueLevel * Time.deltaTime * 300);
     }
 
     float getRightReactorLevel() {
         if ( Input.GetKey("right") == true ) {
             return 1f;
         }
-        return rightJoystick.Vertical;
+
+        return 0f;
     }
 
     float getLeftReactorLevel() {  
         if ( Input.GetKey("left") == true ) {
             return 1f;
         }
-        return leftJoystick.Vertical;
+
+        return 0f;
     }
 }
