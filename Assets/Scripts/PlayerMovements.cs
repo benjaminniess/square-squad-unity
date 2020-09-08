@@ -20,6 +20,8 @@ public class PlayerMovements : NetworkBehaviour
     private float maxRotation = 30f;
     private float rotationDelta;
     private float timeCount = 0.0f;
+    private float rightReactorLevel;
+    private float leftReactorLevel;
 
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -32,6 +34,22 @@ public class PlayerMovements : NetworkBehaviour
             return;
         }
 
+
+        float rightReactorLevel = getRightReactorLevel();
+        float leftReactorLevel = getLeftReactorLevel();
+
+        CmdMove(rightReactorLevel, leftReactorLevel);
+    }
+
+    [Command]
+    private void CmdMove(float rightReactorLevel, float leftReactorLevel) {
+       // Validation here
+
+       RpcMove(rightReactorLevel, leftReactorLevel);
+    }
+
+    [ClientRpc]
+    private void RpcMove(float rightReactorLevel, float leftReactorLevel) {
         // Speed calculation
         speed = 10 * (transform.position - lastPosition).magnitude;
         lastPosition = transform.position;
@@ -49,8 +67,6 @@ public class PlayerMovements : NetworkBehaviour
 
         currentVector = ( topCenterPoint.transform.position - bottomCenterPoint.transform.position  ).normalized;
 
-        float rightReactorLevel = getRightReactorLevel();
-        float leftReactorLevel = getLeftReactorLevel();
 
         if ( rightReactorLevel == 0 && leftReactorLevel == 0 ) {
             rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, Quaternion.Euler(0, 0, 0), timeCount);
@@ -106,6 +122,21 @@ public class PlayerMovements : NetworkBehaviour
         if ( Input.GetKey("right") == true ) {
             return 1f;
         }
+        int touchCount = Input.touchCount;
+        
+        if ( touchCount <= 0) {
+            return 0f;
+        }
+
+        for ( int i = 0; i < touchCount; i++) {
+            Touch touch = Input.GetTouch(i);
+            Vector2 pos = touch.position;
+            if ( pos.x < ( Screen.width / 2 ) ) {
+                continue;
+            }
+
+            return pos.y / Screen.height;
+        }
 
         return 0f;
     }
@@ -113,6 +144,23 @@ public class PlayerMovements : NetworkBehaviour
     float getLeftReactorLevel() {  
         if ( Input.GetKey("left") == true ) {
             return 1f;
+        }
+
+        int touchCount = Input.touchCount;
+        
+        if ( touchCount <= 0) {
+            return 0f;
+        }
+
+        for ( int i = 0; i < touchCount; i++) {
+            Touch touch = Input.GetTouch(i);
+            Vector2 pos = touch.position;
+
+            if ( pos.x > ( Screen.width / 2 ) ) {
+                continue;
+            }
+
+            return pos.y / Screen.height;
         }
 
         return 0f;
