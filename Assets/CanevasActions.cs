@@ -15,11 +15,4 @@ public class CanevasActions : MonoBehaviour
         rb.velocity = new Vector2(0,0);
         rb.angularVelocity = 0f;
     }
-
-    public void GetOut() {
-        rb.transform.position = outPosition;
-        rb.transform.rotation = Quaternion.Euler(0, 0, 0);
-        rb.velocity = new Vector2(0,0);
-        rb.angularVelocity = 0f;
-    }
 }
