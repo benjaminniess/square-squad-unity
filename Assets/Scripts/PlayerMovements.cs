@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class PlayerMovements : MonoBehaviour
@@ -20,12 +21,41 @@ public class PlayerMovements : MonoBehaviour
     private float rotationDelta;
     private float timeCount = 0.0f;
 
+    PlayerController controls;
+    bool gazButton = false;
+    bool leftButton = false;
+    bool rightButton = false;
+    float ControllerMove;
+
+    void Awake() {
+        controls = new PlayerController();
+        controls.Gameplay.Button2.performed += ctx => gazButton = true;
+        controls.Gameplay.Button2.canceled += ctx => gazButton = false;
+        controls.Gameplay.JoystickRight.performed += ctx => rightButton = true;
+        controls.Gameplay.JoystickRight.canceled += ctx => rightButton = false;
+        controls.Gameplay.JoystickLeft.performed += ctx => leftButton = true;
+        controls.Gameplay.JoystickLeft.canceled += ctx => leftButton = false;
+    }
+
+    void OnEnable() {
+        controls.Gameplay.Enable();
+    }
+
+    void OnDisable() {
+        controls.Gameplay.Enable();
+    }
+
+    void TestButton() {
+        Debug.Log("okok");
+    }
+
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
     void Update()
     {
+        Debug.Log(ControllerMove);
         // Speed calculation
         speed = 10 * (transform.position - lastPosition).magnitude;
         lastPosition = transform.position;
@@ -59,13 +89,23 @@ public class PlayerMovements : MonoBehaviour
             //rb.velocity = Vector3.Normalize(rb.velocity) * Mathf.Sqrt(50);
             //rb.velocity = new Vector2( rb.velocity.x, maxSpeed );
         }
-        
+
+        if ( leftButton == true ) {
+            torqueLevel += 5;
+            //bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime);
+        } 
+        if ( rightButton == true ) {
+            torqueLevel -= 5;
+            //bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime);
+        }
+
+
         if ( rightReactorLevel > 0 ) {
-            torqueLevel += rightReactorLevel;
+            //torqueLevel += rightReactorLevel;
             bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * rightReactorLevel);
         } 
         if ( leftReactorLevel > 0 ) {
-            torqueLevel -= leftReactorLevel;
+            //torqueLevel -= leftReactorLevel;
             bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * leftReactorLevel);
         }
 
@@ -101,11 +141,19 @@ public class PlayerMovements : MonoBehaviour
             return 1f;
         }
 
+        if ( gazButton == true ) {
+            return 1f;
+        }
+
         return 0f;
     }
 
     float getLeftReactorLevel() {  
         if ( Input.GetKey("left") == true ) {
+            return 1f;
+        }
+
+        if ( gazButton == true ) {
             return 1f;
         }
 
