@@ -38,7 +38,7 @@ public class CustomCameraFollow : MonoBehaviour
             targetZoom = minZoom;
         }
 
-        transform.position = Vector3.SmoothDamp(transform.position, rb.transform.position + posOffset, ref velocity, timeOffset );
+        //transform.position = Vector3.SmoothDamp(transform.position, rb.transform.position + posOffset, ref velocity, timeOffset );
         
         if ( isZooming ) {
             float targetSize = originalSize * targetZoom;
