@@ -6,7 +6,6 @@ using TMPro;
 public class PlayerMovements : MonoBehaviour
 {
     public float reactorForce;
-    public float maxSpeed;
     
     public Rigidbody2D rb;
     public GameObject topCenterPoint;
@@ -15,16 +14,17 @@ public class PlayerMovements : MonoBehaviour
     private Vector2 currentVector;
     private Vector3 lastPosition = Vector3.zero;
     private float speed;
-    private float rotationSpeed;
-    private float rotationLast = 0;
-    private float maxRotation = 30f;
-    private float rotationDelta;
     private float timeCount = 0.0f;
 
     PlayerController controls;
-    bool gazButton = false;
-    bool leftButton = false;
-    bool rightButton = false;
+
+    public string gazTouch;
+    public string leftTouch;
+    public string rightTouch;
+
+    private bool gazButton = false;
+    private bool leftButton = false;
+    private bool rightButton = false;
     float ControllerMove;
 
     void Awake() {
@@ -45,99 +45,42 @@ public class PlayerMovements : MonoBehaviour
         controls.Gameplay.Enable();
     }
 
-    void TestButton() {
-        Debug.Log("okok");
-    }
-
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
     void Update()
     {
-        Debug.Log(ControllerMove);
         // Speed calculation
         speed = 10 * (transform.position - lastPosition).magnitude;
         lastPosition = transform.position;
 
-        // Rotation calculation
-        float currentRotation = transform.rotation.eulerAngles.z;
-        if ( currentRotation > 180 ) {
-            currentRotation = - (360 - currentRotation );
-        }
-
-        // Rotation delta calculation
-        rotationDelta = currentRotation - rotationLast;
-        rotationLast = currentRotation;
-        rotationDelta = rotationDelta < 0 ? -rotationDelta : rotationDelta;
-
         currentVector = ( topCenterPoint.transform.position - bottomCenterPoint.transform.position  ).normalized;
 
-        float rightReactorLevel = getRightReactorLevel();
-        float leftReactorLevel = getLeftReactorLevel();
-
-        if ( rightReactorLevel == 0 && leftReactorLevel == 0 ) {
+        if ( getRightState() == 0 && getLeftState() == 0 ) {
             rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, Quaternion.Euler(0, 0, 0), timeCount);
             timeCount = timeCount + Time.deltaTime / 100;
-
         }
         
         float torqueLevel = 0;
-        
-        // Limit vertical up speed
-        if ( rb.velocity.y > maxSpeed ) {
-            //rb.velocity = Vector3.Normalize(rb.velocity) * Mathf.Sqrt(50);
-            //rb.velocity = new Vector2( rb.velocity.x, maxSpeed );
-        }
 
-        if ( leftButton == true ) {
-            torqueLevel += 5;
-            //bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime);
+        if ( getLeftState() > 0 ) {
+            torqueLevel -= 2;
         } 
-        if ( rightButton == true ) {
-            torqueLevel -= 5;
-            //bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime);
+        if ( getRightState() > 0 ) {
+            torqueLevel += 2;
         }
 
-
-        if ( rightReactorLevel > 0 ) {
-            //torqueLevel += rightReactorLevel;
-            bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * rightReactorLevel);
-        } 
-        if ( leftReactorLevel > 0 ) {
-            //torqueLevel -= leftReactorLevel;
-            bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime * leftReactorLevel);
+        if ( getReactorstate() > 0 ) {
+            bottomCenterPoint.AddForce(currentVector * reactorForce * Time.deltaTime);
         }
 
-        // MAX ROTATION LIMIT
-        if ( currentRotation > maxRotation && leftReactorLevel >= 0 ) {
-           //rb.transform.rotation = Quaternion.Euler(0f, 0f, maxRotation - 2);
-        } else if ( currentRotation < -maxRotation && rightReactorLevel >= 0 ) {
-           //rb.transform.rotation = Quaternion.Euler(0f, 0f, -maxRotation + 2);
-        } 
-
-        // INVERSE ROTATION WHEN JOYSTICK GOES DOWN
-        if ( rightReactorLevel < 0 ) {
-            //rb.AddTorque(Time.deltaTime * rightReactorLevel * 600);
-        }
-        if ( leftReactorLevel < 0 ) {
-            //rb.AddTorque(Time.deltaTime * -leftReactorLevel * 600);
-        }
-
-        // Accentuation of retro rotation when angle is too high
-        if ( rightReactorLevel > leftReactorLevel && currentRotation < -25 && Mathf.Abs(rb.velocity.x) > 20 ) {
-            //torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
-        }
-        if ( rightReactorLevel < leftReactorLevel && currentRotation > 25 && Mathf.Abs(rb.velocity.x) > 20 ) {
-            //torqueLevel *= ( Mathf.Abs(currentRotation) / 10 );
-        }
-        
-        Quaternion q = Quaternion.AngleAxis(torqueLevel * 70 * Time.deltaTime, Vector3.forward);
+        Quaternion q = Quaternion.AngleAxis(torqueLevel * 40 * Time.deltaTime, Vector3.forward);
         rb.transform.rotation *= q;
     }
 
-    float getRightReactorLevel() {
-        if ( Input.GetKey("right") == true ) {
+    float getReactorstate() {
+        if ( Input.GetKey(gazTouch) == true ) {
             return 1f;
         }
 
@@ -148,12 +91,24 @@ public class PlayerMovements : MonoBehaviour
         return 0f;
     }
 
-    float getLeftReactorLevel() {  
-        if ( Input.GetKey("left") == true ) {
+    float getLeftState() {
+        if ( Input.GetKey(leftTouch) == true ) {
             return 1f;
         }
 
-        if ( gazButton == true ) {
+        if (  leftButton == true ) {
+            return 1f;
+        }
+
+        return 0f;
+    }
+
+    float getRightState() {
+        if ( Input.GetKey(rightTouch) == true ) {
+            return 1f;
+        }
+
+        if (  rightButton == true ) {
             return 1f;
         }
 
