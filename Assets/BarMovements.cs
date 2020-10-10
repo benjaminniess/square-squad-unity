@@ -19,7 +19,7 @@ public class BarMovements : MonoBehaviour
     {
        if ( flip == true ) {
            transform.Translate(Vector2.down * Time.deltaTime * 5, Space.World);
-           if ( transform.position.y < ( barStartYPos - 14 ) ) {
+           if ( transform.position.y < ( barStartYPos - 25 ) ) {
                flip = false;
            }
        } else {
