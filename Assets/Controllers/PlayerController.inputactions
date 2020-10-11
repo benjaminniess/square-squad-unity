@@ -6,25 +6,33 @@
             "id": "71df559b-fa6a-4f59-aee4-88301c0876f1",
             "actions": [
                 {
-                    "name": "Button2",
+                    "name": "UP",
                     "type": "Button",
-                    "id": "555265ce-c9c6-4019-9f37-baca7bbda882",
+                    "id": "cca69087-39ee-41c7-82b0-b27fd459ca2d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "JoystickRight",
+                    "name": "DOWN",
                     "type": "Button",
-                    "id": "e18422d9-974d-4d57-bf8a-fbe029a300ed",
+                    "id": "497bc5e9-1463-417f-8d4f-d9a1c6736ba1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "JoystickLeft",
+                    "name": "LEFT",
                     "type": "Button",
-                    "id": "0fc4bc6b-462e-4883-b321-7e7dcbecfb63",
+                    "id": "886a3633-0949-4bc2-82d7-965ea161d029",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RIGHT",
+                    "type": "Button",
+                    "id": "e9039d69-f68e-45fd-aa19-7e9cf6b7e47a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -33,34 +41,45 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "caeeb7be-7133-4536-8e9c-7c7ee7c1be67",
-                    "path": "<HID::Unknown Joy-Con (L)>/button2",
+                    "id": "d9044c2e-26f7-47ef-8086-896d63bb8afa",
+                    "path": "<HID::Unknown Joy-Con (R)>/hat/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Button2",
+                    "action": "UP",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "79246ec1-2b85-4094-8f58-ac7d4b4fba26",
-                    "path": "<HID::Unknown Joy-Con (L)>/hat/right",
+                    "id": "064477c0-a4cd-4d0e-9c9c-f4b0ea26fafc",
+                    "path": "<HID::Unknown Joy-Con (R)>/hat/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "JoystickRight",
+                    "action": "DOWN",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "e42055ad-ec93-44cc-bcef-08b07f16496e",
-                    "path": "<HID::Unknown Joy-Con (L)>/hat/left",
+                    "id": "1b0902c0-f06a-431f-91ad-428377040158",
+                    "path": "<HID::Unknown Joy-Con (R)>/hat/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "JoystickLeft",
+                    "action": "LEFT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2edf4840-b2ca-4464-a897-aeb98afea1f7",
+                    "path": "<HID::Unknown Joy-Con (R)>/hat/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RIGHT",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

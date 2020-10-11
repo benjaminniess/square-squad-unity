@@ -25,12 +25,14 @@ public class PlayerMovements : MonoBehaviour
 
     void Awake() {
         controls = new PlayerController();
-        controls.Gameplay.Button2.performed += ctx => upButton = true;
-        controls.Gameplay.Button2.canceled += ctx => upButton = false;
-        controls.Gameplay.JoystickRight.performed += ctx => rightButton = true;
-        controls.Gameplay.JoystickRight.canceled += ctx => rightButton = false;
-        controls.Gameplay.JoystickLeft.performed += ctx => leftButton = true;
-        controls.Gameplay.JoystickLeft.canceled += ctx => leftButton = false;
+        controls.Gameplay.UP.performed += ctx => upButton = true;
+        controls.Gameplay.UP.canceled += ctx => upButton = false;
+        controls.Gameplay.DOWN.performed += ctx => downButton = true;
+        controls.Gameplay.DOWN.canceled += ctx => downButton = false;
+        controls.Gameplay.LEFT.performed += ctx => leftButton = true;
+        controls.Gameplay.LEFT.canceled += ctx => leftButton = false;
+        controls.Gameplay.RIGHT.performed += ctx => rightButton = true;
+        controls.Gameplay.RIGHT.canceled += ctx => rightButton = false;
     }
 
     void OnEnable() {
@@ -61,18 +63,6 @@ public class PlayerMovements : MonoBehaviour
         transform.Translate(velocity * Time.deltaTime);
     }
 
-    float getReactorstate() {
-        if ( Input.GetKey(upTouch) == true ) {
-            return 1f;
-        }
-
-        if ( upButton == true ) {
-            return 1f;
-        }
-
-        return 0f;
-    }
-
     float getHorizontalAxe() {
         if ( Input.GetKey(leftTouch) == true ) {
             return -1f;
@@ -80,6 +70,14 @@ public class PlayerMovements : MonoBehaviour
 
         if ( Input.GetKey(rightTouch) == true ) {
             return 1f;
+        }
+
+        if ( rightButton ) {
+            return 1f;
+        }
+
+        if ( leftButton ) {
+            return -1f;
         }
 
         return 0f;
@@ -91,6 +89,14 @@ public class PlayerMovements : MonoBehaviour
         }
 
         if ( Input.GetKey(downTouch) == true ) {
+            return -1f;
+        }
+
+        if ( upButton ) {
+            return 1f;
+        }
+
+        if ( downButton ) {
             return -1f;
         }
 
