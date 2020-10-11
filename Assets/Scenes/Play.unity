@@ -18696,6 +18696,16 @@ PrefabInstance:
       propertyPath: rightTouch
       value: d
       objectReference: {fileID: 0}
+    - target: {fileID: 491578336404137707, guid: b0fbd67e12498451fbceb99ea0fb0bae,
+        type: 3}
+      propertyPath: upTouch
+      value: z
+      objectReference: {fileID: 0}
+    - target: {fileID: 491578336404137707, guid: b0fbd67e12498451fbceb99ea0fb0bae,
+        type: 3}
+      propertyPath: downTouch
+      value: s
+      objectReference: {fileID: 0}
     - target: {fileID: 491578336404137710, guid: b0fbd67e12498451fbceb99ea0fb0bae,
         type: 3}
       propertyPath: m_Name
