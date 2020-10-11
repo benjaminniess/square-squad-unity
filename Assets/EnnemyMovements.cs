@@ -4,29 +4,20 @@ using UnityEngine;
 
 public class EnnemyMovements : MonoBehaviour
 {
-    //public GameObject[] Players;
-    public GameObject[] Ennemies;
-    private float speed = 5f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Ennemies = GameObject.FindGameObjectsWithTag("Ennemy");
-    }
+    private float speed = 15f;
 
     // Update is called once per frame
     void Update()
     {
-        foreach (GameObject Ennemy in Ennemies) {
-            GameObject Player = FindClosestPlayer( Ennemy );
+    
+        GameObject Player = FindClosestPlayer();
 
-            Ennemy.transform.LookAt(Player.transform.position);
-            Ennemy.transform.Rotate(new Vector3(0,-90,-90), Space.Self);
-            Ennemy.transform.position = Vector2.MoveTowards(Ennemy.transform.position, Player.transform.position, speed * Time.deltaTime);
-        }
+        transform.LookAt(Player.transform.position);
+        transform.Rotate(new Vector3(0,-90,-90), Space.Self);
+        transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
     }
 
-    public GameObject FindClosestPlayer( GameObject Ennemy ) {
+    public GameObject FindClosestPlayer() {
         GameObject[] gos;
         gos = GameObject.FindGameObjectsWithTag("Player");
         GameObject closest = null;
