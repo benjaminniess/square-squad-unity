@@ -9,6 +9,7 @@ public class PlayerMovements : MonoBehaviour
     private float acceleration = 750;
     float deceleration = 700;
     private Vector2 velocity;
+    public bool isTracked = true;
 
     PlayerController controls;
 

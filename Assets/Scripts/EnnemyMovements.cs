@@ -11,10 +11,12 @@ public class EnnemyMovements : MonoBehaviour
     {
     
         GameObject Player = FindClosestPlayer();
-
-        transform.LookAt(Player.transform.position);
-        transform.Rotate(new Vector3(0,-90,-90), Space.Self);
-        transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+        if ( Player) {
+            transform.LookAt(Player.transform.position);
+            transform.Rotate(new Vector3(0,-90,-90), Space.Self);
+            transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+        }
+        
     }
 
     public GameObject FindClosestPlayer() {
@@ -25,6 +27,11 @@ public class EnnemyMovements : MonoBehaviour
         Vector3 position = transform.position;
         foreach (GameObject go in gos)
         {
+            PlayerMovements playerScript = go.gameObject.GetComponent<PlayerMovements>();
+            if ( playerScript.isTracked == false ) {
+                continue;
+            }
+
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
