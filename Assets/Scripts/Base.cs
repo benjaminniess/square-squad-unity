@@ -18,8 +18,6 @@ public class Base : MonoBehaviour
 
     void OnTriggerEnter2D (Collider2D collider) {
         if (collider.tag == "Player" ) {
-            Debug.Log(collider.transform.position);
-            Debug.Log(transform.position);
             PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
             playerScript.isTracked = false;
          }

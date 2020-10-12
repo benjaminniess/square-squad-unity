@@ -10,6 +10,7 @@ public class PlayerMovements : MonoBehaviour
     float deceleration = 700;
     private Vector2 velocity;
     public bool isTracked = true;
+    private Vector2 playerStartPos;
 
     PlayerController controls;
 
@@ -46,7 +47,12 @@ public class PlayerMovements : MonoBehaviour
 
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
+        playerStartPos = transform.position;
     }
+
+    public void resetStartPos() {
+        transform.position = playerStartPos;
+    } 
 
     void Update() {
         if ( getHorizontalAxe() != 0 ) {
