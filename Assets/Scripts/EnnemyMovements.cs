@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnnemyMovements : MonoBehaviour
 {
-    private float speed = 15f;
+    private float speed = 20f;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
     
         GameObject Player = FindClosestPlayer();

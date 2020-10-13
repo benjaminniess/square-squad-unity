@@ -54,7 +54,7 @@ public class PlayerMovements : MonoBehaviour
         transform.position = playerStartPos;
     } 
 
-    void Update() {
+    void FixedUpdate() {
         if ( getHorizontalAxe() != 0 ) {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
         } else {
