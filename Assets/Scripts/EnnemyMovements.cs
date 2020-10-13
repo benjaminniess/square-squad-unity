@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnnemyMovements : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 25f;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -46,6 +46,7 @@ public class EnnemyMovements : MonoBehaviour
     void OnTriggerEnter2D (Collider2D collider) {
         if (collider.tag == "Player" ) {
             PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
+            //playerScript.decreaseScore();
             playerScript.resetStartPos();
          }
     }

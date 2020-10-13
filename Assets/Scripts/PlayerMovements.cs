@@ -58,7 +58,6 @@ public class PlayerMovements : MonoBehaviour
 
     public void increaseScore() {
         score++;
-        Debug.Log(score);
     }
 
     public void decreaseScore() {
@@ -66,7 +65,10 @@ public class PlayerMovements : MonoBehaviour
         if ( score < 0 ) {
             score = 0;
         }
-        Debug.Log(score);
+    }
+
+    public int getScore() {
+        return score;
     }
 
     void FixedUpdate() {
