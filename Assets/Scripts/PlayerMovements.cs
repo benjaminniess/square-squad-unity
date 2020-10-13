@@ -53,7 +53,6 @@ public class PlayerMovements : MonoBehaviour
 
     public void resetStartPos() {
         transform.position = playerStartPos;
-        decreaseScore();
     }
 
     public void increaseScore() {

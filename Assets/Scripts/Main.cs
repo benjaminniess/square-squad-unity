@@ -7,6 +7,18 @@ public class Main : MonoBehaviour
     public GameObject Coin;
     public GameObject[] PlayersObjects;
 
+    public static Main M;
+     
+    void Awake() {
+        if ( M != null) {
+            GameObject.Destroy(M);
+        } else {
+            M = this;
+        }
+
+        DontDestroyOnLoad(this);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,14 +27,12 @@ public class Main : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if ( GameObject.FindGameObjectsWithTag("Coin").Length < 1 ) {
             GenerateCoin();
             UpdateScores();
         }
     }
-
 
     public void GenerateCoin() {
         float spawnY = Random.Range(-20,20);
@@ -35,7 +45,6 @@ public class Main : MonoBehaviour
         int i = 1;
         foreach ( GameObject Player in PlayersObjects ) {
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
-            Debug.Log(playerScript.getScore());
             GameObject.Find("ScorePlayer" + i).GetComponent<TMPro.TextMeshProUGUI>().SetText(playerScript.getScore().ToString());
             i++;
         }
