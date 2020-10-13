@@ -6,6 +6,7 @@ using TMPro;
 public class PlayerMovements : MonoBehaviour
 {
     private float speed = 19;
+    private int score = 0;
     private float acceleration = 750;
     float deceleration = 700;
     private Vector2 velocity;
@@ -52,7 +53,21 @@ public class PlayerMovements : MonoBehaviour
 
     public void resetStartPos() {
         transform.position = playerStartPos;
-    } 
+        decreaseScore();
+    }
+
+    public void increaseScore() {
+        score++;
+        Debug.Log(score);
+    }
+
+    public void decreaseScore() {
+        score--;
+        if ( score < 0 ) {
+            score = 0;
+        }
+        Debug.Log(score);
+    }
 
     void FixedUpdate() {
         if ( getHorizontalAxe() != 0 ) {
