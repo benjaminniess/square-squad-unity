@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -9,7 +7,15 @@ public class MainMenu : MonoBehaviour
         Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
-    public void PlayGame() {
+    public void Arena1() {
         SceneManager.LoadScene("Play");
+    }
+
+    public void Arena2() {
+        SceneManager.LoadScene("Play");
+    }
+
+    public void Exit() {
+        Application.Quit();
     }
 }

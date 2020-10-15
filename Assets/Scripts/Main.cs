@@ -7,13 +7,13 @@ public class Main : MonoBehaviour
     public GameObject Coin;
     public GameObject[] PlayersObjects;
 
-    public static Main M;
+    public static Main instance;
      
     void Awake() {
-        if ( M != null) {
-            GameObject.Destroy(M);
+        if ( instance != null) {
+            GameObject.Destroy(instance);
         } else {
-            M = this;
+            instance = this;
         }
 
         DontDestroyOnLoad(this);
