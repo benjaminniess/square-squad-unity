@@ -7,12 +7,16 @@ public class MainMenu : MonoBehaviour
         Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
+    public void Menu() {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void Arena1() {
-        SceneManager.LoadScene("Play");
+        SceneManager.LoadScene("Arena1");
     }
 
     public void Arena2() {
-        SceneManager.LoadScene("Play");
+        SceneManager.LoadScene("Arena2");
     }
 
     public void Exit() {
