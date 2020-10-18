@@ -11,7 +11,7 @@ public class PlayerMovements : MonoBehaviour
     float deceleration = 700;
     private Vector2 velocity;
     private bool isTrackedVal = true;
-    private bool isDashing = false;
+    
     private bool isHoldingCoinVal = false; 
     private GameObject fakeCoin;
     private GameObject dashStatus;
@@ -20,10 +20,18 @@ public class PlayerMovements : MonoBehaviour
 
     PlayerController controls;
 
+
+    // DASH SYSTEM
     float dashTimer = 0.0f;
     float dashSleepTimer = 0.0f;
     public float dashDuration = 0.5f;
     public float dashSleepDuration = 2f;
+    private bool isDashing = false;
+
+    // KO SYSTEM
+    float koTimer = 0.0f;
+    public float koDuration = 1f;
+    private bool isKOVal = false;
 
     public string upTouch;
     public string leftTouch;
@@ -64,6 +72,7 @@ public class PlayerMovements : MonoBehaviour
         fakeCoin = transform.Find("FakeCoin").gameObject;
     }
 
+    
     public void resetStartPos() {
         transform.position = playerStartPos;
         if ( isHoldingCoin() ) {
@@ -79,7 +88,7 @@ public class PlayerMovements : MonoBehaviour
     public void decreaseScore() {
         score--;
         if ( score < 0 ) {
-            score = 0;
+           // score = 0;
         }
     }
 
@@ -88,6 +97,9 @@ public class PlayerMovements : MonoBehaviour
     }
 
     public bool isTracked(){
+         if ( isKO() ) {
+            return false;
+        }
         return isTrackedVal;
     }
 
@@ -105,7 +117,17 @@ public class PlayerMovements : MonoBehaviour
     }
 
     void FixedUpdate() {
-        
+        if ( isKO() ) {
+            koTimer += Time.deltaTime;
+            
+            // Disable dash so the user can't dash right after ko
+            dashSleepTimer = 0;
+
+            return;
+        } else {
+            koTimer = 0;
+            isKOVal = false;
+        }
 
         if ( getHorizontalAxe() != 0 ) {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
@@ -189,7 +211,29 @@ public class PlayerMovements : MonoBehaviour
         }
 
         return false;
-        
+    }
+
+    public bool isKO() {
+        if ( ! isKOVal ) {
+            return false;
+        }
+
+        if ( koTimer > koDuration ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool setKO() {
+        if ( ! isKOVal ) {
+            isKOVal = true;
+            koTimer = 0;
+
+            return true;
+        }
+
+        return false;
     }
 
     float getHorizontalAxe() {
