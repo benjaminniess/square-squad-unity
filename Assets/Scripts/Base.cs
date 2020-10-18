@@ -19,14 +19,19 @@ public class Base : MonoBehaviour
     void OnTriggerEnter2D (Collider2D collider) {
         if (collider.tag == "Player" ) {
             PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-            playerScript.isTracked = false;
+            playerScript.setTracked(false);
+            if ( playerScript.isHoldingCoin() ) {
+                playerScript.increaseScore();
+                playerScript.setIsHoldingCoin(false);
+                Main.instance.GenerateCoin();
+            }
          }
     }
 
     void OnTriggerExit2D(Collider2D collider) {
         if (collider.tag == "Player" ) {
             PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-            playerScript.isTracked = true;
+            playerScript.setTracked(true);
          }
     }
 

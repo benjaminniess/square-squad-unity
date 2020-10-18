@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
+
+    public static Main instance;
+
     public GameObject Coin;
     public GameObject[] PlayersObjects;
+
+    private void Awake(){
+         // if the singleton hasn't been initialized yet
+         if (instance != null && instance != this) 
+         {
+             Destroy(this.gameObject);
+         }
+ 
+         instance = this;
+     }
 
     // Start is called before the first frame update
     void Start()
@@ -16,10 +29,7 @@ public class Main : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if ( GameObject.FindGameObjectsWithTag("Coin").Length < 1 ) {
-            GenerateCoin();
-            UpdateScores();
-        }
+        UpdateScores();
     }
 
     public void GenerateCoin() {

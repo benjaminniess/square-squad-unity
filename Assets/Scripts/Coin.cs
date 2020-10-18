@@ -19,9 +19,10 @@ public class Coin : MonoBehaviour
     void OnTriggerEnter2D (Collider2D collider) {
         if (collider.tag == "Player" ) {
             PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-            playerScript.increaseScore();
-
-            Destroy(gameObject);
+            if ( ! playerScript.isHoldingCoin() ) {
+                playerScript.setIsHoldingCoin(true);
+                Destroy(gameObject);
+            }
         }
     }
 }

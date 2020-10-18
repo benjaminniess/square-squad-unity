@@ -10,7 +10,8 @@ public class PlayerMovements : MonoBehaviour
     private float acceleration = 750;
     float deceleration = 700;
     private Vector2 velocity;
-    public bool isTracked = true;
+    private bool isTrackedVal = true;
+    private bool isHoldingCoinVal = false; 
     private Vector2 playerStartPos;
 
     PlayerController controls;
@@ -53,6 +54,11 @@ public class PlayerMovements : MonoBehaviour
 
     public void resetStartPos() {
         transform.position = playerStartPos;
+        if ( isHoldingCoin() ) {
+            setIsHoldingCoin(false);
+            Main.instance.GenerateCoin();
+        }
+        
     }
 
     public void increaseScore() {
@@ -70,6 +76,22 @@ public class PlayerMovements : MonoBehaviour
         return score;
     }
 
+    public bool isTracked(){
+        return isTrackedVal;
+    }
+
+    public void setTracked(bool isTracked) {
+        isTrackedVal = isTracked;
+    }
+
+    public bool isHoldingCoin(){
+        return isHoldingCoinVal;
+    }
+
+    public void setIsHoldingCoin(bool isHoldingCoin) {
+        isHoldingCoinVal = isHoldingCoin;
+    }
+
     void FixedUpdate() {
         if ( getHorizontalAxe() != 0 ) {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
@@ -84,6 +106,15 @@ public class PlayerMovements : MonoBehaviour
         }
 
         transform.Translate(velocity * Time.deltaTime);
+    }
+
+    void OnTriggerEnter2D (Collider2D collider) {
+        if ( isHoldingCoin() ) {
+            if (collider.tag == "Player" ) {
+                PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
+                playerScript.setIsHoldingCoin(true);
+            }
+        }
     }
 
     float getHorizontalAxe() {

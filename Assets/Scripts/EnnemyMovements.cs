@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnnemyMovements : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 1f;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -28,7 +28,7 @@ public class EnnemyMovements : MonoBehaviour
         foreach (GameObject go in gos)
         {
             PlayerMovements playerScript = go.gameObject.GetComponent<PlayerMovements>();
-            if ( playerScript.isTracked == false ) {
+            if ( playerScript.isTracked() == false ) {
                 continue;
             }
 
