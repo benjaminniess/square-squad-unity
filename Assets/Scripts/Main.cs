@@ -7,8 +7,6 @@ public class Main : MonoBehaviour
     public GameObject Coin;
     public GameObject[] PlayersObjects;
 
-    public static Main instance;
-
     // Start is called before the first frame update
     void Start()
     {
