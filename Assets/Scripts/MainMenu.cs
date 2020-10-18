@@ -3,11 +3,38 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public static bool gameIsPaused = false;
+    public GameObject pauseMenuUi;
+
+
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if ( gameIsPaused ) {
+                Resume();
+            } else {
+                Paused();
+            }
+        }
+    }
+
+    public void Resume() {
+        pauseMenuUi.SetActive(false);
+        Time.timeScale = 1;
+        gameIsPaused = false;
+    }
+
+    void Paused() {
+        pauseMenuUi.SetActive(true);
+        Time.timeScale = 0;
+        gameIsPaused = true;
+    }
+
     public void Menu() {
+        Resume();
         SceneManager.LoadScene("MainMenu");
     }
 

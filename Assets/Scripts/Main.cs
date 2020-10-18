@@ -8,16 +8,6 @@ public class Main : MonoBehaviour
     public GameObject[] PlayersObjects;
 
     public static Main instance;
-     
-    void Awake() {
-        if ( instance != null) {
-            GameObject.Destroy(instance);
-        } else {
-            instance = this;
-        }
-
-        DontDestroyOnLoad(this);
-    }
 
     // Start is called before the first frame update
     void Start()
