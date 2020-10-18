@@ -6,8 +6,6 @@ public class Arena : MonoBehaviour
 {
     
     public static Arena instance;
-
-    protected int ArenaInt = 5;
      
     void Awake() {
         if ( instance != null) {
