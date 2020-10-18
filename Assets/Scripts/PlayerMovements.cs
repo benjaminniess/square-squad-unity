@@ -11,22 +11,31 @@ public class PlayerMovements : MonoBehaviour
     float deceleration = 700;
     private Vector2 velocity;
     private bool isTrackedVal = true;
+    private bool isDashing = false;
     private bool isHoldingCoinVal = false; 
     private GameObject fakeCoin;
+    private GameObject dashStatus;
 
     private Vector2 playerStartPos;
 
     PlayerController controls;
 
+    float dashTimer = 0.0f;
+    float dashSleepTimer = 0.0f;
+    public float dashDuration = 0.5f;
+    public float dashSleepDuration = 2f;
+
     public string upTouch;
     public string leftTouch;
     public string rightTouch;
     public string downTouch;
+    public string dashTouch;
 
     private bool upButton = false;
     private bool downButton = false;
     private bool leftButton = false;
     private bool rightButton = false;
+
     float ControllerMove;
 
     void Awake() {
@@ -53,7 +62,6 @@ public class PlayerMovements : MonoBehaviour
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         playerStartPos = transform.position;
         fakeCoin = transform.Find("FakeCoin").gameObject;
-        //fakeCoin.SetActive(false);
     }
 
     public void resetStartPos() {
@@ -97,6 +105,8 @@ public class PlayerMovements : MonoBehaviour
     }
 
     void FixedUpdate() {
+        
+
         if ( getHorizontalAxe() != 0 ) {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
         } else {
@@ -109,18 +119,77 @@ public class PlayerMovements : MonoBehaviour
             velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.deltaTime);
         }
 
+    
+        dashStatus = transform.Find("DashStatus").gameObject;
+        dashStatus.SetActive( isDashAvailable() );
+        
+        if (getDashStatus() == true) {
+            dashTimer += Time.deltaTime;
+            velocity *= 1.7f;
+            
+        } else {
+            dashSleepTimer += Time.deltaTime;
+        }
+
         transform.Translate(velocity * Time.deltaTime);
     }
 
     void OnTriggerEnter2D (Collider2D collider) {
-        // TODO: Check dash system
         if ( isHoldingCoin() ) {
             if (collider.tag == "Player" ) {
                 PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-                playerScript.setIsHoldingCoin(true);
-                setIsHoldingCoin(false);
+                if ( playerScript.isDashing ) {
+                    playerScript.setIsHoldingCoin(true);
+                    setIsHoldingCoin(false);
+                }
             }
         }
+    }
+
+    bool isDashAvailable() {
+        if ( isDashing ) {
+            return false;
+        }
+
+        // Disable dash when holding coin
+        if ( isHoldingCoin() ) {
+            return false;
+        }
+
+        if ( dashSleepTimer < dashSleepDuration ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    bool getDashStatus() {
+        // No dashing, no dash button
+        if ( ! isDashing && ! Input.GetKey(dashTouch) ) {
+            return false;
+        }
+
+        // Dashing time expiration
+        if ( isDashing && dashTimer > dashDuration ) {
+            isDashing = false;
+            dashTimer = 0;
+            dashSleepTimer = 0;
+            return false;
+        }
+
+        // Dash engoing
+        if ( isDashing && dashTimer < dashDuration ) {
+            return true;
+        }
+
+        // New dash
+        if ( Input.GetKey(dashTouch) && isDashAvailable() ) {
+            isDashing = true;
+            return true;
+        }
+
+        return false;
+        
     }
 
     float getHorizontalAxe() {
