@@ -12,6 +12,8 @@ public class PlayerMovements : MonoBehaviour
     private Vector2 velocity;
     private bool isTrackedVal = true;
     private bool isHoldingCoinVal = false; 
+    private GameObject fakeCoin;
+
     private Vector2 playerStartPos;
 
     PlayerController controls;
@@ -50,6 +52,8 @@ public class PlayerMovements : MonoBehaviour
     void Start() {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         playerStartPos = transform.position;
+        fakeCoin = transform.Find("FakeCoin").gameObject;
+        //fakeCoin.SetActive(false);
     }
 
     public void resetStartPos() {
@@ -58,7 +62,6 @@ public class PlayerMovements : MonoBehaviour
             setIsHoldingCoin(false);
             Main.instance.GenerateCoin();
         }
-        
     }
 
     public void increaseScore() {
@@ -89,6 +92,7 @@ public class PlayerMovements : MonoBehaviour
     }
 
     public void setIsHoldingCoin(bool isHoldingCoin) {
+        fakeCoin.SetActive(isHoldingCoin);
         isHoldingCoinVal = isHoldingCoin;
     }
 
@@ -109,10 +113,12 @@ public class PlayerMovements : MonoBehaviour
     }
 
     void OnTriggerEnter2D (Collider2D collider) {
+        // TODO: Check dash system
         if ( isHoldingCoin() ) {
             if (collider.tag == "Player" ) {
                 PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
                 playerScript.setIsHoldingCoin(true);
+                setIsHoldingCoin(false);
             }
         }
     }
