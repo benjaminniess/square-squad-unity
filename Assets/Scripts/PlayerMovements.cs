@@ -32,6 +32,7 @@ public class PlayerMovements : MonoBehaviour
     float koTimer = 0.0f;
     public float koDuration = 1f;
     private bool isKOVal = false;
+    private GameObject koStatus;
 
     public string upTouch;
     public string leftTouch;
@@ -70,6 +71,8 @@ public class PlayerMovements : MonoBehaviour
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         playerStartPos = transform.position;
         fakeCoin = transform.Find("FakeCoin").gameObject;
+        koStatus = transform.Find("KOStatus").gameObject;
+        dashStatus = transform.Find("DashStatus").gameObject;
     }
 
     
@@ -88,7 +91,7 @@ public class PlayerMovements : MonoBehaviour
     public void decreaseScore() {
         score--;
         if ( score < 0 ) {
-           // score = 0;
+            score = 0;
         }
     }
 
@@ -124,10 +127,8 @@ public class PlayerMovements : MonoBehaviour
             dashSleepTimer = 0;
 
             return;
-        } else {
-            koTimer = 0;
-            isKOVal = false;
         }
+        setOK();
 
         if ( getHorizontalAxe() != 0 ) {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
@@ -141,8 +142,6 @@ public class PlayerMovements : MonoBehaviour
             velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.deltaTime);
         }
 
-    
-        dashStatus = transform.Find("DashStatus").gameObject;
         dashStatus.SetActive( isDashAvailable() );
         
         if (getDashStatus() == true) {
@@ -163,6 +162,7 @@ public class PlayerMovements : MonoBehaviour
                 if ( playerScript.isDashing ) {
                     playerScript.setIsHoldingCoin(true);
                     setIsHoldingCoin(false);
+                    setKO();
                 }
             }
         }
@@ -230,10 +230,18 @@ public class PlayerMovements : MonoBehaviour
             isKOVal = true;
             koTimer = 0;
 
+            koStatus.SetActive( true );
+
             return true;
         }
 
         return false;
+    }
+
+    public void setOK() {
+        isKOVal = false;
+        koTimer = 0;
+        koStatus.SetActive( false );
     }
 
     float getHorizontalAxe() {
