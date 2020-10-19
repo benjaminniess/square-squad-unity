@@ -11,6 +11,8 @@ public class PlayerMovements : MonoBehaviour
     float deceleration = 700;
     private Vector2 velocity;
     private bool isTrackedVal = true;
+
+    private string playerHealth = "ok";
     
     private bool isHoldingCoinVal = false; 
     private GameObject fakeCoin;
@@ -31,8 +33,8 @@ public class PlayerMovements : MonoBehaviour
     // KO SYSTEM
     float koTimer = 0.0f;
     public float koDuration = 1f;
-    private bool isKOVal = false;
     private GameObject koStatus;
+    private GameObject recoverStatus;
 
     public string upTouch;
     public string leftTouch;
@@ -73,102 +75,30 @@ public class PlayerMovements : MonoBehaviour
         fakeCoin = transform.Find("FakeCoin").gameObject;
         koStatus = transform.Find("KOStatus").gameObject;
         dashStatus = transform.Find("DashStatus").gameObject;
-    }
-
-    
-    public void resetStartPos() {
-        transform.position = playerStartPos;
-        if ( isHoldingCoin() ) {
-            setIsHoldingCoin(false);
-            Main.instance.GenerateCoin();
-        }
-    }
-
-    public void increaseScore() {
-        score++;
-    }
-
-    public void decreaseScore() {
-        score--;
-        if ( score < 0 ) {
-            score = 0;
-        }
+        recoverStatus = transform.Find("RecoverStatus").gameObject;
     }
 
     public int getScore() {
         return score;
     }
 
-    public bool isTracked(){
-         if ( isKO() ) {
-            return false;
-        }
-        return isTrackedVal;
+    public string getPlayerHealth() {
+        return playerHealth;
     }
 
-    public void setTracked(bool isTracked) {
-        isTrackedVal = isTracked;
+    public bool isOk() {
+        return getPlayerHealth() == "ok";
     }
 
-    public bool isHoldingCoin(){
-        return isHoldingCoinVal;
+    public bool isRecovering() {
+        return getPlayerHealth() == "recovering";
     }
 
-    public void setIsHoldingCoin(bool isHoldingCoin) {
-        fakeCoin.SetActive(isHoldingCoin);
-        isHoldingCoinVal = isHoldingCoin;
+    public bool isKO() {
+        return getPlayerHealth() == "ko";
     }
 
-    void FixedUpdate() {
-        if ( isKO() ) {
-            koTimer += Time.deltaTime;
-            
-            // Disable dash so the user can't dash right after ko
-            dashSleepTimer = 0;
-
-            return;
-        }
-        setOK();
-
-        if ( getHorizontalAxe() != 0 ) {
-            velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
-        } else {
-            velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
-        }
-
-        if ( getVerticalAxe() != 0 ) {
-            velocity.y = Mathf.MoveTowards(velocity.y, speed * getVerticalAxe(), acceleration * Time.deltaTime);
-        } else {
-            velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.deltaTime);
-        }
-
-        dashStatus.SetActive( isDashAvailable() );
-        
-        if (getDashStatus() == true) {
-            dashTimer += Time.deltaTime;
-            velocity *= 1.7f;
-            
-        } else {
-            dashSleepTimer += Time.deltaTime;
-        }
-
-        transform.Translate(velocity * Time.deltaTime);
-    }
-
-    void OnTriggerEnter2D (Collider2D collider) {
-        if ( isHoldingCoin() ) {
-            if (collider.tag == "Player" ) {
-                PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-                if ( playerScript.isDashing ) {
-                    playerScript.setIsHoldingCoin(true);
-                    setIsHoldingCoin(false);
-                    setKO();
-                }
-            }
-        }
-    }
-
-    bool isDashAvailable() {
+    public bool isDashAvailable() {
         if ( isDashing ) {
             return false;
         }
@@ -183,6 +113,22 @@ public class PlayerMovements : MonoBehaviour
         }
 
         return true;
+    }
+
+    public bool isTracked(){
+        if ( isKO() ) {
+            return false;
+        }
+
+        if ( isRecovering() ) {
+            return false;
+        }
+
+        return isTrackedVal;
+    }
+
+    public bool isHoldingCoin(){
+        return isHoldingCoinVal;
     }
 
     bool getDashStatus() {
@@ -211,37 +157,6 @@ public class PlayerMovements : MonoBehaviour
         }
 
         return false;
-    }
-
-    public bool isKO() {
-        if ( ! isKOVal ) {
-            return false;
-        }
-
-        if ( koTimer > koDuration ) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public bool setKO() {
-        if ( ! isKOVal ) {
-            isKOVal = true;
-            koTimer = 0;
-
-            koStatus.SetActive( true );
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public void setOK() {
-        isKOVal = false;
-        koTimer = 0;
-        koStatus.SetActive( false );
     }
 
     float getHorizontalAxe() {
@@ -282,5 +197,124 @@ public class PlayerMovements : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    public void setTracked(bool isTracked) {
+        isTrackedVal = isTracked;
+    }
+
+    public bool setKO() {
+        if ( ! isKO() ) {
+            playerHealth = "ko";
+            koTimer = 0;
+
+            koStatus.SetActive( true );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void setOK() {
+        koTimer = 0;
+        playerHealth = "ok";
+        koStatus.SetActive( false );
+        recoverStatus.SetActive( false );
+    }
+
+    public void setRecovering() {
+        koTimer = 0;
+        playerHealth = "recovering";
+        koStatus.SetActive( false );
+        recoverStatus.SetActive( true );
+    }
+
+    public void setIsHoldingCoin(bool isHoldingCoin) {
+        fakeCoin.SetActive(isHoldingCoin);
+        isHoldingCoinVal = isHoldingCoin;
+    }
+
+    public void updatePlayerStatus() {
+        koTimer += Time.deltaTime;
+
+        if ( isKO() ) {
+            // Disable dash so the user can't dash right after ko
+            dashSleepTimer = 0;
+
+            if ( koTimer > koDuration ) {
+                setRecovering();
+            }
+
+            return;
+        } else if ( isRecovering() ){
+            if ( koTimer > koDuration ) {
+                setOK();
+            }
+        }
+    }
+
+    public void resetStartPos() {
+        transform.position = playerStartPos;
+        if ( isHoldingCoin() ) {
+            setIsHoldingCoin(false);
+            Main.instance.GenerateCoin();
+        }
+    }
+
+    public void increaseScore() {
+        score++;
+    }
+
+    public void decreaseScore() {
+        score--;
+        if ( score < 0 ) {
+            score = 0;
+        }
+    }
+
+    void FixedUpdate() {
+        updatePlayerStatus();
+        if ( isKO() ) {
+            return;
+        }
+
+
+        if ( getHorizontalAxe() != 0 ) {
+            velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
+        } else {
+            velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
+        }
+
+        if ( getVerticalAxe() != 0 ) {
+            velocity.y = Mathf.MoveTowards(velocity.y, speed * getVerticalAxe(), acceleration * Time.deltaTime);
+        } else {
+            velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.deltaTime);
+        }
+
+        dashStatus.SetActive( isDashAvailable() );
+        
+        if (getDashStatus() == true) {
+            dashTimer += Time.deltaTime;
+            velocity *= 1.7f;
+            
+        } else {
+            dashSleepTimer += Time.deltaTime;
+        }
+
+        transform.Translate(velocity * Time.deltaTime);
+    }
+
+    void OnTriggerEnter2D (Collider2D collider) {
+        if ( isHoldingCoin() ) {
+            if (collider.tag == "Player" ) {
+                PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
+                if ( playerScript.isDashing ) {
+                    playerScript.setIsHoldingCoin(true);
+                    setIsHoldingCoin(false);
+                    setKO();
+                }
+            }
+        }
     }
 }
