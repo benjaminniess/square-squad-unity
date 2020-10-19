@@ -6,10 +6,9 @@ using TMPro;
 public class PlayerMovements : MonoBehaviour
 {
     private float speed = 19;
+    private float currentSpeed;
     private int score = 0;
-    private float acceleration = 750;
-    float deceleration = 700;
-    private Vector2 velocity;
+
     private bool isTrackedVal = true;
 
     private string playerHealth = "ok";
@@ -26,9 +25,10 @@ public class PlayerMovements : MonoBehaviour
     // DASH SYSTEM
     float dashTimer = 0.0f;
     float dashSleepTimer = 0.0f;
-    public float dashDuration = 0.5f;
+    public float dashDuration = 0.2f;
+    public float dashSpeed = 2f;
     public float dashSleepDuration = 2f;
-    private bool isDashing = false;
+    private bool isDashingVal = false;
 
     // KO SYSTEM
     float koTimer = 0.0f;
@@ -99,7 +99,7 @@ public class PlayerMovements : MonoBehaviour
     }
 
     public bool isDashAvailable() {
-        if ( isDashing ) {
+        if ( isDashingVal ) {
             return false;
         }
 
@@ -131,28 +131,30 @@ public class PlayerMovements : MonoBehaviour
         return isHoldingCoinVal;
     }
 
-    bool getDashStatus() {
+    bool isDashing() {
         // No dashing, no dash button
-        if ( ! isDashing && ! Input.GetKey(dashTouch) ) {
+        if ( ! isDashingVal && ! Input.GetKey(dashTouch) ) {
             return false;
         }
 
         // Dashing time expiration
-        if ( isDashing && dashTimer > dashDuration ) {
-            isDashing = false;
-            dashTimer = 0;
+        if ( isDashingVal && ( dashTimer * 10 ) > dashDuration ) {
+            Debug.Log(dashTimer * 10);
+            isDashingVal = false;
             dashSleepTimer = 0;
+
             return false;
         }
 
         // Dash engoing
-        if ( isDashing && dashTimer < dashDuration ) {
+        if ( isDashingVal && ( dashTimer * 10 ) < dashDuration ) {
             return true;
         }
 
         // New dash
         if ( Input.GetKey(dashTouch) && isDashAvailable() ) {
-            isDashing = true;
+            isDashingVal = true;
+            dashTimer = 0f;
             return true;
         }
 
@@ -237,7 +239,8 @@ public class PlayerMovements : MonoBehaviour
 
     public void updatePlayerStatus() {
         koTimer += Time.deltaTime;
-
+        dashTimer += Time.deltaTime;
+        
         if ( isKO() ) {
             // Disable dash so the user can't dash right after ko
             dashSleepTimer = 0;
@@ -252,6 +255,11 @@ public class PlayerMovements : MonoBehaviour
                 setOK();
             }
         }
+
+        if ( ! isDashing() ) {
+            
+        }
+        
     }
 
     public void resetStartPos() {
@@ -279,37 +287,26 @@ public class PlayerMovements : MonoBehaviour
             return;
         }
 
-
-        if ( getHorizontalAxe() != 0 ) {
-            velocity.x = Mathf.MoveTowards(velocity.x, speed * getHorizontalAxe(), acceleration * Time.deltaTime);
-        } else {
-            velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
-        }
-
-        if ( getVerticalAxe() != 0 ) {
-            velocity.y = Mathf.MoveTowards(velocity.y, speed * getVerticalAxe(), acceleration * Time.deltaTime);
-        } else {
-            velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.deltaTime);
-        }
-
-        dashStatus.SetActive( isDashAvailable() );
-        
-        if (getDashStatus() == true) {
-            dashTimer += Time.deltaTime;
-            velocity *= 1.7f;
+        if (isDashing() == true) {
+            currentSpeed = dashSpeed;
             
         } else {
+            currentSpeed = speed;
             dashSleepTimer += Time.deltaTime;
         }
 
-        transform.Translate(velocity * Time.deltaTime);
+        Vector3 move = new Vector3 (getHorizontalAxe(), getVerticalAxe(), 0.0f) * currentSpeed;
+ 
+        transform.position += Vector3.ClampMagnitude(move, currentSpeed) * Time.deltaTime;
+  
+        dashStatus.SetActive( isDashAvailable() );
     }
 
     void OnTriggerEnter2D (Collider2D collider) {
         if ( isHoldingCoin() ) {
             if (collider.tag == "Player" ) {
                 PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-                if ( playerScript.isDashing ) {
+                if ( playerScript.isDashingVal ) {
                     playerScript.setIsHoldingCoin(true);
                     setIsHoldingCoin(false);
                     setKO();

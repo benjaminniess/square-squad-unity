@@ -47,7 +47,7 @@ public class EnnemyMovements : MonoBehaviour
         if (collider.tag == "Player" ) {
             PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
             
-            if ( playerScript.setKO() ) {
+            if ( ! playerScript.isRecovering() && playerScript.setKO() ) {
                 playerScript.decreaseScore();
             }
          }
