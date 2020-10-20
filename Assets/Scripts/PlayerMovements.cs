@@ -75,7 +75,6 @@ public class PlayerMovements : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
-        Debug.Log(gameObject);
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         playerStartPos = transform.position;
         fakeCoin = transform.Find("FakeCoin").gameObject;
