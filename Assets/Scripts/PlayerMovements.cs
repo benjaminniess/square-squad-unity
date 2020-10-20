@@ -12,8 +12,8 @@ public class PlayerMovements : MonoBehaviour
     private bool isTrackedVal = true;
 
     private string playerHealth = "ok";
-    
-    private bool isHoldingCoinVal = false; 
+
+    private bool isHoldingCoinVal = false;
     private GameObject fakeCoin;
     private GameObject dashStatus;
 
@@ -25,8 +25,8 @@ public class PlayerMovements : MonoBehaviour
     // DASH SYSTEM
     float dashTimer = 0.0f;
     float dashSleepTimer = 0.0f;
-    public float dashDuration = 0.2f;
-    public float dashSpeed = 2f;
+    public float dashDuration = 60f;
+    public float dashSpeed = 40;
     public float dashSleepDuration = 2f;
     private bool isDashingVal = false;
 
@@ -49,7 +49,8 @@ public class PlayerMovements : MonoBehaviour
 
     float ControllerMove;
 
-    void Awake() {
+    void Awake()
+    {
         controls = new PlayerController();
         controls.Gameplay.UP.performed += ctx => upButton = true;
         controls.Gameplay.UP.canceled += ctx => upButton = false;
@@ -61,15 +62,18 @@ public class PlayerMovements : MonoBehaviour
         controls.Gameplay.RIGHT.canceled += ctx => rightButton = false;
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         controls.Gameplay.Enable();
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         controls.Gameplay.Enable();
     }
 
-    void Start() {
+    void Start()
+    {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         playerStartPos = transform.position;
         fakeCoin = transform.Find("FakeCoin").gameObject;
@@ -78,139 +82,140 @@ public class PlayerMovements : MonoBehaviour
         recoverStatus = transform.Find("RecoverStatus").gameObject;
     }
 
-    public int getScore() {
+    public int getScore()
+    {
         return score;
     }
 
-    public string getPlayerHealth() {
+    public string getPlayerHealth()
+    {
         return playerHealth;
     }
 
-    public bool isOk() {
+    public bool isOk()
+    {
         return getPlayerHealth() == "ok";
     }
 
-    public bool isRecovering() {
+    public bool isRecovering()
+    {
         return getPlayerHealth() == "recovering";
     }
 
-    public bool isKO() {
+    public bool isKO()
+    {
         return getPlayerHealth() == "ko";
     }
 
-    public bool isDashAvailable() {
-        if ( isDashingVal ) {
+    public bool isDashAvailable()
+    {
+        if (isDashingVal)
+        {
             return false;
         }
 
         // Disable dash when holding coin
-        if ( isHoldingCoin() ) {
+        if (isHoldingCoin())
+        {
             return false;
         }
 
-        if ( dashSleepTimer < dashSleepDuration ) {
+        if (dashSleepTimer < dashSleepDuration)
+        {
             return false;
         }
 
         return true;
     }
 
-    public bool isTracked(){
-        if ( isKO() ) {
+    public bool isTracked()
+    {
+        if (isKO())
+        {
             return false;
         }
 
-        if ( isRecovering() ) {
+        if (isRecovering())
+        {
             return false;
         }
 
         return isTrackedVal;
     }
 
-    public bool isHoldingCoin(){
+    public bool isHoldingCoin()
+    {
         return isHoldingCoinVal;
     }
 
-    bool isDashing() {
-        // No dashing, no dash button
-        if ( ! isDashingVal && ! Input.GetKey(dashTouch) ) {
-            return false;
-        }
-
-        // Dashing time expiration
-        if ( isDashingVal && ( dashTimer * 10 ) > dashDuration ) {
-            Debug.Log(dashTimer * 10);
-            isDashingVal = false;
-            dashSleepTimer = 0;
-
-            return false;
-        }
-
-        // Dash engoing
-        if ( isDashingVal && ( dashTimer * 10 ) < dashDuration ) {
-            return true;
-        }
-
-        // New dash
-        if ( Input.GetKey(dashTouch) && isDashAvailable() ) {
-            isDashingVal = true;
-            dashTimer = 0f;
-            return true;
-        }
-
-        return false;
+    bool isDashing()
+    {
+        return isDashingVal;
     }
 
-    float getHorizontalAxe() {
-        if ( Input.GetKey(leftTouch) == true ) {
+    float getHorizontalAxe()
+    {
+        if (Input.GetKey(leftTouch) == true)
+        {
             return -1f;
         }
 
-        if ( Input.GetKey(rightTouch) == true ) {
+        if (Input.GetKey(rightTouch) == true)
+        {
             return 1f;
         }
 
-        if ( rightButton ) {
+        if (rightButton)
+        {
             return 1f;
         }
 
-        if ( leftButton ) {
+        if (leftButton)
+        {
             return -1f;
         }
 
         return 0f;
     }
 
-    float getVerticalAxe() {
-        if ( Input.GetKey(upTouch) == true ) {
+    float getVerticalAxe()
+    {
+        if (Input.GetKey(upTouch) == true)
+        {
             return 1f;
         }
 
-        if ( Input.GetKey(downTouch) == true ) {
+        if (Input.GetKey(downTouch) == true)
+        {
             return -1f;
         }
 
-        if ( upButton ) {
+        if (upButton)
+        {
             return 1f;
         }
 
-        if ( downButton ) {
+        if (downButton)
+        {
             return -1f;
         }
 
         return 0f;
     }
 
-    public void setTracked(bool isTracked) {
+    public void setTracked(bool isTracked)
+    {
         isTrackedVal = isTracked;
     }
 
-    public bool setKO() {
-        if ( ! isKO() ) {
+    public bool setKO()
+    {
+        if (!isKO())
+        {
             playerHealth = "ko";
             koTimer = 0;
 
-            koStatus.SetActive( true );
+            koStatus.SetActive(true);
 
             return true;
         }
@@ -218,95 +223,136 @@ public class PlayerMovements : MonoBehaviour
         return false;
     }
 
-    public void setOK() {
+    public void setOK()
+    {
         koTimer = 0;
         playerHealth = "ok";
-        koStatus.SetActive( false );
-        recoverStatus.SetActive( false );
+        koStatus.SetActive(false);
+        recoverStatus.SetActive(false);
     }
 
-    public void setRecovering() {
+    public void setRecovering()
+    {
         koTimer = 0;
         playerHealth = "recovering";
-        koStatus.SetActive( false );
-        recoverStatus.SetActive( true );
+        koStatus.SetActive(false);
+        recoverStatus.SetActive(true);
     }
 
-    public void setIsHoldingCoin(bool isHoldingCoin) {
+    public void setIsHoldingCoin(bool isHoldingCoin)
+    {
         fakeCoin.SetActive(isHoldingCoin);
         isHoldingCoinVal = isHoldingCoin;
     }
 
-    public void updatePlayerStatus() {
+    public void updatePlayerStatus()
+    {
         koTimer += Time.deltaTime;
         dashTimer += Time.deltaTime;
-        
-        if ( isKO() ) {
+
+        if (isKO())
+        {
             // Disable dash so the user can't dash right after ko
             dashSleepTimer = 0;
 
-            if ( koTimer > koDuration ) {
+            if (koTimer > koDuration)
+            {
                 setRecovering();
             }
 
             return;
-        } else if ( isRecovering() ){
-            if ( koTimer > koDuration ) {
+        }
+        else if (isRecovering())
+        {
+            if (koTimer > koDuration)
+            {
                 setOK();
             }
         }
-
-        if ( ! isDashing() ) {
-            
-        }
-        
     }
 
-    public void resetStartPos() {
+    public void updateDashStatus()
+    {
+
+        // Dashing time expiration
+        if (isDashingVal && dashTimer > dashDuration)
+        {
+            isDashingVal = false;
+            dashSleepTimer = 0;
+
+            return;
+        }
+
+        // New dash
+        if (!isDashingVal && Input.GetKey(dashTouch) && isDashAvailable())
+        {
+            isDashingVal = true;
+            dashTimer = 0f;
+
+            return;
+        }
+    }
+
+    public void resetStartPos()
+    {
         transform.position = playerStartPos;
-        if ( isHoldingCoin() ) {
+        if (isHoldingCoin())
+        {
             setIsHoldingCoin(false);
             Main.instance.GenerateCoin();
         }
     }
 
-    public void increaseScore() {
+    public void increaseScore()
+    {
         score++;
     }
 
-    public void decreaseScore() {
+    public void decreaseScore()
+    {
         score--;
-        if ( score < 0 ) {
+        if (score < 0)
+        {
             score = 0;
         }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         updatePlayerStatus();
-        if ( isKO() ) {
+        updateDashStatus();
+        if (isKO())
+        {
             return;
         }
 
-        if (isDashing() == true) {
+        if (isDashing())
+        {
             currentSpeed = dashSpeed;
-            
-        } else {
+
+        }
+        else
+        {
             currentSpeed = speed;
             dashSleepTimer += Time.deltaTime;
         }
 
-        Vector3 move = new Vector3 (getHorizontalAxe(), getVerticalAxe(), 0.0f) * currentSpeed;
- 
+        Vector3 move = new Vector3(getHorizontalAxe(), getVerticalAxe(), 0.0f) * currentSpeed;
+
         transform.position += Vector3.ClampMagnitude(move, currentSpeed) * Time.deltaTime;
-  
-        dashStatus.SetActive( isDashAvailable() );
+
+        dashStatus.SetActive(isDashAvailable());
     }
 
-    void OnTriggerEnter2D (Collider2D collider) {
-        if ( isHoldingCoin() ) {
-            if (collider.tag == "Player" ) {
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (isHoldingCoin())
+        {
+            if (collider.tag == "Player")
+            {
                 PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-                if ( playerScript.isDashingVal ) {
+                if (playerScript.isDashingVal)
+                {
                     playerScript.setIsHoldingCoin(true);
                     setIsHoldingCoin(false);
                     setKO();
