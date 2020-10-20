@@ -5,7 +5,7 @@ using TMPro;
 
 public class PlayerMovements : MonoBehaviour
 {
-    private float speed = 19;
+    private float speed = 25;
     private float currentSpeed;
     private int score = 0;
 
