@@ -8,7 +8,7 @@ public class PlayerMovements : MonoBehaviour
     private float speed = 25;
     private float currentSpeed;
     private int score = 0;
-
+    private Rigidbody2D rb;
     private bool isTrackedVal = true;
 
     private string playerHealth = "ok";
@@ -74,6 +74,8 @@ public class PlayerMovements : MonoBehaviour
 
     void Start()
     {
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        Debug.Log(gameObject);
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         playerStartPos = transform.position;
         fakeCoin = transform.Find("FakeCoin").gameObject;
@@ -214,7 +216,7 @@ public class PlayerMovements : MonoBehaviour
         {
             playerHealth = "ko";
             koTimer = 0;
-
+            rb.velocity = Vector3.zero;
             koStatus.SetActive(true);
 
             return true;
@@ -337,9 +339,8 @@ public class PlayerMovements : MonoBehaviour
             dashSleepTimer += Time.deltaTime;
         }
 
-        Vector3 move = new Vector3(getHorizontalAxe(), getVerticalAxe(), 0.0f) * currentSpeed;
-
-        transform.position += Vector3.ClampMagnitude(move, currentSpeed) * Time.deltaTime;
+        
+        rb.velocity = new Vector3( getHorizontalAxe(), getVerticalAxe(), 0 ) * currentSpeed;
 
         dashStatus.SetActive(isDashAvailable());
     }
