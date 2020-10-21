@@ -33,7 +33,7 @@ public class PlayerMovements : MonoBehaviour
 
     // KO SYSTEM
     float koTimer = 0.0f;
-    public float koDuration = 1f;
+    private float koDuration = 1f;
     private GameObject koStatus;
     private GameObject recoverStatus;
 
