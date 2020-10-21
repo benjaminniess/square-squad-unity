@@ -1,10 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnnemyMovements : MonoBehaviour
 {
-    private float speed = 1;
+    private float speed = 15;
+    private NavMeshAgent agent;
+
+    void Start() {
+        agent = GetComponent<NavMeshAgent>();
+		agent.updateRotation = false;
+		agent.updateUpAxis = false;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -13,9 +21,12 @@ public class EnnemyMovements : MonoBehaviour
         GameObject Player = FindClosestPlayer();
         if (Player)
         {
+            agent.SetDestination(Player.transform.position);
             transform.LookAt(Player.transform.position);
             transform.Rotate(new Vector3(0, -90, -90), Space.Self);
-            transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+            //transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+        } else {
+            agent.SetDestination(agent.transform.position);
         }
 
     }
