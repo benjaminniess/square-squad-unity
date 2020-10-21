@@ -5,7 +5,7 @@ using TMPro;
 
 public class PlayerMovements : MonoBehaviour
 {
-    private float speed = 25;
+    
     private float currentSpeed;
     private int score = 0;
     private Rigidbody2D rb;
@@ -21,13 +21,14 @@ public class PlayerMovements : MonoBehaviour
 
     PlayerController controls;
 
+    private float speed = 1000;
 
     // DASH SYSTEM
     float dashTimer = 0.0f;
     float dashSleepTimer = 0.0f;
-    public float dashDuration = 60f;
-    public float dashSpeed = 40;
-    public float dashSleepDuration = 2f;
+    private float dashDuration = 0.05f;
+    private float dashSpeed = 3000;
+    private float dashSleepDuration = 2;
     private bool isDashingVal = false;
 
     // KO SYSTEM
@@ -338,8 +339,7 @@ public class PlayerMovements : MonoBehaviour
             dashSleepTimer += Time.deltaTime;
         }
 
-        
-        rb.velocity = new Vector3( getHorizontalAxe(), getVerticalAxe(), 0 ) * currentSpeed;
+        rb.velocity = Vector3.ClampMagnitude( new Vector3( getHorizontalAxe(), getVerticalAxe(), 0 ) * currentSpeed, currentSpeed ) * Time.deltaTime  ;
 
         dashStatus.SetActive(isDashAvailable());
     }
