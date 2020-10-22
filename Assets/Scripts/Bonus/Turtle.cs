@@ -21,12 +21,7 @@ public class Turtle : Bonus
 
     protected override void onBonusEnd() {
         foreach( GameObject Player in Main.instance.getPlayers() ) {
-            if ( Player.name == holder.name ) {
-                continue;
-            }
-
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
-
             playerScript.resetPlayerSpeed();
         }
     }
