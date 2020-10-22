@@ -22,6 +22,7 @@ public class PlayerMovements : MonoBehaviour
     PlayerController controls;
 
     private float speed = 1000;
+    private float currentPlayerSpeed;
 
     // DASH SYSTEM
     float dashTimer = 0.0f;
@@ -82,6 +83,7 @@ public class PlayerMovements : MonoBehaviour
 
     void Start()
     {
+        currentPlayerSpeed = speed;
         rb = gameObject.GetComponent<Rigidbody2D>();
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         playerStartPos = transform.position;
@@ -277,6 +279,18 @@ public class PlayerMovements : MonoBehaviour
         isHoldingCoinVal = isHoldingCoin;
     }
 
+    public float getNormalSpeed() {
+        return speed;
+    }
+
+    public void setPlayerSpeed(float newSpeed) {
+        currentPlayerSpeed = newSpeed;
+    }
+
+    public void resetPlayerSpeed() {
+        currentPlayerSpeed = speed;
+    }
+
     public void updatePlayerStatus()
     {
         koTimer += Time.deltaTime;
@@ -332,6 +346,7 @@ public class PlayerMovements : MonoBehaviour
         if (!isUsingBonus()) {
             if ( Input.GetKey(bonusTouch) && isHoldingBonus() ) {
                 bonusTimer = 0;
+                isUsingBonusVal = true;
                 bonus.triggerBonus();
             }
 
@@ -340,6 +355,7 @@ public class PlayerMovements : MonoBehaviour
 
         if (bonusTimer > bonus.getDuration()) {
             isUsingBonusVal = false;
+            bonus.StopBonus();
         }
     }
 
@@ -384,7 +400,7 @@ public class PlayerMovements : MonoBehaviour
         }
         else
         {
-            currentSpeed = speed;
+            currentSpeed = currentPlayerSpeed;
             dashSleepTimer += Time.deltaTime;
         }
 

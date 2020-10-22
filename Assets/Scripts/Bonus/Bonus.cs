@@ -5,12 +5,17 @@ using UnityEngine;
 public abstract class Bonus : MonoBehaviour
 {
     protected abstract void onTriggerBonus();
-    private PlayerMovements holder;
+    protected abstract void onBonusEnd();
+    protected PlayerMovements holder;
 
     public void triggerBonus() {
         onTriggerBonus();
 
         getHolder().setIsHoldingBonus(false);
+    }
+
+    public void StopBonus() {
+        onBonusEnd();
     }
 
     public float getDuration() {

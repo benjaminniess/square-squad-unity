@@ -26,6 +26,7 @@ public class Main : MonoBehaviour
     {
         GenerateCoin();
         GenerateBonus();
+        GenerateBonus();
         PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
     }
 
