@@ -8,8 +8,10 @@ public class Main : MonoBehaviour
     public static Main instance;
 
     public GameObject Coin;
-    public GameObject Rocket;
+
     public GameObject[] PlayersObjects;
+
+    public GameObject[] BonusTypes;
 
     private void Awake(){
          // if the singleton hasn't been initialized yet
@@ -26,7 +28,7 @@ public class Main : MonoBehaviour
     {
         GenerateCoin();
         GenerateBonus();
-        GenerateBonus();
+       // GenerateBonus();
         PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
     }
 
@@ -45,8 +47,14 @@ public class Main : MonoBehaviour
     public void GenerateBonus() {
         float spawnY = Random.Range(-20,20);
         float spawnX = Random.Range(-32, 32);
-        
-        Instantiate(Rocket, new Vector3(spawnX, spawnY, 0), Quaternion.identity);
+
+        int BonusKey = Random.Range(0, (BonusTypes.Length));
+
+        Instantiate(BonusTypes[BonusKey], new Vector3(spawnX, spawnY, 0), Quaternion.identity);
+    }
+
+    public GameObject[] getPlayers() {
+        return PlayersObjects;
     }
 
     public void UpdateScores() {
