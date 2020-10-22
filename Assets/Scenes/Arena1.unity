@@ -19195,6 +19195,11 @@ PrefabInstance:
       propertyPath: reactorForce
       value: 3900
       objectReference: {fileID: 0}
+    - target: {fileID: 491578336404137707, guid: b0fbd67e12498451fbceb99ea0fb0bae,
+        type: 3}
+      propertyPath: bonusTouch
+      value: b
+      objectReference: {fileID: 0}
     - target: {fileID: 491578336404137710, guid: b0fbd67e12498451fbceb99ea0fb0bae,
         type: 3}
       propertyPath: m_Name
@@ -19384,6 +19389,11 @@ PrefabInstance:
         type: 3}
       propertyPath: dashTouch
       value: g
+      objectReference: {fileID: 0}
+    - target: {fileID: 491578336404137707, guid: b0fbd67e12498451fbceb99ea0fb0bae,
+        type: 3}
+      propertyPath: bonusTouch
+      value: f
       objectReference: {fileID: 0}
     - target: {fileID: 491578336404137710, guid: b0fbd67e12498451fbceb99ea0fb0bae,
         type: 3}
