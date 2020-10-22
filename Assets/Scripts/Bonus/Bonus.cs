@@ -41,6 +41,7 @@ public abstract class Bonus : MonoBehaviour
         playerScript.setIsHoldingBonus(true);
         playerScript.setBonus(this);
         setHolder(playerScript);
+        Main.instance.GenerateBonus();
         
         Destroy(gameObject);
     }
