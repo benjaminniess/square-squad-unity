@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnnemyMovements : MonoBehaviour
 {
-    private float speed = 15;
     private NavMeshAgent agent;
 
     void Start() {

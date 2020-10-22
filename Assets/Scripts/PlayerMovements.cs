@@ -37,11 +37,18 @@ public class PlayerMovements : MonoBehaviour
     private GameObject koStatus;
     private GameObject recoverStatus;
 
+    // BONUS SYSTEM
+    private bool isHoldingBonusVal = false;
+    private bool isUsingBonusVal = false;
+    private Bonus bonus;
+    private float bonusTimer;
+
     public string upTouch;
     public string leftTouch;
     public string rightTouch;
     public string downTouch;
     public string dashTouch;
+    public string bonusTouch;
 
     private bool upButton = false;
     private bool downButton = false;
@@ -149,6 +156,29 @@ public class PlayerMovements : MonoBehaviour
     {
         return isHoldingCoinVal;
     }
+
+    public bool isHoldingBonus() {
+        return isHoldingBonusVal;
+    }
+
+
+    bool isUsingBonus()
+    {
+        return isUsingBonusVal;
+    }
+
+    public Bonus getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(Bonus newBonus) {
+        bonus = newBonus;
+    }
+
+    public void setIsHoldingBonus(bool isHolding) {
+        isHoldingBonusVal = isHolding;   
+    }
+
 
     bool isDashing()
     {
@@ -295,6 +325,24 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
+    public void updateBonusStatus()
+    {
+        bonusTimer += Time.deltaTime;
+
+        if (!isUsingBonus()) {
+            if ( Input.GetKey(bonusTouch) && isHoldingBonus() ) {
+                bonusTimer = 0;
+                bonus.triggerBonus();
+            }
+
+            return;
+        }
+
+        if (bonusTimer > bonus.getDuration()) {
+            isUsingBonusVal = false;
+        }
+    }
+
     public void resetStartPos()
     {
         transform.position = playerStartPos;
@@ -323,6 +371,7 @@ public class PlayerMovements : MonoBehaviour
     {
         updatePlayerStatus();
         updateDashStatus();
+        updateBonusStatus();
         if (isKO())
         {
             return;
