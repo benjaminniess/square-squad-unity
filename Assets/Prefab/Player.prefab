@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 491578336404137705}
   - component: {fileID: 7091661022632908290}
   - component: {fileID: -1900429387609622403}
+  - component: {fileID: 8607373718047767842}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -79,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 40
   m_Sprite: {fileID: -8377130690987618698, guid: b37473b6d75781c69b34ecbbe86ce2d9,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -109,6 +110,7 @@ MonoBehaviour:
   rightTouch: right
   downTouch: down
   dashTouch: n
+  bonusTouch: b
 --- !u!50 &491578336404137706
 Rigidbody2D:
   serializedVersion: 4
@@ -198,6 +200,134 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.49999997
+--- !u!114 &8607373718047767842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491578336404137710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 8ebdfe90f3c2144f3a3bc86decef72d4,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cd77f3a8-80a6-4ef0-b08b-8cd4037f933c
+    m_ActionName: Gameplay/DASH[/Unknown Joy-Con (L)/button2,/Unknown Joy-Con (R)/button2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressBonus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b442680c-921a-49c4-9b57-198a0b4eb279
+    m_ActionName: Gameplay/BONUS[/Unknown Joy-Con (L)/button3,/Unknown Joy-Con (R)/button3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ee75d37e-f265-494a-8c0e-0cdeb8305bb8
+    m_ActionName: Gameplay/UP[/Unknown Joy-Con (L)/hat/up,/Unknown Joy-Con (R)/hat/up]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f869f9b5-0889-44db-a8ba-87b8b3845d83
+    m_ActionName: Gameplay/DOWN[/Unknown Joy-Con (L)/hat/down,/Unknown Joy-Con (R)/hat/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5d99a95b-bb94-4d58-a38c-4d5b90bf8f37
+    m_ActionName: Gameplay/LEFT[/Unknown Joy-Con (L)/hat/left,/Unknown Joy-Con (R)/hat/left]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5b6fa8fd-d5a5-4c8f-9dd6-e6c5f6c3f377
+    m_ActionName: Gameplay/RIGHT[/Unknown Joy-Con (L)/hat/right,/Unknown Joy-Con
+      (R)/hat/right]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1872274490544188031
 GameObject:
   m_ObjectHideFlags: 0

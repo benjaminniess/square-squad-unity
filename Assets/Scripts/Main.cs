@@ -10,6 +10,8 @@ public class Main : MonoBehaviour
     public GameObject Coin;
     public GameObject Player;
 
+    private int PlayerCount = 0;
+
     private GameObject[] playersScores;
     private GameObject[] PlayersObjects;
 
@@ -23,7 +25,7 @@ public class Main : MonoBehaviour
          }
  
          instance = this;
-     }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -39,52 +41,25 @@ public class Main : MonoBehaviour
         UpdateScores();
     }
 
+    public void initPlayer(PlayerMovements playerScript) {
+        PlayerCount ++;
+
+        GameObject spawnPosition =  GameObject.Find("SpawnPositionForPlayer" + PlayerCount);
+        Rigidbody2D rb = playerScript.getRigidbody();
+        rb.MovePosition(spawnPosition.transform.position);
+
+        playersScores[PlayerCount-1].SetActive(true);
+
+        PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
+    }
+
     public void GeneratePlayers() {
+        PlayersObjects = new GameObject[4];
         playersScores = new GameObject[4];
         for ( int i = 0; i < 4; i++) {
             playersScores[i] = GameObject.Find("ScorePlayer" + (i+1));
             playersScores[i].SetActive(false);
         }
-
-        for ( int i = 1; i <= 2; i++) {
-            GameObject spawnPosition =  GameObject.Find("SpawnPositionForPlayer" + i);
-            GameObject PlayerObject = Instantiate(Player, spawnPosition.transform.position, Quaternion.identity);
-            PlayerMovements playerScript = PlayerObject.GetComponent<PlayerMovements>();
-            playersScores[i-1].SetActive(true);
-
-            if ( i == 1 ) {
-                playerScript.upTouch = "z";
-                playerScript.leftTouch = "q";
-                playerScript.rightTouch = "d";
-                playerScript.downTouch = "s";
-                playerScript.dashTouch = "g";
-                playerScript.bonusTouch = "f";
-            } else if ( i == 2 ) {
-                playerScript.upTouch = "up";
-                playerScript.leftTouch = "left";
-                playerScript.rightTouch = "right";
-                playerScript.downTouch = "down";
-                playerScript.dashTouch = "n";
-                playerScript.bonusTouch = "b";
-            } else if ( i == 3 ) {
-                playerScript.upTouch = "u";
-                playerScript.leftTouch = "h";
-                playerScript.rightTouch = "k";
-                playerScript.downTouch = "j";
-                playerScript.dashTouch = "l";
-                playerScript.bonusTouch = "m";
-            } else if ( i == 4 ) {
-                playerScript.upTouch = "w";
-                playerScript.leftTouch = "x";
-                playerScript.rightTouch = "c";
-                playerScript.downTouch = "v";
-                playerScript.dashTouch = "p";
-                playerScript.bonusTouch = "m";
-            }
-        }
-
-        PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
-        
     }
 
     public void GenerateCoin() {
@@ -108,8 +83,15 @@ public class Main : MonoBehaviour
     }
 
     public void UpdateScores() {
+        if ( PlayersObjects == null || PlayersObjects.Length == 0 ) {
+            return;
+        }
+
         int i = 0;
         foreach ( GameObject Player in PlayersObjects ) {
+            if ( Player == null ) {
+                continue;
+            }
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
             playersScores[i].GetComponent<TMPro.TextMeshProUGUI>().SetText(playerScript.getScore().ToString());
             i++;

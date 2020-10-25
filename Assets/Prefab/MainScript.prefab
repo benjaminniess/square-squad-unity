@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 425955092768611259}
   - component: {fileID: 425955092768611260}
+  - component: {fileID: -8295666644453849824}
   m_Layer: 0
   m_Name: MainScript
   m_TagString: Untagged
@@ -44,8 +45,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Coin: {fileID: 1989060042501414387, guid: ebf2cd37b6bf69ae1a5f0c20ee542ce2, type: 3}
-  Rocket: {fileID: 4016743242160764426, guid: e8bb09700e3984cad941fafb53af5804, type: 3}
-  PlayersObjects: []
+  Player: {fileID: 0}
   BonusTypes:
   - {fileID: 4016743242160764426, guid: 89b378545a64e434fad657e8ea00523b, type: 3}
   - {fileID: 4016743242160764426, guid: e8bb09700e3984cad941fafb53af5804, type: 3}
+--- !u!114 &-8295666644453849824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425955092768611261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: -1
+  m_AllowJoining: 1
+  m_JoinBehavior: 0
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Join
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 01e31a52-ca5c-47f1-9617-77ef2ce9fe79
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 491578336404137710, guid: b0fbd67e12498451fbceb99ea0fb0bae,
+    type: 3}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1

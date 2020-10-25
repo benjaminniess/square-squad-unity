@@ -55,30 +55,31 @@ public class PlayerMovements : MonoBehaviour
     private bool downButton = false;
     private bool leftButton = false;
     private bool rightButton = false;
+    private bool dashButton = false;
+    private bool bonusButton = false;
 
-    float ControllerMove;
-
-    void Awake()
-    {
-        controls = new PlayerController();
-        controls.Gameplay.UP.performed += ctx => upButton = true;
-        controls.Gameplay.UP.canceled += ctx => upButton = false;
-        controls.Gameplay.DOWN.performed += ctx => downButton = true;
-        controls.Gameplay.DOWN.canceled += ctx => downButton = false;
-        controls.Gameplay.LEFT.performed += ctx => leftButton = true;
-        controls.Gameplay.LEFT.canceled += ctx => leftButton = false;
-        controls.Gameplay.RIGHT.performed += ctx => rightButton = true;
-        controls.Gameplay.RIGHT.canceled += ctx => rightButton = false;
+    public void pressUp(InputAction.CallbackContext ctx) {
+        upButton = 0.1f < ctx.ReadValue<float>() ? true : false;
     }
 
-    void OnEnable()
-    {
-        controls.Gameplay.Enable();
+    public void pressDown(InputAction.CallbackContext ctx) {
+        downButton = 0.1f < ctx.ReadValue<float>() ? true : false;
     }
 
-    void OnDisable()
-    {
-        controls.Gameplay.Enable();
+    public void pressLeft(InputAction.CallbackContext ctx) {
+        leftButton = 0.1f < ctx.ReadValue<float>() ? true : false;
+    }
+
+    public void pressRight(InputAction.CallbackContext ctx) {
+        rightButton = 0.1f < ctx.ReadValue<float>() ? true : false;
+    }
+
+    public void pressDash(InputAction.CallbackContext ctx) {
+        dashButton = 0.1f < ctx.ReadValue<float>() ? true : false;
+    }
+
+    public void pressBonus(InputAction.CallbackContext ctx) {
+        bonusButton = 0.1f < ctx.ReadValue<float>() ? true : false;
     }
 
     void Start()
@@ -91,11 +92,16 @@ public class PlayerMovements : MonoBehaviour
         koStatus = transform.Find("KOStatus").gameObject;
         dashStatus = transform.Find("DashStatus").gameObject;
         recoverStatus = transform.Find("RecoverStatus").gameObject;
+        Main.instance.initPlayer(this);
     }
 
     public int getScore()
     {
         return score;
+    }
+
+    public Rigidbody2D getRigidbody() {
+        return rb;
     }
 
     public string getPlayerHealth()
@@ -181,6 +187,9 @@ public class PlayerMovements : MonoBehaviour
         isHoldingBonusVal = isHolding;   
     }
 
+    bool isDashPressed() {
+        return Input.GetKey(dashTouch) || dashButton == true;
+    }
 
     bool isDashing()
     {
@@ -191,12 +200,12 @@ public class PlayerMovements : MonoBehaviour
     {
         if (Input.GetKey(leftTouch) == true)
         {
-            return -1f;
+            //return -1f;
         }
 
         if (Input.GetKey(rightTouch) == true)
         {
-            return 1f;
+            //return 1f;
         }
 
         if (rightButton)
@@ -216,12 +225,12 @@ public class PlayerMovements : MonoBehaviour
     {
         if (Input.GetKey(upTouch) == true)
         {
-            return 1f;
+            //return 1f;
         }
 
         if (Input.GetKey(downTouch) == true)
         {
-            return -1f;
+            //return -1f;
         }
 
         if (upButton)
@@ -330,7 +339,7 @@ public class PlayerMovements : MonoBehaviour
         }
 
         // New dash
-        if (!isDashingVal && Input.GetKey(dashTouch) && isDashAvailable())
+        if (!isDashingVal && isDashPressed() && isDashAvailable())
         {
             isDashingVal = true;
             dashTimer = 0f;
