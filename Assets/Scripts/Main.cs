@@ -34,6 +34,7 @@ public class Main : MonoBehaviour
         GenerateBonus();
         GenerateBonus();
         GeneratePlayers();
+        //Instantiate(Player, new Vector2(20,20), Quaternion.identity);
     }
 
     // Update is called once per frame

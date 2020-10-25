@@ -18,16 +18,16 @@ public class EnnemyMovements : MonoBehaviour
     {
 
         GameObject Player = FindClosestPlayer();
-        Debug.Log(Player);
         if (Player)
         {
-            agent.SetDestination(Player.transform.position);
+            agent.SetDestination(new Vector3(Player.transform.position.x, Player.transform.position.y, agent.transform.position.z));
             transform.LookAt(Player.transform.position);
             //transform.Rotate(new Vector3(0, -90, -90), Space.Self);
             //transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
         } else {
             agent.SetDestination(agent.transform.position);
         }
+        
 
     }
 
