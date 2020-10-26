@@ -357,7 +357,7 @@ public class PlayerMovements : MonoBehaviour
             return;
         }
 
-        if (bonusTimer > bonus.getDuration())
+        if (bonusTimer > bonus.getDuration() || isKO() )
         {
             isUsingBonusVal = false;
             bonus.StopBonus();
