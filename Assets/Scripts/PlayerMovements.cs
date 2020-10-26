@@ -5,7 +5,7 @@ using TMPro;
 
 public class PlayerMovements : MonoBehaviour
 {
-    
+
     private float currentSpeed;
     private int score = 0;
     private Rigidbody2D rb;
@@ -44,13 +44,6 @@ public class PlayerMovements : MonoBehaviour
     private Bonus bonus;
     private float bonusTimer;
 
-    public string upTouch;
-    public string leftTouch;
-    public string rightTouch;
-    public string downTouch;
-    public string dashTouch;
-    public string bonusTouch;
-
     private bool upButton = false;
     private bool downButton = false;
     private bool leftButton = false;
@@ -58,27 +51,33 @@ public class PlayerMovements : MonoBehaviour
     private bool dashButton = false;
     private bool bonusButton = false;
 
-    public void pressUp(InputAction.CallbackContext ctx) {
+    public void pressUp(InputAction.CallbackContext ctx)
+    {
         upButton = 0.1f < ctx.ReadValue<float>() ? true : false;
     }
 
-    public void pressDown(InputAction.CallbackContext ctx) {
+    public void pressDown(InputAction.CallbackContext ctx)
+    {
         downButton = 0.1f < ctx.ReadValue<float>() ? true : false;
     }
 
-    public void pressLeft(InputAction.CallbackContext ctx) {
+    public void pressLeft(InputAction.CallbackContext ctx)
+    {
         leftButton = 0.1f < ctx.ReadValue<float>() ? true : false;
     }
 
-    public void pressRight(InputAction.CallbackContext ctx) {
+    public void pressRight(InputAction.CallbackContext ctx)
+    {
         rightButton = 0.1f < ctx.ReadValue<float>() ? true : false;
     }
 
-    public void pressDash(InputAction.CallbackContext ctx) {
+    public void pressDash(InputAction.CallbackContext ctx)
+    {
         dashButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
-    public void pressBonus(InputAction.CallbackContext ctx) {
+    public void pressBonus(InputAction.CallbackContext ctx)
+    {
         bonusButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
@@ -100,7 +99,8 @@ public class PlayerMovements : MonoBehaviour
         return score;
     }
 
-    public Rigidbody2D getRigidbody() {
+    public Rigidbody2D getRigidbody()
+    {
         return rb;
     }
 
@@ -165,7 +165,8 @@ public class PlayerMovements : MonoBehaviour
         return isHoldingCoinVal;
     }
 
-    public bool isHoldingBonus() {
+    public bool isHoldingBonus()
+    {
         return isHoldingBonusVal;
     }
 
@@ -175,23 +176,28 @@ public class PlayerMovements : MonoBehaviour
         return isUsingBonusVal;
     }
 
-    public Bonus getBonus() {
+    public Bonus getBonus()
+    {
         return bonus;
     }
 
-    public void setBonus(Bonus newBonus) {
+    public void setBonus(Bonus newBonus)
+    {
         bonus = newBonus;
     }
 
-    public void setIsHoldingBonus(bool isHolding) {
-        isHoldingBonusVal = isHolding;   
+    public void setIsHoldingBonus(bool isHolding)
+    {
+        isHoldingBonusVal = isHolding;
     }
 
-    bool isDashPressed() {
+    bool isDashPressed()
+    {
         return dashButton == true;
     }
 
-    bool isBonusPressed() {
+    bool isBonusPressed()
+    {
         return bonusButton == true;
     }
 
@@ -272,15 +278,18 @@ public class PlayerMovements : MonoBehaviour
         isHoldingCoinVal = isHoldingCoin;
     }
 
-    public float getNormalSpeed() {
+    public float getNormalSpeed()
+    {
         return speed;
     }
 
-    public void setPlayerSpeed(float newSpeed) {
+    public void setPlayerSpeed(float newSpeed)
+    {
         currentPlayerSpeed = newSpeed;
     }
 
-    public void resetPlayerSpeed() {
+    public void resetPlayerSpeed()
+    {
         currentPlayerSpeed = speed;
     }
 
@@ -336,8 +345,10 @@ public class PlayerMovements : MonoBehaviour
     {
         bonusTimer += Time.deltaTime;
 
-        if (!isUsingBonus()) {
-            if ( isBonusPressed() && isHoldingBonus() ) {
+        if (!isUsingBonus())
+        {
+            if (isBonusPressed() && isHoldingBonus())
+            {
                 bonusTimer = 0;
                 isUsingBonusVal = true;
                 bonus.triggerBonus();
@@ -346,7 +357,8 @@ public class PlayerMovements : MonoBehaviour
             return;
         }
 
-        if (bonusTimer > bonus.getDuration()) {
+        if (bonusTimer > bonus.getDuration())
+        {
             isUsingBonusVal = false;
             bonus.StopBonus();
         }
@@ -397,7 +409,7 @@ public class PlayerMovements : MonoBehaviour
             dashSleepTimer += Time.deltaTime;
         }
 
-        rb.velocity = Vector3.ClampMagnitude( new Vector3( getHorizontalAxe(), getVerticalAxe(), 0 ) * currentSpeed, currentSpeed ) * Time.deltaTime  ;
+        rb.velocity = Vector3.ClampMagnitude(new Vector3(getHorizontalAxe(), getVerticalAxe(), 0) * currentSpeed, currentSpeed) * Time.deltaTime;
 
         dashStatus.SetActive(isDashAvailable());
     }
