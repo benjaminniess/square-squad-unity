@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Main : MonoBehaviour
 {
@@ -32,12 +31,10 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(Gamepad.all);
         GenerateCoin();
         GenerateBonus();
         GenerateBonus();
         GeneratePlayers();
-        //Instantiate(Player, new Vector2(20,20), Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -52,7 +49,7 @@ public class Main : MonoBehaviour
 
         GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + PlayerCount);
         Rigidbody2D rb = playerScript.getRigidbody();
-        rb.MovePosition(spawnPosition.transform.position);
+        rb.transform.position = spawnPosition.transform.position;
         playerScript.name = "player_" + PlayerCount;
         playersScores[PlayerCount - 1].SetActive(true);
 

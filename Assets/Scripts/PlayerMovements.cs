@@ -91,7 +91,7 @@ public class PlayerMovements : MonoBehaviour
         koStatus = transform.Find("KOStatus").gameObject;
         dashStatus = transform.Find("DashStatus").gameObject;
         recoverStatus = transform.Find("RecoverStatus").gameObject;
-        Main.instance.initPlayer(this);
+        LobbyScript.instance.initPlayer(this);
     }
 
     public int getScore()
