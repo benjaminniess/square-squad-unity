@@ -75,11 +75,11 @@ public class PlayerMovements : MonoBehaviour
     }
 
     public void pressDash(InputAction.CallbackContext ctx) {
-        dashButton = 0.1f < ctx.ReadValue<float>() ? true : false;
+        dashButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
     public void pressBonus(InputAction.CallbackContext ctx) {
-        bonusButton = 0.1f < ctx.ReadValue<float>() ? true : false;
+        bonusButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
     void Start()
@@ -188,7 +188,11 @@ public class PlayerMovements : MonoBehaviour
     }
 
     bool isDashPressed() {
-        return Input.GetKey(dashTouch) || dashButton == true;
+        return dashButton == true;
+    }
+
+    bool isBonusPressed() {
+        return bonusButton == true;
     }
 
     bool isDashing()
@@ -198,16 +202,6 @@ public class PlayerMovements : MonoBehaviour
 
     float getHorizontalAxe()
     {
-        if (Input.GetKey(leftTouch) == true)
-        {
-            //return -1f;
-        }
-
-        if (Input.GetKey(rightTouch) == true)
-        {
-            //return 1f;
-        }
-
         if (rightButton)
         {
             return 1f;
@@ -223,16 +217,6 @@ public class PlayerMovements : MonoBehaviour
 
     float getVerticalAxe()
     {
-        if (Input.GetKey(upTouch) == true)
-        {
-            //return 1f;
-        }
-
-        if (Input.GetKey(downTouch) == true)
-        {
-            //return -1f;
-        }
-
         if (upButton)
         {
             return 1f;
@@ -353,7 +337,7 @@ public class PlayerMovements : MonoBehaviour
         bonusTimer += Time.deltaTime;
 
         if (!isUsingBonus()) {
-            if ( Input.GetKey(bonusTouch) && isHoldingBonus() ) {
+            if ( isBonusPressed() && isHoldingBonus() ) {
                 bonusTimer = 0;
                 isUsingBonusVal = true;
                 bonus.triggerBonus();
