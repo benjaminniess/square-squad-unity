@@ -54,6 +54,9 @@ public class Main : MonoBehaviour
         PlayersObjects = LobbyScript.instance.getPlayers();
         foreach (GameObject Player in PlayersObjects)
         {
+            if ( null == Player || !Player.CompareTag("Player") ) {
+                continue;
+            }
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerScript.getNumber());
             Rigidbody2D rb = playerScript.getRigidbody();

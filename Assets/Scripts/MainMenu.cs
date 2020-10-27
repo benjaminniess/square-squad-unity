@@ -9,7 +9,17 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        HideExistingPlayers();
+    }
 
+    public void HideExistingPlayers() {
+        GameObject[] PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject Player in PlayersObjects)
+        {
+            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            Rigidbody2D rb = playerScript.getRigidbody();
+            rb.transform.position = new Vector3(-100,-100,-100);
+        }
     }
 
     void Update()
@@ -41,20 +51,20 @@ public class MainMenu : MonoBehaviour
         gameIsPaused = true;
     }
 
+    public void Play()
+    {
+        SceneManager.LoadScene("Arena2");
+    }
+
     public void Menu()
     {
         Resume();
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void Arena1()
+    public void Lobby()
     {
-        SceneManager.LoadScene("Arena1");
-    }
-
-    public void Arena2()
-    {
-        SceneManager.LoadScene("Arena2");
+        SceneManager.LoadScene("Lobby");
     }
 
     public void Exit()

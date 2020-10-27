@@ -29,6 +29,7 @@ public class LobbyScript : MonoBehaviour
     void Start()
     {
         GeneratePlayers();
+        ResetPlayers();
     }
 
     public void initPlayer(PlayerMovements playerScript)
@@ -41,12 +42,25 @@ public class LobbyScript : MonoBehaviour
         playerScript.name = "player_" + PlayerCount;
         playerScript.setNumber(PlayerCount);
         DontDestroyOnLoad(playerScript);
-        PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
+        GeneratePlayers();
+    }
+
+    public void ResetPlayers() {
+        int playerReCount = 1;
+        foreach (GameObject Player in PlayersObjects)
+        {
+            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            playerScript.setNumber(playerReCount);
+            GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerReCount);
+            Rigidbody2D rb = playerScript.getRigidbody();
+            rb.transform.position = spawnPosition.transform.position;
+            playerReCount ++;
+        }
     }
 
     public void GeneratePlayers()
     {
-        PlayersObjects = new GameObject[4];
+        PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
     }
 
     public GameObject[] getPlayers()
@@ -54,8 +68,4 @@ public class LobbyScript : MonoBehaviour
         return PlayersObjects;
     }
 
-    public void Play()
-    {
-        SceneManager.LoadScene("Arena2");
-    }
 }
