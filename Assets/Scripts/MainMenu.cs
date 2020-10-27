@@ -7,46 +7,58 @@ public class MainMenu : MonoBehaviour
     public GameObject pauseMenuUi;
 
 
-    void Start() {
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
+    void Start()
+    {
+
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if ( gameIsPaused ) {
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (gameIsPaused)
+            {
                 Resume();
-            } else {
+            }
+            else
+            {
                 Paused();
             }
         }
     }
 
-    public void Resume() {
+    public void Resume()
+    {
         pauseMenuUi.SetActive(false);
         Time.timeScale = 1;
         gameIsPaused = false;
     }
 
-    void Paused() {
+    void Paused()
+    {
         pauseMenuUi.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;
     }
 
-    public void Menu() {
+    public void Menu()
+    {
         Resume();
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void Arena1() {
+    public void Arena1()
+    {
         SceneManager.LoadScene("Arena1");
     }
 
-    public void Arena2() {
+    public void Arena2()
+    {
         SceneManager.LoadScene("Arena2");
     }
 
-    public void Exit() {
+    public void Exit()
+    {
         Application.Quit();
     }
 }

@@ -8,6 +8,7 @@ public class PlayerMovements : MonoBehaviour
 
     private float currentSpeed;
     private int score = 0;
+    private int playerNumber;
     private Rigidbody2D rb;
     private bool isTrackedVal = true;
 
@@ -83,20 +84,24 @@ public class PlayerMovements : MonoBehaviour
 
     void Start()
     {
-        currentPlayerSpeed = speed;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-        playerStartPos = transform.position;
         fakeCoin = transform.Find("FakeCoin").gameObject;
         koStatus = transform.Find("KOStatus").gameObject;
         dashStatus = transform.Find("DashStatus").gameObject;
         recoverStatus = transform.Find("RecoverStatus").gameObject;
+        currentPlayerSpeed = speed;
+
         LobbyScript.instance.initPlayer(this);
     }
 
     public int getScore()
     {
         return score;
+    }
+
+    public int getNumber()
+    {
+        return playerNumber;
     }
 
     public Rigidbody2D getRigidbody()
@@ -189,6 +194,11 @@ public class PlayerMovements : MonoBehaviour
     public void setIsHoldingBonus(bool isHolding)
     {
         isHoldingBonusVal = isHolding;
+    }
+
+    public void setNumber(int number)
+    {
+        playerNumber = number;
     }
 
     bool isDashPressed()
@@ -357,7 +367,7 @@ public class PlayerMovements : MonoBehaviour
             return;
         }
 
-        if (bonusTimer > bonus.getDuration() || isKO() )
+        if (bonusTimer > bonus.getDuration() || isKO())
         {
             isUsingBonusVal = false;
             bonus.StopBonus();
@@ -366,7 +376,6 @@ public class PlayerMovements : MonoBehaviour
 
     public void resetStartPos()
     {
-        transform.position = playerStartPos;
         if (isHoldingCoin())
         {
             setIsHoldingCoin(false);
@@ -386,6 +395,11 @@ public class PlayerMovements : MonoBehaviour
         {
             score = 0;
         }
+    }
+
+    public void resetScore()
+    {
+        score = 0;
     }
 
     void FixedUpdate()

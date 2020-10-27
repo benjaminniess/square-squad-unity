@@ -10,8 +10,6 @@ public class Main : MonoBehaviour
     public GameObject Coin;
     public GameObject Player;
 
-    private int PlayerCount = 0;
-
     private GameObject[] playersScores;
     private GameObject[] PlayersObjects;
 
@@ -43,27 +41,25 @@ public class Main : MonoBehaviour
         UpdateScores();
     }
 
-    public void initPlayer(PlayerMovements playerScript)
-    {
-        PlayerCount++;
-
-        GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + PlayerCount);
-        Rigidbody2D rb = playerScript.getRigidbody();
-        rb.transform.position = spawnPosition.transform.position;
-        playerScript.name = "player_" + PlayerCount;
-        playersScores[PlayerCount - 1].SetActive(true);
-
-        PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
-    }
-
     public void GeneratePlayers()
     {
-        PlayersObjects = new GameObject[4];
         playersScores = new GameObject[4];
         for (int i = 0; i < 4; i++)
         {
+
             playersScores[i] = GameObject.Find("ScorePlayer" + (i + 1));
             playersScores[i].SetActive(false);
+        }
+
+        PlayersObjects = LobbyScript.instance.getPlayers();
+        foreach (GameObject Player in PlayersObjects)
+        {
+            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerScript.getNumber());
+            Rigidbody2D rb = playerScript.getRigidbody();
+            playersScores[playerScript.getNumber() - 1].SetActive(true);
+            rb.transform.position = spawnPosition.transform.position;
+            playerScript.resetScore();
         }
     }
 

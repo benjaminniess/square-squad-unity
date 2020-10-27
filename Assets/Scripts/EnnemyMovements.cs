@@ -7,10 +7,11 @@ public class EnnemyMovements : MonoBehaviour
 {
     private NavMeshAgent agent;
 
-    void Start() {
+    void Start()
+    {
         agent = GetComponent<NavMeshAgent>();
-		agent.updateRotation = false;
-		agent.updateUpAxis = false;
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     // Update is called once per frame
@@ -22,13 +23,13 @@ public class EnnemyMovements : MonoBehaviour
         {
             agent.SetDestination(new Vector3(Player.transform.position.x, Player.transform.position.y, agent.transform.position.z));
             transform.LookAt(Player.transform.position);
-            //transform.Rotate(new Vector3(0, -90, -90), Space.Self);
+            transform.Rotate(new Vector3(0, -90, -90), Space.Self);
             //transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
-        } else {
+        }
+        else
+        {
             agent.SetDestination(agent.transform.position);
         }
-        
-
     }
 
     public GameObject FindClosestPlayer()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LobbyScript : MonoBehaviour
 {
@@ -38,23 +39,23 @@ public class LobbyScript : MonoBehaviour
         Rigidbody2D rb = playerScript.getRigidbody();
         rb.transform.position = spawnPosition.transform.position;
         playerScript.name = "player_" + PlayerCount;
-        playersScores[PlayerCount - 1].SetActive(true);
-
+        playerScript.setNumber(PlayerCount);
+        DontDestroyOnLoad(playerScript);
         PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
     }
 
     public void GeneratePlayers()
     {
         PlayersObjects = new GameObject[4];
-        playersScores = new GameObject[4];
-        for (int i = 0; i < 4; i++)
-        {
-            playersScores[i] = GameObject.Find("ScorePlayer" + (i + 1));
-            playersScores[i].SetActive(false);
-        }
     }
 
-    public void Play() {
-        Debug.Log("Play");
+    public GameObject[] getPlayers()
+    {
+        return PlayersObjects;
+    }
+
+    public void Play()
+    {
+        SceneManager.LoadScene("Arena2");
     }
 }
