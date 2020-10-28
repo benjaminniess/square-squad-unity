@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Main : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Main : MonoBehaviour
 
     private GameObject[] playersScores;
     private GameObject[] PlayersObjects;
+
+    private Tilemap map;
 
     public GameObject[] BonusTypes;
 
@@ -29,7 +32,10 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        map = FindObjectOfType<Tilemap>();
+        
         GenerateCoin();
+        GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();
         GenerateBonus();
         GenerateBonus();
         GeneratePlayers();
@@ -68,16 +74,26 @@ public class Main : MonoBehaviour
 
     public void GenerateCoin()
     {
-        float spawnY = Random.Range(-20, 20);
-        float spawnX = Random.Range(-32, 32);
+        int spawnY = Random.Range(-20, 20);
+        int spawnX = Random.Range(-32, 32);
+        
+        TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
+        if ( null != tile ) {
+            GenerateCoin();
+        }
 
         Instantiate(Coin, new Vector3(spawnX, spawnY, 0), Quaternion.identity);
     }
 
     public void GenerateBonus()
     {
-        float spawnY = Random.Range(-20, 20);
-        float spawnX = Random.Range(-32, 32);
+        int spawnY = Random.Range(-20, 20);
+        int spawnX = Random.Range(-32, 32);
+
+        TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
+        if ( null != tile ) {
+            GenerateBonus();
+        }
 
         int BonusKey = Random.Range(0, (BonusTypes.Length));
 
