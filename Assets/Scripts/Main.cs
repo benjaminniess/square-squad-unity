@@ -79,6 +79,7 @@ public class Main : MonoBehaviour
         TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
         if ( null != tile ) {
             GenerateCoin();
+            return;
         }
 
         Instantiate(Coin, new Vector3(spawnX, spawnY, 0), Quaternion.identity);
@@ -92,6 +93,7 @@ public class Main : MonoBehaviour
         TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
         if ( null != tile ) {
             GenerateBonus();
+            return;
         }
 
         int BonusKey = Random.Range(0, (BonusTypes.Length));
