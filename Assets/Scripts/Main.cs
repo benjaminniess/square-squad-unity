@@ -35,7 +35,6 @@ public class Main : MonoBehaviour
         map = FindObjectOfType<Tilemap>();
         
         GenerateCoin();
-        GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();GenerateCoin();
         GenerateBonus();
         GenerateBonus();
         GeneratePlayers();
