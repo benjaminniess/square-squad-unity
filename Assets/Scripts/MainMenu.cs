@@ -9,17 +9,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        HideExistingPlayers();
-    }
-
-    public void HideExistingPlayers() {
-        GameObject[] PlayersObjects = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject Player in PlayersObjects)
-        {
-            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
-            Rigidbody2D rb = playerScript.getRigidbody();
-            rb.transform.position = new Vector3(-100,-100,-100);
-        }
+        
     }
 
     void Update()
@@ -39,6 +29,7 @@ public class MainMenu : MonoBehaviour
 
     public void Resume()
     {
+        LobbyScript.instance.showPlayers();
         pauseMenuUi.SetActive(false);
         Time.timeScale = 1;
         gameIsPaused = false;
@@ -46,6 +37,7 @@ public class MainMenu : MonoBehaviour
 
     void Paused()
     {
+        LobbyScript.instance.hidePlayers();
         pauseMenuUi.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;
@@ -59,6 +51,7 @@ public class MainMenu : MonoBehaviour
     public void Menu()
     {
         Resume();
+        LobbyScript.instance.hidePlayers();
         SceneManager.LoadScene("MainMenu");
     }
 

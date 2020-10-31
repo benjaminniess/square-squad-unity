@@ -86,12 +86,27 @@ public class LobbyScript : MonoBehaviour
         }
         foreach (GameObject Player in PlayersObjects)
         {
+            Player.SetActive(true);
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
             playerScript.setNumber(playerReCount);
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerReCount);
             Rigidbody2D rb = playerScript.getRigidbody();
             rb.transform.position = spawnPosition.transform.position;
             playerReCount ++;
+        }
+    }
+
+    public void hidePlayers() {
+        foreach (GameObject Player in getPlayers())
+        {
+            Player.SetActive(false);
+        }
+    }
+
+    public void showPlayers() {
+        foreach (GameObject Player in getPlayers())
+        {
+            Player.SetActive(true);
         }
     }
 
