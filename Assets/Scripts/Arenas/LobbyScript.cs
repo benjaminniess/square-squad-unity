@@ -7,8 +7,6 @@ public class LobbyScript : MonoBehaviour
 {
     public static LobbyScript instance;
 
-    public GameObject Player;
-
     private int PlayerCount = 0;
 
     private GameObject[] PlayersObjects;
@@ -39,8 +37,10 @@ public class LobbyScript : MonoBehaviour
 
     public void initPlayer(PlayerMovements playerScript)
     {
+        Debug.Log("INIT");
         Scene scene = SceneManager.GetActiveScene();
         if ( scene.name != "Lobby" ) {
+            Debug.Log( scene.name);
             Destroy(playerScript.gameObject);
             return;
         }
@@ -86,7 +86,6 @@ public class LobbyScript : MonoBehaviour
         }
         foreach (GameObject Player in PlayersObjects)
         {
-            Player.SetActive(true);
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
             playerScript.setNumber(playerReCount);
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerReCount);
@@ -99,14 +98,8 @@ public class LobbyScript : MonoBehaviour
     public void hidePlayers() {
         foreach (GameObject Player in getPlayers())
         {
-            Player.SetActive(false);
-        }
-    }
-
-    public void showPlayers() {
-        foreach (GameObject Player in getPlayers())
-        {
-            Player.SetActive(true);
+            //Player.SetActive(false);
+            Player.transform.position = new Vector3(-100,-100,-100);
         }
     }
 

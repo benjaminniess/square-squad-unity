@@ -29,7 +29,6 @@ public class MainMenu : MonoBehaviour
 
     public void Resume()
     {
-        LobbyScript.instance.showPlayers();
         pauseMenuUi.SetActive(false);
         Time.timeScale = 1;
         gameIsPaused = false;
