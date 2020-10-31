@@ -41,6 +41,15 @@ public class LobbyScript : MonoBehaviour
         rb.transform.position = spawnPosition.transform.position;
         playerScript.name = "player_" + PlayerCount;
         playerScript.setNumber(PlayerCount);
+        if ( PlayerCount == 1 ) {
+            playerScript.setColor(new Color(146f/255f, 100f/255f, 244f/255f));
+        } else if ( PlayerCount == 2 ) {
+            playerScript.setColor(new Color(242f/255f, 118f/255f, 46f/255f));
+        } else if ( PlayerCount == 3 ) {
+            playerScript.setColor(new Color(171f/255f, 191f/255f, 21f/255f));
+        } else {
+            playerScript.setColor(new Color(88f/255f, 109f/255f, 245f/255f));
+        }
         DontDestroyOnLoad(playerScript);
         GeneratePlayers();
     }

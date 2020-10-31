@@ -52,6 +52,8 @@ public class PlayerMovements : MonoBehaviour
     private bool dashButton = false;
     private bool bonusButton = false;
 
+    private SpriteRenderer playerColor;
+
     public void pressUp(InputAction.CallbackContext ctx)
     {
         upButton = 0.1f < ctx.ReadValue<float>() ? true : false;
@@ -90,6 +92,7 @@ public class PlayerMovements : MonoBehaviour
         dashStatus = transform.Find("DashStatus").gameObject;
         recoverStatus = transform.Find("RecoverStatus").gameObject;
         currentPlayerSpeed = speed;
+        playerColor = transform.Find("MainColor").gameObject.GetComponent<SpriteRenderer>();
 
         LobbyScript.instance.initPlayer(this);
     }
@@ -199,6 +202,11 @@ public class PlayerMovements : MonoBehaviour
     public void setNumber(int number)
     {
         playerNumber = number;
+    }
+
+    public void setColor(Color color)
+    {
+        playerColor.color = color;
     }
 
     bool isDashPressed()
