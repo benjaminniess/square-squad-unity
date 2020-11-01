@@ -51,6 +51,9 @@ public class PlayerMovements : MonoBehaviour
     private bool rightButton = false;
     private bool dashButton = false;
     private bool bonusButton = false;
+    private bool startButton = false;
+    private bool northButton = false;
+    private bool southButton = false;
 
     private SpriteRenderer playerColor;
 
@@ -82,6 +85,25 @@ public class PlayerMovements : MonoBehaviour
     public void pressBonus(InputAction.CallbackContext ctx)
     {
         bonusButton = 1 == ctx.ReadValue<float>() ? true : false;
+    }
+
+    public void pressStart(InputAction.CallbackContext ctx)
+    {
+        MainMenu.instance.togglePause();
+        startButton = 1 == ctx.ReadValue<float>() ? true : false;
+        if ( startButton == true ) {
+            
+        }
+    }
+
+        public void pressNorth(InputAction.CallbackContext ctx)
+    {
+        northButton = 1 == ctx.ReadValue<float>() ? true : false;
+    }
+
+    public void pressSouth(InputAction.CallbackContext ctx)
+    {
+        southButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
     void Start()
@@ -230,6 +252,21 @@ public class PlayerMovements : MonoBehaviour
     bool isBonusPressed()
     {
         return bonusButton == true;
+    }
+
+    bool isStartPressed()
+    {
+        return startButton == true;
+    }
+
+    bool isNorthPressed()
+    {
+        return northButton == true;
+    }
+
+    bool isSouthPressed()
+    {
+        return southButton == true;
     }
 
     bool isDashing()

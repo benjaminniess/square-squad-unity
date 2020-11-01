@@ -318,6 +318,54 @@ MonoBehaviour:
     m_ActionId: 5b6fa8fd-d5a5-4c8f-9dd6-e6c5f6c3f377
     m_ActionName: Gameplay/RIGHT[/Unknown Joy-Con (L)/hat/right,/Unknown Joy-Con
       (R)/hat/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 51ef5993-8eda-4527-a3c5-4a5e58959092
+    m_ActionName: Gameplay/START[/Gamepad/start,/Gamepad/start,/Gamepad/start]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressNorth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dbf5b879-8881-414a-a139-ad2c6403e0b4
+    m_ActionName: Gameplay/NORTH[/Gamepad/buttonNorth,/Gamepad/buttonNorth,/Gamepad/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 491578336404137707}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: pressSouth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e3f323e7-0615-43f6-84b6-b64341198660
+    m_ActionName: Gameplay/SOUTH[/Gamepad/buttonSouth,/Gamepad/buttonSouth,/Gamepad/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

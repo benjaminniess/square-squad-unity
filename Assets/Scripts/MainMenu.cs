@@ -3,9 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+
+    public static MainMenu instance;
     public static bool gameIsPaused = false;
     public GameObject pauseMenuUi;
 
+    private void Awake()
+    {
+        // if the singleton hasn't been initialized yet
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+
+        instance = this;
+    }
 
     void Start()
     {
@@ -16,14 +28,18 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (gameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Paused();
-            }
+            togglePause();
+        }
+    }
+
+    public void togglePause() {
+        if (gameIsPaused) 
+        {
+            Resume();
+        }
+        else
+        {
+            Paused();
         }
     }
 
@@ -36,7 +52,7 @@ public class MainMenu : MonoBehaviour
 
     void Paused()
     {
-        LobbyScript.instance.hidePlayers();
+        //LobbyScript.instance.hidePlayers();
         pauseMenuUi.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;

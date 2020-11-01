@@ -65,6 +65,30 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""START"",
+                    ""type"": ""Button"",
+                    ""id"": ""51ef5993-8eda-4527-a3c5-4a5e58959092"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""NORTH"",
+                    ""type"": ""Button"",
+                    ""id"": ""dbf5b879-8881-414a-a139-ad2c6403e0b4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SOUTH"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3f323e7-0615-43f6-84b6-b64341198660"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -397,6 +421,39 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""action"": ""RIGHT"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bbb8bece-b0e8-4244-9219-6ffbc7b649b7"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""START"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d87f268-783b-4743-aaa0-33eeaf84db06"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NORTH"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""358de730-3198-45b3-8379-39550979612b"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SOUTH"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -411,6 +468,9 @@ public class @PlayerController : IInputActionCollection, IDisposable
         m_Gameplay_DOWN = m_Gameplay.FindAction("DOWN", throwIfNotFound: true);
         m_Gameplay_LEFT = m_Gameplay.FindAction("LEFT", throwIfNotFound: true);
         m_Gameplay_RIGHT = m_Gameplay.FindAction("RIGHT", throwIfNotFound: true);
+        m_Gameplay_START = m_Gameplay.FindAction("START", throwIfNotFound: true);
+        m_Gameplay_NORTH = m_Gameplay.FindAction("NORTH", throwIfNotFound: true);
+        m_Gameplay_SOUTH = m_Gameplay.FindAction("SOUTH", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -466,6 +526,9 @@ public class @PlayerController : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DOWN;
     private readonly InputAction m_Gameplay_LEFT;
     private readonly InputAction m_Gameplay_RIGHT;
+    private readonly InputAction m_Gameplay_START;
+    private readonly InputAction m_Gameplay_NORTH;
+    private readonly InputAction m_Gameplay_SOUTH;
     public struct GameplayActions
     {
         private @PlayerController m_Wrapper;
@@ -476,6 +539,9 @@ public class @PlayerController : IInputActionCollection, IDisposable
         public InputAction @DOWN => m_Wrapper.m_Gameplay_DOWN;
         public InputAction @LEFT => m_Wrapper.m_Gameplay_LEFT;
         public InputAction @RIGHT => m_Wrapper.m_Gameplay_RIGHT;
+        public InputAction @START => m_Wrapper.m_Gameplay_START;
+        public InputAction @NORTH => m_Wrapper.m_Gameplay_NORTH;
+        public InputAction @SOUTH => m_Wrapper.m_Gameplay_SOUTH;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -503,6 +569,15 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @RIGHT.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRIGHT;
                 @RIGHT.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRIGHT;
                 @RIGHT.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRIGHT;
+                @START.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTART;
+                @START.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTART;
+                @START.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTART;
+                @NORTH.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNORTH;
+                @NORTH.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNORTH;
+                @NORTH.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnNORTH;
+                @SOUTH.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSOUTH;
+                @SOUTH.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSOUTH;
+                @SOUTH.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSOUTH;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -525,6 +600,15 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @RIGHT.started += instance.OnRIGHT;
                 @RIGHT.performed += instance.OnRIGHT;
                 @RIGHT.canceled += instance.OnRIGHT;
+                @START.started += instance.OnSTART;
+                @START.performed += instance.OnSTART;
+                @START.canceled += instance.OnSTART;
+                @NORTH.started += instance.OnNORTH;
+                @NORTH.performed += instance.OnNORTH;
+                @NORTH.canceled += instance.OnNORTH;
+                @SOUTH.started += instance.OnSOUTH;
+                @SOUTH.performed += instance.OnSOUTH;
+                @SOUTH.canceled += instance.OnSOUTH;
             }
         }
     }
@@ -537,5 +621,8 @@ public class @PlayerController : IInputActionCollection, IDisposable
         void OnDOWN(InputAction.CallbackContext context);
         void OnLEFT(InputAction.CallbackContext context);
         void OnRIGHT(InputAction.CallbackContext context);
+        void OnSTART(InputAction.CallbackContext context);
+        void OnNORTH(InputAction.CallbackContext context);
+        void OnSOUTH(InputAction.CallbackContext context);
     }
 }
