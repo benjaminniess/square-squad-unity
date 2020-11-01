@@ -16,7 +16,7 @@ public class Main : MonoBehaviour
     private GameObject[] playersScores;
     private GameObject[] PlayersObjects;
 
-    private float timeRemaining = 30;
+    private float timeRemaining = 60;
     private TextMeshProUGUI countDownText;
     private GameObject GameOverMenu;
     private GameObject FinalScore1;
