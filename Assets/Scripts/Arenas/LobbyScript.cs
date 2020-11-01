@@ -37,7 +37,6 @@ public class LobbyScript : MonoBehaviour
 
     public void initPlayer(PlayerMovements playerScript)
     {
-        Debug.Log("INIT");
         Scene scene = SceneManager.GetActiveScene();
         if ( scene.name != "Lobby" ) {
             Debug.Log( scene.name);
@@ -88,6 +87,7 @@ public class LobbyScript : MonoBehaviour
         {
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
             playerScript.setNumber(playerReCount);
+            playerScript.setIsHoldingBonus(false);
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerReCount);
             Rigidbody2D rb = playerScript.getRigidbody();
             rb.transform.position = spawnPosition.transform.position;

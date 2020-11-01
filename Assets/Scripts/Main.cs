@@ -52,7 +52,7 @@ public class Main : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
 
-            playersScores[i] = GameObject.Find("ScorePlayer" + (i + 1));
+            playersScores[i] = GameObject.Find("InfosPlayer" + (i + 1));
             playersScores[i].SetActive(false);
         }
 
@@ -66,6 +66,7 @@ public class Main : MonoBehaviour
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerScript.getNumber());
             Rigidbody2D rb = playerScript.getRigidbody();
             playersScores[playerScript.getNumber() - 1].SetActive(true);
+            playersScores[playerScript.getNumber() - 1].transform.Find("Bonus").gameObject.SetActive(false);
             rb.transform.position = spawnPosition.transform.position;
             playerScript.resetScore();
         }
@@ -106,6 +107,15 @@ public class Main : MonoBehaviour
         return PlayersObjects;
     }
 
+    public void setBonusForPlayer(int playerNumber, Sprite sprite) {
+        playersScores[playerNumber-1].transform.Find("Bonus").gameObject.SetActive(true);
+        playersScores[playerNumber-1].transform.Find("Bonus").GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+
+    public void removeBonusFromPlayer(int playerNumber, Sprite sprite) {
+        playersScores[playerNumber-1].transform.Find("Bonus").gameObject.SetActive(false);
+    }
+
     public void UpdateScores()
     {
         if (PlayersObjects == null || PlayersObjects.Length == 0)
@@ -121,7 +131,9 @@ public class Main : MonoBehaviour
                 continue;
             }
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
-            playersScores[i].GetComponent<TMPro.TextMeshProUGUI>().SetText(playerScript.getScore().ToString());
+            playersScores[i].transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerScript.getScore().ToString());
+            playersScores[i].transform.Find("Color").GetComponent<SpriteRenderer>().color = playerScript.getColor();
+            
             i++;
         }
     }

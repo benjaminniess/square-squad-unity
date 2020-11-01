@@ -94,6 +94,7 @@ public class PlayerMovements : MonoBehaviour
         currentPlayerSpeed = speed;
         playerColor = transform.Find("MainColor").gameObject.GetComponent<SpriteRenderer>();
 
+
         LobbyScript.instance.initPlayer(this);
     }
 
@@ -196,12 +197,17 @@ public class PlayerMovements : MonoBehaviour
 
     public void setIsHoldingBonus(bool isHolding)
     {
+        
         isHoldingBonusVal = isHolding;
     }
 
     public void setNumber(int number)
     {
         playerNumber = number;
+    }
+
+    public Color getColor() {
+        return playerColor.color;
     }
 
     public void setColor(Color color)
