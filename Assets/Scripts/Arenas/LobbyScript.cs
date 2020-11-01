@@ -39,7 +39,6 @@ public class LobbyScript : MonoBehaviour
     {
         Scene scene = SceneManager.GetActiveScene();
         if ( scene.name != "Lobby" ) {
-            Debug.Log( scene.name);
             Destroy(playerScript.gameObject);
             return;
         }
