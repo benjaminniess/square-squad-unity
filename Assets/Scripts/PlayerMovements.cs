@@ -190,6 +190,13 @@ public class PlayerMovements : MonoBehaviour
         return bonus;
     }
 
+    public void initState() {
+        setIsHoldingBonus(false);
+        setIsHoldingCoin(false);
+        setOK();
+        resetPlayerSpeed();
+    }
+
     public void setBonus(Bonus newBonus)
     {
         bonus = newBonus;
@@ -197,7 +204,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void setIsHoldingBonus(bool isHolding)
     {
-        
+
         isHoldingBonusVal = isHolding;
     }
 

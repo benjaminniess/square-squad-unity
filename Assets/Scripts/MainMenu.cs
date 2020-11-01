@@ -44,7 +44,9 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Arena2");
+        
     }
 
     public void Menu()

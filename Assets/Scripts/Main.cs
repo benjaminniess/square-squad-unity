@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class Main : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class Main : MonoBehaviour
 
     private GameObject[] playersScores;
     private GameObject[] PlayersObjects;
+
+    private float timeRemaining = 10;
+    private TextMeshProUGUI countDownText;
+    private GameObject GameOverMenu;
 
     private Tilemap map;
 
@@ -33,7 +38,10 @@ public class Main : MonoBehaviour
     void Start()
     {
         map = FindObjectOfType<Tilemap>();
-
+        Time.timeScale = 60;
+        countDownText = GameObject.Find("Countdown").GetComponent<TMPro.TextMeshProUGUI>();
+        GameOverMenu = GameObject.Find("GameOverMenu");
+        GameOverMenu.SetActive(false);
         GenerateCoin();
         GenerateBonus();
         GenerateBonus();
@@ -43,6 +51,12 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeRemaining -= Time.deltaTime;
+        countDownText.SetText(((int)timeRemaining).ToString());
+        if ( timeRemaining <= 0 ) {
+            Time.timeScale = 0;
+            GameOverMenu.SetActive(true);
+        }
         UpdateScores();
     }
 
@@ -63,6 +77,7 @@ public class Main : MonoBehaviour
                 continue;
             }
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            playerScript.initState();
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerScript.getNumber());
             Rigidbody2D rb = playerScript.getRigidbody();
             playersScores[playerScript.getNumber() - 1].SetActive(true);
