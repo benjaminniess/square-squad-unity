@@ -33,7 +33,7 @@ public class Main : MonoBehaviour
     void Start()
     {
         map = FindObjectOfType<Tilemap>();
-        
+
         GenerateCoin();
         GenerateBonus();
         GenerateBonus();
@@ -76,7 +76,7 @@ public class Main : MonoBehaviour
     {
         int spawnY = Random.Range(-20, 20);
         int spawnX = Random.Range(-32, 32);
-        
+
         TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
         if ( null != tile ) {
             GenerateCoin();
