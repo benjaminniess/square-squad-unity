@@ -49,6 +49,10 @@ public class Main : MonoBehaviour
         GenerateCoin();
         GenerateBonus();
         GenerateBonus();
+        GenerateBonus();
+        GenerateBonus();
+        GenerateBonus();
+        GenerateBonus();
         GeneratePlayers();
 
         GameOverMenu = GameObject.Find("GameOverMenu");
@@ -66,10 +70,12 @@ public class Main : MonoBehaviour
         UpdateScores();
     }
 
-    public void gameOver() {
+    public void gameOver()
+    {
         timeRemaining -= Time.deltaTime;
         countDownText.SetText(((int)timeRemaining).ToString());
-        if ( timeRemaining <= 0 ) {
+        if (timeRemaining <= 0)
+        {
             Time.timeScale = 0;
 
             GameObject[] coins;
@@ -85,47 +91,55 @@ public class Main : MonoBehaviour
             FinalScore2.SetActive(false);
             FinalScore3.SetActive(false);
             FinalScore4.SetActive(false);
-            
+
             Dictionary<PlayerMovements, int> ScoresDictionnary = new Dictionary<PlayerMovements, int>();
-            
+
             foreach (GameObject Player in PlayersObjects)
             {
-                
-                if ( null == Player || !Player.CompareTag("Player") ) {
+
+                if (null == Player || !Player.CompareTag("Player"))
+                {
                     continue;
                 }
 
                 PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
                 ScoresDictionnary.Add(playerScript, playerScript.getScore());
                 GameObject pInfos = GameObject.Find("InfosPlayer" + playerScript.getNumber());
-                if ( pInfos != null ) {
+                if (pInfos != null)
+                {
                     pInfos.SetActive(false);
                 }
             }
 
             int i = 1;
-            foreach (KeyValuePair<PlayerMovements, int> playerData in ScoresDictionnary.OrderByDescending(key => key.Value))  
-            {  
+            foreach (KeyValuePair<PlayerMovements, int> playerData in ScoresDictionnary.OrderByDescending(key => key.Value))
+            {
                 int playerScore = playerData.Value;
 
-                if (i == 1 ) {
+                if (i == 1)
+                {
                     FinalScore1.SetActive(true);
                     FinalScore1.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
                     FinalScore1.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
                     FinalScore1.transform.Find("Color").GetComponent<SpriteRenderer>().color = playerData.Key.getColor();
-                    
-                } else if (i == 2) {
+
+                }
+                else if (i == 2)
+                {
                     FinalScore2.SetActive(true);
                     FinalScore2.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
                     FinalScore2.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
                     FinalScore2.transform.Find("Color").GetComponent<SpriteRenderer>().color = playerData.Key.getColor();
                 }
-                 else if (i == 3) {
+                else if (i == 3)
+                {
                     FinalScore3.SetActive(true);
                     FinalScore3.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
                     FinalScore3.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
                     FinalScore3.transform.Find("Color").GetComponent<SpriteRenderer>().color = playerData.Key.getColor();
-                } else {
+                }
+                else
+                {
                     FinalScore4.SetActive(true);
                     FinalScore4.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
                     FinalScore4.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
@@ -133,7 +147,7 @@ public class Main : MonoBehaviour
                 }
 
                 i++;
-            } 
+            }
         }
     }
 
@@ -150,7 +164,8 @@ public class Main : MonoBehaviour
         PlayersObjects = LobbyScript.instance.getPlayers();
         foreach (GameObject Player in PlayersObjects)
         {
-            if ( null == Player || !Player.CompareTag("Player") ) {
+            if (null == Player || !Player.CompareTag("Player"))
+            {
                 continue;
             }
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
@@ -170,7 +185,8 @@ public class Main : MonoBehaviour
         int spawnX = Random.Range(-32, 32);
 
         TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
-        if ( null != tile ) {
+        if (null != tile)
+        {
             GenerateCoin();
             return;
         }
@@ -184,7 +200,8 @@ public class Main : MonoBehaviour
         int spawnX = Random.Range(-32, 32);
 
         TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
-        if ( null != tile ) {
+        if (null != tile)
+        {
             GenerateBonus();
             return;
         }
@@ -199,13 +216,15 @@ public class Main : MonoBehaviour
         return PlayersObjects;
     }
 
-    public void setBonusForPlayer(int playerNumber, Sprite sprite) {
-        playersScores[playerNumber-1].transform.Find("Bonus").gameObject.SetActive(true);
-        playersScores[playerNumber-1].transform.Find("Bonus").GetComponent<SpriteRenderer>().sprite = sprite;
+    public void setBonusForPlayer(int playerNumber, Sprite sprite)
+    {
+        playersScores[playerNumber - 1].transform.Find("Bonus").gameObject.SetActive(true);
+        playersScores[playerNumber - 1].transform.Find("Bonus").GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
-    public void removeBonusFromPlayer(int playerNumber, Sprite sprite) {
-        playersScores[playerNumber-1].transform.Find("Bonus").gameObject.SetActive(false);
+    public void removeBonusFromPlayer(int playerNumber, Sprite sprite)
+    {
+        playersScores[playerNumber - 1].transform.Find("Bonus").gameObject.SetActive(false);
     }
 
     public void UpdateScores()
@@ -225,7 +244,7 @@ public class Main : MonoBehaviour
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
             playersScores[i].transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerScript.getScore().ToString());
             playersScores[i].transform.Find("Color").GetComponent<SpriteRenderer>().color = playerScript.getColor();
-            
+
             i++;
         }
     }
