@@ -202,7 +202,7 @@ public class PlayerMovements : MonoBehaviour
     }
 
 
-    bool isUsingBonus()
+    public bool isUsingBonus()
     {
         return isUsingBonusVal;
     }
@@ -428,7 +428,9 @@ public class PlayerMovements : MonoBehaviour
         if (bonusTimer > bonus.getDuration() || isKO())
         {
             isUsingBonusVal = false;
-            bonus.StopBonus();
+            if ( bonus != null ) {
+                bonus.StopBonus();
+            }
         }
     }
 

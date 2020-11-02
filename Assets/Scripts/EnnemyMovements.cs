@@ -14,6 +14,10 @@ public class EnnemyMovements : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
+    public void setKO() {
+        Debug.Log("KO");
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {

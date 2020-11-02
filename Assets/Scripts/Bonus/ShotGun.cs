@@ -6,31 +6,39 @@ public class ShotGun : Bonus
 {
 
     public GameObject bullet;
-    public float bulletTime;
+    public float bulletTime = 0;
+    public float remainingBullets = 5;
+    private bool isTriggered = false;
 
     protected override void onTriggerBonus()
     {
-        bulletTime = 0;
-        fire();
+        isTriggered = true;
+        
+    }
+
+    new public float getDuration() {
+        return 1;
     }
 
     void FixedUpdate()
     {
-        bulletTime += Time.deltaTime;
-        if (bulletTime > 3)
-        {
-            Debug.Log(bulletTime);
-            bulletTime = 0;
-            //fire();
+        if ( isTriggered == true ) {
+            bulletTime += Time.deltaTime;
+            if (bulletTime > 0.1f && remainingBullets > 0)
+            {
+                remainingBullets--;
+                bulletTime = 0;
+                fire();
+            }
         }
+        
     }
 
     public void fire()
     {
-        Debug.Log(holder);
-        Debug.Log(bullet);
         GameObject singleBullet = Instantiate(bullet, new Vector3(holder.transform.position.x, holder.transform.position.y + 2, 0), Quaternion.identity);
-        bulletTime = 0;
+        Bullet bullerScript = singleBullet.GetComponent<Bullet>();
+        bullerScript.setShooter(holder);
     }
 
     protected override void onBonusEnd()

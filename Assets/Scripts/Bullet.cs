@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private PlayerMovements shooter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -11,9 +13,16 @@ public class Bullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.Translate(Vector3.up * Time.deltaTime * 20);
+        if ( transform.position.y > 50 ) {
+            Destroy(gameObject);
+        }
+    }
+
+    public void setShooter( PlayerMovements shooterRef ) {
+        shooter = shooterRef;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -24,8 +33,13 @@ public class Bullet : MonoBehaviour
             if (!playerScript.isRecovering() && playerScript.setKO())
             {
                 playerScript.decreaseScore();
-                Destroy(gameObject);
             }
+        } else if (collider.tag == "Ennemy") {
+            EnnemyMovements ennemyScript = collider.gameObject.GetComponent<EnnemyMovements>();
+            ennemyScript.setKO();
+            shooter.increaseScore();
         }
+
+        Destroy(gameObject);
     }
 }

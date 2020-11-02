@@ -17,15 +17,18 @@ public abstract class Bonus : MonoBehaviour
     public void triggerBonus() {
         Main.instance.removeBonusFromPlayer(holder.getNumber(), BonusSprite);
         onTriggerBonus();
-
-        
-        //playersScores[i].transform.Find("Bonus").GetComponent<SpriteRenderer>().sprite = Resources.Load("Tiles_09", typeof(Sprite)) as Sprite;
+    
 
         getHolder().setIsHoldingBonus(false);
     }
 
     public void StopBonus() {
         onBonusEnd();
+
+        if ( gameObject != null ) {
+            Destroy(gameObject);
+        }
+        
     }
 
     public float getDuration() {
@@ -49,7 +52,7 @@ public abstract class Bonus : MonoBehaviour
 
         PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
 
-        if ( playerScript.isHoldingBonus() ) {
+        if ( playerScript.isHoldingBonus() || playerScript.isUsingBonus() ) {
             return;
         }
 
@@ -60,6 +63,6 @@ public abstract class Bonus : MonoBehaviour
         Main.instance.setBonusForPlayer(holder.getNumber(), transform.GetComponent<SpriteRenderer>().sprite);
         Main.instance.GenerateBonus();
         
-        Destroy(gameObject);
+        transform.position = new Vector3(-100,-100,-100);
     }
 }
