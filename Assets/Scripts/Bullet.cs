@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private PlayerMovements shooter;
+    private bool hasTouched = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +36,13 @@ public class Bullet : MonoBehaviour
                 playerScript.decreaseScore();
             }
         } else if (collider.tag == "Ennemy") {
-            EnnemyMovements ennemyScript = collider.gameObject.GetComponent<EnnemyMovements>();
-            ennemyScript.setKO();
-            shooter.increaseScore();
+            if (!hasTouched ) {
+                EnnemyMovements ennemyScript = collider.gameObject.GetComponent<EnnemyMovements>();
+                ennemyScript.kill();
+                shooter.increaseScore();
+                hasTouched = true;
+            }
+            
         }
 
         Destroy(gameObject);

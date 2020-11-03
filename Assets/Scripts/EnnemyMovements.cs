@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnnemyMovements : MonoBehaviour
 {
     private NavMeshAgent agent;
+    public string health;
 
     void Start()
     {
@@ -34,6 +35,10 @@ public class EnnemyMovements : MonoBehaviour
         {
             agent.SetDestination(agent.transform.position);
         }
+    }
+
+    public void kill() {
+        Destroy(gameObject);
     }
 
     public GameObject FindClosestPlayer()
