@@ -52,17 +52,21 @@ public abstract class Bonus : MonoBehaviour
 
         PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
 
-        if ( playerScript.isHoldingBonus() || playerScript.isUsingBonus() ) {
+        if ( playerScript.isHoldingBonus()  ) {
             return;
         }
 
         playerScript.setIsHoldingBonus(true);
-        playerScript.setBonus(this);
+        
         setHolder(playerScript);
-        Main.instance.setBonusForPlayer(holder.getNumber(), BonusSprite);
         Main.instance.setBonusForPlayer(holder.getNumber(), transform.GetComponent<SpriteRenderer>().sprite);
         Main.instance.GenerateBonus();
-        
         transform.position = new Vector3(-100,-100,-100);
+
+        if (!playerScript.isUsingBonus() ) {
+            playerScript.setBonus(this);
+        } else {
+            playerScript.setStashedBonus(this);
+        }
     }
 }

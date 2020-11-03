@@ -43,6 +43,7 @@ public class PlayerMovements : MonoBehaviour
     private bool isHoldingBonusVal = false;
     private bool isUsingBonusVal = false;
     private Bonus bonus;
+    private Bonus stashedBonus;
     private float bonusTimer;
 
     private bool upButton = false;
@@ -212,6 +213,11 @@ public class PlayerMovements : MonoBehaviour
         return bonus;
     }
 
+    public Bonus getStashedBonus()
+    {
+        return stashedBonus;
+    }
+
     public void initState() {
         setIsHoldingBonus(false);
         setIsHoldingCoin(false);
@@ -222,6 +228,19 @@ public class PlayerMovements : MonoBehaviour
     public void setBonus(Bonus newBonus)
     {
         bonus = newBonus;
+    }
+
+    public void setStashedBonus(Bonus newBonus)
+    {
+        stashedBonus = newBonus;
+    }
+
+    public void loadStashedBonus() {
+        if ( getStashedBonus() != null) {
+            setBonus(getStashedBonus());
+        }
+
+        stashedBonus = default(Bonus);
     }
 
     public void setIsHoldingBonus(bool isHolding)
@@ -430,6 +449,10 @@ public class PlayerMovements : MonoBehaviour
             isUsingBonusVal = false;
             if ( bonus != null ) {
                 bonus.StopBonus();
+            }
+
+            if ( getStashedBonus() != null ) {
+                setBonus(getStashedBonus());
             }
         }
     }
