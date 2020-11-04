@@ -24,6 +24,11 @@ public class Main : MonoBehaviour
     private GameObject FinalScore3;
     private GameObject FinalScore4;
 
+    private bool isFrozenVal = true;
+    private GameObject StartCountdown;
+    private float startCountDownTime = 4f;
+    private TextMeshProUGUI startCountDownText;
+
     private Tilemap map;
 
     public GameObject[] BonusTypes;
@@ -43,8 +48,11 @@ public class Main : MonoBehaviour
     void Start()
     {
         map = FindObjectOfType<Tilemap>();
-        Time.timeScale = 1;
+        Time.timeScale = 0;
+
         countDownText = GameObject.Find("Countdown").GetComponent<TMPro.TextMeshProUGUI>();
+        startCountDownText = GameObject.Find("StartCountdownTxt").GetComponent<TMPro.TextMeshProUGUI>();
+        StartCountdown = GameObject.Find("StartCountdown");
 
         GenerateCoin();
         GenerateBonus();
@@ -66,8 +74,24 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if ( isFrozen() ) {
+            startCountDownTime -= Time.fixedDeltaTime;
+            startCountDownText.SetText(((int)startCountDownTime).ToString());
+            if ( startCountDownTime < 1 ) {
+                isFrozenVal = false;
+                StartCountdown.SetActive(false);
+                Time.timeScale = 1;
+            }
+
+            return;
+        }
+
         gameOver();
         UpdateScores();
+    }
+
+    public bool isFrozen() {
+        return isFrozenVal;
     }
 
     public void gameOver()
