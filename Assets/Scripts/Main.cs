@@ -82,8 +82,6 @@ public class Main : MonoBehaviour
                 StartCountdown.SetActive(false);
                 Time.timeScale = 1;
             }
-
-            return;
         }
 
         gameOver();

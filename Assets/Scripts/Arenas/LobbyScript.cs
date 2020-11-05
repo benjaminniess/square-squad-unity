@@ -28,7 +28,7 @@ public class LobbyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void reset() {
@@ -46,6 +46,8 @@ public class LobbyScript : MonoBehaviour
         PlayerCount++;
 
         GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + PlayerCount);
+        GameObject PressToJoin = GameObject.Find("PressToJoin" + PlayerCount);
+        PressToJoin.SetActive(false);
         Rigidbody2D rb = playerScript.getRigidbody();
         rb.transform.position = spawnPosition.transform.position;
         playerScript.name = "player_" + PlayerCount;
@@ -87,6 +89,8 @@ public class LobbyScript : MonoBehaviour
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
             playerScript.setNumber(playerReCount);
             playerScript.setIsHoldingBonus(false);
+            GameObject PressToJoin = GameObject.Find("PressToJoin" + playerReCount);
+            PressToJoin.SetActive(false);
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerReCount);
             Rigidbody2D rb = playerScript.getRigidbody();
             rb.transform.position = spawnPosition.transform.position;
