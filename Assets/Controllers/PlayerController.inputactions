@@ -104,7 +104,7 @@
                 {
                     "name": "",
                     "id": "f0fcc12a-2e3b-4ebc-b3b6-f4ab825eb74a",
-                    "path": "<Keyboard>/n",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -148,7 +148,7 @@
                 {
                     "name": "",
                     "id": "951a3471-2c1e-4072-a2c6-fe1cd20661b8",
-                    "path": "<Keyboard>/b",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -235,17 +235,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e8d5e8a0-529f-4eda-bd33-1a7be4149be5",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UP",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "10157d20-9a85-4eb3-a75a-7c8fd4c94f0f",
                     "path": "<HID::Unknown Joy-Con (L)>/hat/down",
                     "interactions": "",
@@ -281,17 +270,6 @@
                     "name": "",
                     "id": "5b4f05b4-66ae-4b1d-8e44-9c87a45134bd",
                     "path": "<Gamepad>/leftStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DOWN",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f7ef981e-d7f6-47f4-91ec-39ec664af9a2",
-                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -378,17 +356,6 @@
                 },
                 {
                     "name": "",
-                    "id": "83fb3e05-5ef9-48c9-afd3-50ddc23aed4b",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RIGHT",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "6d7fe1ca-970a-47d0-8d4a-cc1e621c5e94",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
@@ -433,8 +400,30 @@
                 },
                 {
                     "name": "",
+                    "id": "301e3e06-d6e4-469d-83a5-d5830a0bf8bb",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NORTH",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "358de730-3198-45b3-8379-39550979612b",
                     "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SOUTH",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70bce616-0952-4f9d-b459-56679d4cfcb0",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

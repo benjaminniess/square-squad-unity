@@ -31,6 +31,28 @@ public class LobbyScript : MonoBehaviour
 
     }
 
+    void Update() {
+        Scene scene = SceneManager.GetActiveScene();
+        if ( scene.name != "Lobby" ) {
+            return;
+        }
+
+        if ( PlayersObjects == null ) {
+            return;
+        }
+        foreach (GameObject Player in PlayersObjects)
+        {
+            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + playerScript.getNumber());
+            PlayerLobbyUI playerLobbyUIScript = playerLobbyUI.GetComponent<PlayerLobbyUI>();
+            if ( playerScript.isDashPressed() ) {
+                playerLobbyUIScript.showReady(false);
+            } else if (playerScript.isSouthPressed() ) {
+                playerLobbyUIScript.showReady(true);
+            }
+        }
+    }
+
     public void reset() {
         ResetPlayers();
     }
@@ -45,11 +67,12 @@ public class LobbyScript : MonoBehaviour
 
         PlayerCount++;
 
-        GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + PlayerCount);
-        GameObject PressToJoin = GameObject.Find("PressToJoin" + PlayerCount);
-        PressToJoin.SetActive(false);
+        GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + PlayerCount);
+        PlayerLobbyUI playerLobbyUIScript = playerLobbyUI.GetComponent<PlayerLobbyUI>();
+
+        playerLobbyUIScript.showPressToJoin(false);
         Rigidbody2D rb = playerScript.getRigidbody();
-        rb.transform.position = spawnPosition.transform.position;
+        rb.transform.position = playerLobbyUIScript.getSpawnPosition();
         playerScript.name = "player_" + PlayerCount;
         playerScript.setNumber(PlayerCount);
         if ( PlayerCount == 1 ) {
@@ -87,11 +110,14 @@ public class LobbyScript : MonoBehaviour
         foreach (GameObject Player in PlayersObjects)
         {
             PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + playerReCount);
+            GameObject spawnPosition = playerLobbyUI.transform.Find("SpawnPosition").gameObject;
+            GameObject PressToJoin = playerLobbyUI.transform.Find("PressToJoin").gameObject;
+
             playerScript.setNumber(playerReCount);
             playerScript.setIsHoldingBonus(false);
-            GameObject PressToJoin = GameObject.Find("PressToJoin" + playerReCount);
             PressToJoin.SetActive(false);
-            GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerReCount);
+
             Rigidbody2D rb = playerScript.getRigidbody();
             rb.transform.position = spawnPosition.transform.position;
             playerReCount ++;

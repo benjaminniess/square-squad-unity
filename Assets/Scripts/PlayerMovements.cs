@@ -263,27 +263,27 @@ public class PlayerMovements : MonoBehaviour
         playerColor.color = color;
     }
 
-    bool isDashPressed()
+    public bool isDashPressed()
     {
         return dashButton == true;
     }
 
-    bool isBonusPressed()
+    public bool isBonusPressed()
     {
         return bonusButton == true;
     }
 
-    bool isStartPressed()
+    public bool isStartPressed()
     {
         return startButton == true;
     }
 
-    bool isNorthPressed()
+    public bool isNorthPressed()
     {
         return northButton == true;
     }
 
-    bool isSouthPressed()
+    public bool isSouthPressed()
     {
         return southButton == true;
     }
