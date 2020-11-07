@@ -9,52 +9,78 @@ public class LobbyScript : MonoBehaviour
 
     private int PlayerCount = 0;
 
-    private GameObject[] PlayersObjects;
     private GameObject[] playersScores;
+    private Dictionary<int, GameObject> Players;
 
     private void Awake()
     {
         if(instance == null){
-             DontDestroyOnLoad(gameObject);
-             instance = this;
-         }
-         else{
-             if(instance != this){
-                 Destroy (gameObject);
-             }
-         }
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else{
+            if(instance != this){
+                Destroy (gameObject);
+            }
+        }
+
+        Players = new Dictionary<int, GameObject>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    void Update() {
+    public void isButtonPressed( PlayerMovements playerScript, string Button ) {
         Scene scene = SceneManager.GetActiveScene();
         if ( scene.name != "Lobby" ) {
             return;
         }
 
-        if ( PlayersObjects == null ) {
-            return;
-        }
-        foreach (GameObject Player in PlayersObjects)
-        {
-            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
-            GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + playerScript.getNumber());
-            PlayerLobbyUI playerLobbyUIScript = playerLobbyUI.GetComponent<PlayerLobbyUI>();
-            if ( playerScript.isDashPressed() ) {
-                playerLobbyUIScript.showReady(false);
-            } else if (playerScript.isSouthPressed() ) {
-                playerLobbyUIScript.showReady(true);
+        GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + playerScript.getNumber());
+        PlayerLobbyUI playerLobbyUIScript = playerLobbyUI.GetComponent<PlayerLobbyUI>();
+        if ( "Dash" == Button ) {
+            if (!playerScript.isReady() ) {
+                playerLobbyUIScript.showReadyButton(false);
+                playerLobbyUIScript.showReadyText(true);
+                playerScript.setReady(true);
+            } else {
+                bool allReady = true;
+                foreach ( KeyValuePair<int, GameObject> PlayerReady in Players )
+                {
+                    PlayerMovements playerReadyScript = PlayerReady.Value.GetComponent<PlayerMovements>();
+                    if ( ! playerReadyScript.isReady() ) {
+                        allReady = false;
+                    }
+                }
+
+                if ( allReady == true ) {
+                    MainMenu.instance.Play();
+                }
+                
+            }
+            
+        } else if ( "South" == Button ) {
+            if (playerScript.isReady() ) {
+                playerLobbyUIScript.showReadyButton(true);
+                playerLobbyUIScript.showBack(true);
+                playerLobbyUIScript.showReadyText(false);
+                playerScript.setReady(false);
+            } else {
+                playerLobbyUIScript.showPressToJoin(true);
+                playerLobbyUIScript.showReadyButton(false);
+                playerLobbyUIScript.showBack(false);
+                playerLobbyUIScript.showReadyText(false);
+
+                foreach ( KeyValuePair<int, GameObject> PlayerToD in Players )
+                {
+                    PlayerMovements playerToDScript = PlayerToD.Value.GetComponent<PlayerMovements>();
+                    if ( playerToDScript.getNumber() == playerScript.getNumber() ) {
+
+                    }
+                }
+
+                Players.Remove(playerScript.getNumber());
+                Destroy(playerScript.gameObject);
+                ResetPlayers();
             }
         }
-    }
-
-    public void reset() {
-        ResetPlayers();
     }
 
     public void initPlayer(PlayerMovements playerScript)
@@ -65,75 +91,83 @@ public class LobbyScript : MonoBehaviour
             return;
         }
 
-        PlayerCount++;
+        PlayerCount = Players.Count + 1;
 
         GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + PlayerCount);
         PlayerLobbyUI playerLobbyUIScript = playerLobbyUI.GetComponent<PlayerLobbyUI>();
 
         playerLobbyUIScript.showPressToJoin(false);
-        Rigidbody2D rb = playerScript.getRigidbody();
-        rb.transform.position = playerLobbyUIScript.getSpawnPosition();
-        playerScript.name = "player_" + PlayerCount;
-        playerScript.setNumber(PlayerCount);
-        if ( PlayerCount == 1 ) {
-            playerScript.setColor(new Color(146f/255f, 100f/255f, 244f/255f));
-        } else if ( PlayerCount == 2 ) {
-            playerScript.setColor(new Color(242f/255f, 118f/255f, 46f/255f));
-        } else if ( PlayerCount == 3 ) {
-            playerScript.setColor(new Color(171f/255f, 191f/255f, 21f/255f));
-        } else {
-            playerScript.setColor(new Color(88f/255f, 109f/255f, 245f/255f));
-        }
+        playerLobbyUIScript.showBack(true);
+        playerLobbyUIScript.showReadyButton(true);
+        
         DontDestroyOnLoad(playerScript);
 
-        int ArraySize = PlayersObjects == null ? 1 : PlayersObjects.Length + 1;
-        GameObject[] save = PlayersObjects;
-        PlayersObjects = new GameObject[ArraySize];
-        int i = 0;
+        Players.Add(PlayerCount, playerScript.gameObject);
 
-        if ( save != null ) {
-            foreach (GameObject Player in save)
-            {
-                PlayersObjects[i] = Player;
-                i++;
-            }
-        }
-        
-        PlayersObjects[i] = playerScript.gameObject;
+        ResetPlayers();
     }
 
-    public void ResetPlayers() {
+    public void ResetPlayers(bool forcePosition = false) {
         int playerReCount = 1;
-        if ( PlayersObjects == null ) {
-            return;
-        }
-        foreach (GameObject Player in PlayersObjects)
-        {
-            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
-            GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + playerReCount);
-            GameObject spawnPosition = playerLobbyUI.transform.Find("SpawnPosition").gameObject;
-            GameObject PressToJoin = playerLobbyUI.transform.Find("PressToJoin").gameObject;
 
+        for (int i =1; i <= 4; i++) {
+            GameObject playerLobbyUI = GameObject.Find("PlayerLobbyUI" + i);
+            PlayerLobbyUI playerLobbyUIScript = playerLobbyUI.GetComponent<PlayerLobbyUI>();
+            playerLobbyUIScript.reset();
+        }
+        Dictionary<int, GameObject> NewPlayers = new Dictionary<int, GameObject>();
+        foreach ( KeyValuePair<int, GameObject> Player in Players )
+        {
+            PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
+            GameObject playerNewLobbyUI = GameObject.Find("PlayerLobbyUI" + playerReCount);
+            PlayerLobbyUI playerNewLobbyUIScript = playerNewLobbyUI.GetComponent<PlayerLobbyUI>();
+
+            playerNewLobbyUIScript.reset();
+            playerNewLobbyUIScript.showPressToJoin(false);
+            playerNewLobbyUIScript.showBack(true);
+            playerNewLobbyUIScript.showReadyButton(!playerScript.isReady());
+            playerNewLobbyUIScript.showReadyText(playerScript.isReady());
+
+            int prevNumber = playerScript.getNumber();
             playerScript.setNumber(playerReCount);
             playerScript.setIsHoldingBonus(false);
-            PressToJoin.SetActive(false);
 
             Rigidbody2D rb = playerScript.getRigidbody();
-            rb.transform.position = spawnPosition.transform.position;
+
+            if ( prevNumber != playerReCount || forcePosition ) {
+                rb.transform.position = playerNewLobbyUIScript.getSpawnPosition();
+            }
+            
+            playerScript.name = "player_" + playerReCount;
+            
+            if ( playerReCount == 1 ) {
+                playerScript.setColor(new Color(146f/255f, 100f/255f, 244f/255f));
+            } else if ( playerReCount == 2 ) {
+                playerScript.setColor(new Color(242f/255f, 118f/255f, 46f/255f));
+            } else if ( playerReCount == 3 ) {
+                playerScript.setColor(new Color(171f/255f, 191f/255f, 21f/255f));
+            } else {
+                playerScript.setColor(new Color(88f/255f, 109f/255f, 245f/255f));
+            }
+
+            NewPlayers.Add(playerReCount, playerScript.gameObject);
+
             playerReCount ++;
         }
+
+        Players = NewPlayers;
     }
 
     public void hidePlayers() {
-        foreach (GameObject Player in getPlayers())
+        foreach ( KeyValuePair<int, GameObject> Player in Players )
         {
             //Player.SetActive(false);
-            Player.transform.position = new Vector3(-100,-100,-100);
+            Player.Value.transform.position = new Vector3(-100,-100,-100);
         }
     }
 
-    public GameObject[] getPlayers()
+    public Dictionary<int, GameObject> getPlayers()
     {
-        return PlayersObjects;
+        return Players;
     }
 }

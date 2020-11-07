@@ -11,6 +11,7 @@ public class PlayerMovements : MonoBehaviour
     private int playerNumber;
     private Rigidbody2D rb;
     private bool isTrackedVal = true;
+    private bool isReadyVal = false;
 
     private string playerHealth = "ok";
 
@@ -80,7 +81,15 @@ public class PlayerMovements : MonoBehaviour
 
     public void pressDash(InputAction.CallbackContext ctx)
     {
-        dashButton = 1 == ctx.ReadValue<float>() ? true : false;
+        float ctxvalue = ctx.ReadValue<float>();
+        if ( ctxvalue == 1 ) {
+            if ( dashButton != true ) {
+                LobbyScript.instance.isButtonPressed(this, "Dash");
+            }
+            dashButton = true;
+        } else {
+            dashButton = false;
+        }
     }
 
     public void pressBonus(InputAction.CallbackContext ctx)
@@ -97,14 +106,22 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-        public void pressNorth(InputAction.CallbackContext ctx)
+    public void pressNorth(InputAction.CallbackContext ctx)
     {
         northButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
     public void pressSouth(InputAction.CallbackContext ctx)
     {
-        southButton = 1 == ctx.ReadValue<float>() ? true : false;
+        float ctxvalue = ctx.ReadValue<float>();
+        if ( ctxvalue == 1 ) {
+            if ( southButton != true ) {
+                LobbyScript.instance.isButtonPressed(this, "South");
+            }
+            southButton = true;
+        } else {
+            southButton = false;
+        }
     }
 
     void Start()
@@ -139,6 +156,10 @@ public class PlayerMovements : MonoBehaviour
     public string getPlayerHealth()
     {
         return playerHealth;
+    }
+
+    public bool isReady() {
+        return isReadyVal;
     }
 
     public bool isOk()
@@ -223,6 +244,10 @@ public class PlayerMovements : MonoBehaviour
         setIsHoldingCoin(false);
         setOK();
         resetPlayerSpeed();
+    }
+
+    public void setReady(bool ready) {
+        isReadyVal = ready;
     }
 
     public void setBonus(Bonus newBonus)

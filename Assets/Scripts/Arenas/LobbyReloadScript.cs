@@ -7,6 +7,6 @@ public class LobbyReloadScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LobbyScript.instance.reset();
+        LobbyScript.instance.ResetPlayers(true);
     }
 }

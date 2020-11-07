@@ -14,7 +14,6 @@ public class Main : MonoBehaviour
     public GameObject Player;
 
     private GameObject[] playersScores;
-    private GameObject[] PlayersObjects;
 
     private float timeRemaining = 60;
     private TextMeshProUGUI countDownText;
@@ -116,15 +115,9 @@ public class Main : MonoBehaviour
 
             Dictionary<PlayerMovements, int> ScoresDictionnary = new Dictionary<PlayerMovements, int>();
 
-            foreach (GameObject Player in PlayersObjects)
+            foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
             {
-
-                if (null == Player || !Player.CompareTag("Player"))
-                {
-                    continue;
-                }
-
-                PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+                PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
                 ScoresDictionnary.Add(playerScript, playerScript.getScore());
                 GameObject pInfos = GameObject.Find("InfosPlayer" + playerScript.getNumber());
                 if (pInfos != null)
@@ -183,14 +176,13 @@ public class Main : MonoBehaviour
             playersScores[i].SetActive(false);
         }
 
-        PlayersObjects = LobbyScript.instance.getPlayers();
-        foreach (GameObject Player in PlayersObjects)
+        foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
         {
-            if (null == Player || !Player.CompareTag("Player"))
+            if (null == Player.Value || !Player.Value.CompareTag("Player"))
             {
                 continue;
             }
-            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
             playerScript.initState();
             GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerScript.getNumber());
             Rigidbody2D rb = playerScript.getRigidbody();
@@ -233,11 +225,6 @@ public class Main : MonoBehaviour
         Instantiate(BonusTypes[BonusKey], new Vector3(spawnX, spawnY, 0), Quaternion.identity);
     }
 
-    public GameObject[] getPlayers()
-    {
-        return PlayersObjects;
-    }
-
     public void setBonusForPlayer(int playerNumber, Sprite sprite)
     {
         playersScores[playerNumber - 1].transform.Find("Bonus").gameObject.SetActive(true);
@@ -251,19 +238,10 @@ public class Main : MonoBehaviour
 
     public void UpdateScores()
     {
-        if (PlayersObjects == null || PlayersObjects.Length == 0)
-        {
-            return;
-        }
-
         int i = 0;
-        foreach (GameObject Player in PlayersObjects)
+        foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
         {
-            if (Player == null)
-            {
-                continue;
-            }
-            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
             playersScores[i].transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerScript.getScore().ToString());
             playersScores[i].transform.Find("Color").GetComponent<SpriteRenderer>().color = playerScript.getColor();
 

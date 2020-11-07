@@ -9,14 +9,14 @@ public class Turtle : Bonus
 
     protected override void onTriggerBonus()
     {
-        foreach (GameObject Player in Main.instance.getPlayers())
+        foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
         {
-            if (Player.name == holder.name)
+            if (Player.Value.name == holder.name)
             {
                 continue;
             }
 
-            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
 
             playerScript.setPlayerSpeed(playerScript.getNormalSpeed() / 2);
         }
@@ -24,9 +24,9 @@ public class Turtle : Bonus
 
     protected override void onBonusEnd()
     {
-        foreach (GameObject Player in Main.instance.getPlayers())
+        foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
         {
-            PlayerMovements playerScript = Player.GetComponent<PlayerMovements>();
+            PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
             playerScript.resetPlayerSpeed();
         }
     }

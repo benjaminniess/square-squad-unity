@@ -7,6 +7,7 @@ public class PlayerLobbyUI : MonoBehaviour
 
     GameObject pressToJoin;
     GameObject ready;
+    GameObject readyText;
     GameObject back;
     GameObject spawnPosition;
 
@@ -15,8 +16,11 @@ public class PlayerLobbyUI : MonoBehaviour
     {
         pressToJoin = transform.Find("PressToJoin").gameObject;
         ready = transform.Find("Ready").gameObject;
+        readyText = transform.Find("IsReady").gameObject;
         back = transform.Find("Back").gameObject;
         spawnPosition = transform.Find("SpawnPosition").gameObject;
+
+        reset();
     }
 
     // Update is called once per frame
@@ -25,12 +29,23 @@ public class PlayerLobbyUI : MonoBehaviour
         
     }
 
+    public void reset() {
+        showPressToJoin(true);
+        showBack(false);
+        showReadyButton(false);
+        showReadyText(false);
+    }
+
     public void showPressToJoin(bool show) {
         pressToJoin.SetActive(show);
     }
 
-    public void showReady(bool show) {
+    public void showReadyButton(bool show) {
         ready.SetActive(show);
+    }
+
+    public void showReadyText(bool show) {
+        readyText.SetActive(show);
     }
 
     public void showBack(bool show) {
