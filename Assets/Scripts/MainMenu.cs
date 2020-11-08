@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
         {
             Resume();
         }
-        else
+        else if (Time.timeScale == 1)
         {
             Paused();
         }
