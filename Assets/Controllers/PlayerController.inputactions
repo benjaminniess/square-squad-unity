@@ -76,6 +76,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "STICK",
+                    "type": "Value",
+                    "id": "f57a727d-2800-4b7c-b3af-9ab25ab8a231",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -428,6 +436,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SOUTH",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d874682-ecab-4ed3-bb40-880bb056850f",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "STICK",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

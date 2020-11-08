@@ -1,15 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 using UnityEngine.SceneManagement;
 
 public class LobbyScript : MonoBehaviour
 {
     public static LobbyScript instance;
-
-   // private PlayerInputManager inputManager;
 
     private GameObject[] playersScores;
     private Dictionary<int, GameObject> Players;
@@ -27,13 +24,6 @@ public class LobbyScript : MonoBehaviour
         }
 
         Players = new Dictionary<int, GameObject>();
-        //initializeManager();
-    }
-
-    private void initializeManager()
-    {
-        //inputManager = GetComponent<PlayerInputManager>();
-        //inputManager.DisableJoining();
     }
 
     public void isButtonPressed( PlayerMovements playerScript, string Button ) {

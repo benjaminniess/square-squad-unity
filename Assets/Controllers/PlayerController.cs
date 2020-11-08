@@ -89,6 +89,14 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""STICK"",
+                    ""type"": ""Value"",
+                    ""id"": ""f57a727d-2800-4b7c-b3af-9ab25ab8a231"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -443,6 +451,17 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""action"": ""SOUTH"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d874682-ecab-4ed3-bb40-880bb056850f"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""STICK"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -460,6 +479,7 @@ public class @PlayerController : IInputActionCollection, IDisposable
         m_Gameplay_START = m_Gameplay.FindAction("START", throwIfNotFound: true);
         m_Gameplay_NORTH = m_Gameplay.FindAction("NORTH", throwIfNotFound: true);
         m_Gameplay_SOUTH = m_Gameplay.FindAction("SOUTH", throwIfNotFound: true);
+        m_Gameplay_STICK = m_Gameplay.FindAction("STICK", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -518,6 +538,7 @@ public class @PlayerController : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_START;
     private readonly InputAction m_Gameplay_NORTH;
     private readonly InputAction m_Gameplay_SOUTH;
+    private readonly InputAction m_Gameplay_STICK;
     public struct GameplayActions
     {
         private @PlayerController m_Wrapper;
@@ -531,6 +552,7 @@ public class @PlayerController : IInputActionCollection, IDisposable
         public InputAction @START => m_Wrapper.m_Gameplay_START;
         public InputAction @NORTH => m_Wrapper.m_Gameplay_NORTH;
         public InputAction @SOUTH => m_Wrapper.m_Gameplay_SOUTH;
+        public InputAction @STICK => m_Wrapper.m_Gameplay_STICK;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -567,6 +589,9 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @SOUTH.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSOUTH;
                 @SOUTH.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSOUTH;
                 @SOUTH.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSOUTH;
+                @STICK.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTICK;
+                @STICK.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTICK;
+                @STICK.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTICK;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -598,6 +623,9 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @SOUTH.started += instance.OnSOUTH;
                 @SOUTH.performed += instance.OnSOUTH;
                 @SOUTH.canceled += instance.OnSOUTH;
+                @STICK.started += instance.OnSTICK;
+                @STICK.performed += instance.OnSTICK;
+                @STICK.canceled += instance.OnSTICK;
             }
         }
     }
@@ -613,5 +641,6 @@ public class @PlayerController : IInputActionCollection, IDisposable
         void OnSTART(InputAction.CallbackContext context);
         void OnNORTH(InputAction.CallbackContext context);
         void OnSOUTH(InputAction.CallbackContext context);
+        void OnSTICK(InputAction.CallbackContext context);
     }
 }
