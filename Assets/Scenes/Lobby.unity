@@ -457,30 +457,54 @@ MonoBehaviour:
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings:
-      - m_Name: 
-        m_Id: 6daea364-388b-42fe-920d-2990a270e021
-        m_Path: <Keyboard>/numpadEnter
+      - m_Name: Gamepad
+        m_Id: f8e5220c-c208-4506-9581-c496a7b524fa
+        m_Path: ButtonWithOneModifier
         m_Interactions: 
         m_Processors: 
         m_Groups: 
         m_Action: Join
-        m_Flags: 0
-      - m_Name: 
-        m_Id: ba920d41-45b7-4805-861f-7a9b54788646
-        m_Path: <Gamepad>/buttonEast
+        m_Flags: 4
+      - m_Name: modifier
+        m_Id: 18492463-3fdf-4a24-9de9-0930f6dde707
+        m_Path: <Gamepad>/buttonNorth
         m_Interactions: 
         m_Processors: 
         m_Groups: 
         m_Action: Join
-        m_Flags: 0
-      - m_Name: 
-        m_Id: 97a1cf23-82ae-44fb-814d-0b66a6c2aa5a
-        m_Path: <Keyboard>/f
+        m_Flags: 8
+      - m_Name: button
+        m_Id: 652ea521-f3dc-4103-98f1-02cb57ee74b2
+        m_Path: <Gamepad>/buttonWest
         m_Interactions: 
         m_Processors: 
         m_Groups: 
         m_Action: Join
-        m_Flags: 0
+        m_Flags: 8
+      - m_Name: Keyboard
+        m_Id: e17cbfbc-859a-4fe5-946a-615940bef1e2
+        m_Path: ButtonWithOneModifier
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 4
+      - m_Name: modifier
+        m_Id: fdfad5cd-f94d-4864-a961-43f26ef1176d
+        m_Path: <Keyboard>/e
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 8
+      - m_Name: button
+        m_Id: cdf470e5-f648-4beb-808c-9e8b1eba0a63
+        m_Path: <Keyboard>/s
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 8
     m_Reference: {fileID: 0}
   m_PlayerPrefab: {fileID: 491578336404137710, guid: b0fbd67e12498451fbceb99ea0fb0bae,
     type: 3}
