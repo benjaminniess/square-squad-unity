@@ -84,6 +84,22 @@
                     "expectedControlType": "Stick",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "CLICK",
+                    "type": "Button",
+                    "id": "db6a721d-6758-42de-bd1e-73f6b29b37df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "POINT",
+                    "type": "Value",
+                    "id": "4c4c06d9-2c54-4921-942a-9df41f672718",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -447,6 +463,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "STICK",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d64079c2-f182-47d5-81cb-69f4d0740504",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CLICK",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7160b4f0-6c86-4024-93c9-f122c26678ce",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "POINT",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

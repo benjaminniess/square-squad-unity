@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using TMPro;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
@@ -18,10 +19,15 @@ public class Main : MonoBehaviour
     private float timeRemaining = 60;
     private TextMeshProUGUI countDownText;
     private GameObject GameOverMenu;
+    private GameObject PauseMenu;
     private GameObject FinalScore1;
     private GameObject FinalScore2;
     private GameObject FinalScore3;
     private GameObject FinalScore4;
+
+    private bool gameIsPaused = false;
+
+    private PlayerController controller;
 
     private bool isFrozenVal = true;
     private GameObject StartCountdown;
@@ -41,6 +47,11 @@ public class Main : MonoBehaviour
         }
 
         instance = this;
+
+        controller = new PlayerController();
+        controller.Gameplay.SOUTH.performed += ctx => BackAction();
+        controller.Gameplay.DASH.performed += ctx => ConfirmAction();
+        controller.Gameplay.START.performed += ctx => StartAction();
     }
 
     // Start is called before the first frame update
@@ -63,11 +74,13 @@ public class Main : MonoBehaviour
         GeneratePlayers();
 
         GameOverMenu = GameObject.Find("GameOverMenu");
+        PauseMenu = GameObject.Find("PauseMenu");
         FinalScore1 = GameObject.Find("FinalScorePlayer1");
         FinalScore2 = GameObject.Find("FinalScorePlayer2");
         FinalScore3 = GameObject.Find("FinalScorePlayer3");
         FinalScore4 = GameObject.Find("FinalScorePlayer4");
         GameOverMenu.SetActive(false);
+        PauseMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -85,6 +98,100 @@ public class Main : MonoBehaviour
 
         gameOver();
         UpdateScores();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            togglePause();
+        }
+    }
+
+        void OnEnable() {
+        controller.Enable();
+    }
+
+    void BackAction() {
+        if (Time.timeScale == 1 || Main.instance.isFrozen()) {
+            return;
+        }
+
+        Menu();
+    }
+
+    void ConfirmAction() {
+        if (Time.timeScale == 1 || Main.instance.isFrozen()) {
+            return;
+        }
+
+        if (gameIsPaused) {
+            Resume();
+        } else {
+            Play();
+        }
+
+    }
+
+    
+    public void StartAction()
+    {
+        togglePause();
+    }
+
+
+    public void togglePause() {
+        if (gameIsPaused) 
+        {
+            Resume();
+        }
+        else if (Time.timeScale == 1)
+        {
+            Paused();
+        }
+    }
+
+    public void Play()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Arena2");
+        
+    }
+
+    public void Resume()
+    {
+        if (!gameIsPaused) {
+            return;
+        }
+
+        if (PauseMenu == null) {
+            return;
+        }
+
+        PauseMenu.SetActive(false);
+        
+        Time.timeScale = 1;
+        gameIsPaused = false;
+    }
+
+    void Paused()
+    {
+        if ( gameIsPaused ) {
+            return;
+        }
+
+        if (PauseMenu == null) {
+            return;
+        }
+
+        PauseMenu.SetActive(true);
+    
+        
+        Time.timeScale = 0;
+        gameIsPaused = true;
+    }
+
+    public void Menu()
+    {
+        LobbyScript.instance.hidePlayers();
+        SceneManager.LoadScene("MainMenu");
     }
 
     public bool isFrozen() {
@@ -107,7 +214,7 @@ public class Main : MonoBehaviour
             }
 
             GameOverMenu.SetActive(true);
-
+            PauseMenu.SetActive(false);
             FinalScore1.SetActive(false);
             FinalScore2.SetActive(false);
             FinalScore3.SetActive(false);

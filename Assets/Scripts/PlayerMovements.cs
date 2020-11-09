@@ -53,7 +53,6 @@ public class PlayerMovements : MonoBehaviour
     private bool rightButton = false;
     private bool dashButton = false;
     private bool bonusButton = false;
-    private bool startButton = false;
     private bool northButton = false;
     private bool southButton = false;
 
@@ -97,14 +96,6 @@ public class PlayerMovements : MonoBehaviour
         bonusButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
-    public void pressStart(InputAction.CallbackContext ctx)
-    {
-        MainMenu.instance.togglePause();
-        startButton = 1 == ctx.ReadValue<float>() ? true : false;
-        if ( startButton == true ) {
-            
-        }
-    }
 
     public void pressNorth(InputAction.CallbackContext ctx)
     {
@@ -296,11 +287,6 @@ public class PlayerMovements : MonoBehaviour
     public bool isBonusPressed()
     {
         return bonusButton == true;
-    }
-
-    public bool isStartPressed()
-    {
-        return startButton == true;
     }
 
     public bool isNorthPressed()

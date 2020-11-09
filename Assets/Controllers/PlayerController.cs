@@ -97,6 +97,22 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Stick"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""CLICK"",
+                    ""type"": ""Button"",
+                    ""id"": ""db6a721d-6758-42de-bd1e-73f6b29b37df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""POINT"",
+                    ""type"": ""Value"",
+                    ""id"": ""4c4c06d9-2c54-4921-942a-9df41f672718"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -462,6 +478,28 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""action"": ""STICK"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d64079c2-f182-47d5-81cb-69f4d0740504"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CLICK"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7160b4f0-6c86-4024-93c9-f122c26678ce"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""POINT"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -480,6 +518,8 @@ public class @PlayerController : IInputActionCollection, IDisposable
         m_Gameplay_NORTH = m_Gameplay.FindAction("NORTH", throwIfNotFound: true);
         m_Gameplay_SOUTH = m_Gameplay.FindAction("SOUTH", throwIfNotFound: true);
         m_Gameplay_STICK = m_Gameplay.FindAction("STICK", throwIfNotFound: true);
+        m_Gameplay_CLICK = m_Gameplay.FindAction("CLICK", throwIfNotFound: true);
+        m_Gameplay_POINT = m_Gameplay.FindAction("POINT", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -539,6 +579,8 @@ public class @PlayerController : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_NORTH;
     private readonly InputAction m_Gameplay_SOUTH;
     private readonly InputAction m_Gameplay_STICK;
+    private readonly InputAction m_Gameplay_CLICK;
+    private readonly InputAction m_Gameplay_POINT;
     public struct GameplayActions
     {
         private @PlayerController m_Wrapper;
@@ -553,6 +595,8 @@ public class @PlayerController : IInputActionCollection, IDisposable
         public InputAction @NORTH => m_Wrapper.m_Gameplay_NORTH;
         public InputAction @SOUTH => m_Wrapper.m_Gameplay_SOUTH;
         public InputAction @STICK => m_Wrapper.m_Gameplay_STICK;
+        public InputAction @CLICK => m_Wrapper.m_Gameplay_CLICK;
+        public InputAction @POINT => m_Wrapper.m_Gameplay_POINT;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -592,6 +636,12 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @STICK.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTICK;
                 @STICK.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTICK;
                 @STICK.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSTICK;
+                @CLICK.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCLICK;
+                @CLICK.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCLICK;
+                @CLICK.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCLICK;
+                @POINT.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPOINT;
+                @POINT.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPOINT;
+                @POINT.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPOINT;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -626,6 +676,12 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @STICK.started += instance.OnSTICK;
                 @STICK.performed += instance.OnSTICK;
                 @STICK.canceled += instance.OnSTICK;
+                @CLICK.started += instance.OnCLICK;
+                @CLICK.performed += instance.OnCLICK;
+                @CLICK.canceled += instance.OnCLICK;
+                @POINT.started += instance.OnPOINT;
+                @POINT.performed += instance.OnPOINT;
+                @POINT.canceled += instance.OnPOINT;
             }
         }
     }
@@ -642,5 +698,7 @@ public class @PlayerController : IInputActionCollection, IDisposable
         void OnNORTH(InputAction.CallbackContext context);
         void OnSOUTH(InputAction.CallbackContext context);
         void OnSTICK(InputAction.CallbackContext context);
+        void OnCLICK(InputAction.CallbackContext context);
+        void OnPOINT(InputAction.CallbackContext context);
     }
 }

@@ -50249,6 +50249,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 231864073589942860, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 605608948561094555, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+    - target: {fileID: 231864073589942860, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 231864073589942860, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InGameMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2042237500677073941, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -50264,10 +50280,61 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 2132776292505148502, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960210949860743823, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2122532869}
+    - target: {fileID: 3960210949860743823, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960210949860743823, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InGameMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6277071984189543337, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400876338641198334, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2122532869}
+    - target: {fileID: 6400876338641198334, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400876338641198334, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InGameMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664499680440782085, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 605608948561094555, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+    - target: {fileID: 6664499680440782085, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664499680440782085, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InGameMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7543758329900704131, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
         type: 3}
@@ -50406,6 +50473,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e3b5d00964edc91fadd5f4ebebadc03, type: 3}
+--- !u!114 &2122532869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 605608948561094555, guid: 4e3b5d00964edc91fadd5f4ebebadc03,
+    type: 3}
+  m_PrefabInstance: {fileID: 2122532868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff981d9b818f0b9a9b1a00467c1a1b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &681744152913154850
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class LobbyScript : MonoBehaviour
 
     private GameObject[] playersScores;
     private Dictionary<int, GameObject> Players;
+    private PlayerController controller;
 
     private void Awake()
     {
@@ -24,6 +25,29 @@ public class LobbyScript : MonoBehaviour
         }
 
         Players = new Dictionary<int, GameObject>();
+
+        controller = new PlayerController();
+        controller.Gameplay.SOUTH.performed += ctx => BackAction();
+    }
+
+    void OnEnable() {
+        controller.Enable();
+    }
+
+    void BackAction() {
+        if ( getPlayers().Count < 1 ) {
+            SceneManager.LoadScene("MainMenu");
+        }
+        
+    }
+    
+    public void Play()
+    {
+        if ( getPlayers().Count > 0 ) {
+            controller.Disable();
+            Time.timeScale = 1;
+            SceneManager.LoadScene("Arena2");
+        }
     }
 
     public void isButtonPressed( PlayerMovements playerScript, string Button ) {
@@ -50,7 +74,7 @@ public class LobbyScript : MonoBehaviour
                 }
 
                 if ( allReady == true ) {
-                    MainMenu.instance.Play();
+                    Play();
                 }
                 
             }
