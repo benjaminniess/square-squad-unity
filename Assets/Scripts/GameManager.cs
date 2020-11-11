@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         {
             bgColor.a = Mathf.Lerp(1, 0, time / transitionsDuration);
             fadeBackground.color = bgColor;
-            time += Time.deltaTime;
+            time += Time.fixedDeltaTime;
             yield return null;
         }
     }
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         {
             bgColor.a = Mathf.Lerp(0, 1, time / transitionsDuration);
             fadeBackground.color = bgColor;
-            time += Time.deltaTime;
+            time += Time.fixedDeltaTime;
             yield return null;
         }
 

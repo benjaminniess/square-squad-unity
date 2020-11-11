@@ -34,7 +34,6 @@ public class LobbyScript : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("start");
         controller.Enable();
     }
 
@@ -42,7 +41,7 @@ public class LobbyScript : MonoBehaviour
     {
         if (GameManager.instance.GetPlayers().Count < 1)
         {
-            SceneManager.LoadScene("MainMenu");
+            StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
         }
     }
 
@@ -52,7 +51,7 @@ public class LobbyScript : MonoBehaviour
         {
             controller.Disable();
             Time.timeScale = 1;
-            SceneManager.LoadScene("Arena2");
+            StartCoroutine(GameManager.instance.LoadScene("Arena2"));
         }
     }
 
