@@ -58,7 +58,7 @@ public class Main : MonoBehaviour
 
         instance = this;
 
-        controller = new PlayerController();
+        controller = GameManager.instance.GetController();
         controller.Gameplay.SOUTH.performed += ctx => BackAction();
         controller.Gameplay.DASH.performed += ctx => ConfirmAction();
         controller.Gameplay.START.performed += ctx => StartAction();
@@ -226,7 +226,7 @@ public class Main : MonoBehaviour
 
     public void Menu()
     {
-        LobbyScript.instance.hidePlayers();
+        GameManager.instance.hidePlayers();
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -263,7 +263,7 @@ public class Main : MonoBehaviour
             foreach (KeyValuePair<int, GameObject>
                 Player
                 in
-                LobbyScript.instance.getPlayers()
+                GameManager.instance.GetPlayers()
             )
             {
                 PlayerMovements playerScript =
@@ -380,7 +380,7 @@ public class Main : MonoBehaviour
         foreach (KeyValuePair<int, GameObject>
             Player
             in
-            LobbyScript.instance.getPlayers()
+            GameManager.instance.GetPlayers()
         )
         {
             if (null == Player.Value || !Player.Value.CompareTag("Player"))
@@ -468,7 +468,7 @@ public class Main : MonoBehaviour
         foreach (KeyValuePair<int, GameObject>
             Player
             in
-            LobbyScript.instance.getPlayers()
+            GameManager.instance.GetPlayers()
         )
         {
             PlayerMovements playerScript =

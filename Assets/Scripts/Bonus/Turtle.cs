@@ -11,7 +11,7 @@ public class Turtle : Bonus
         foreach (KeyValuePair<int, GameObject>
             Player
             in
-            LobbyScript.instance.getPlayers()
+            GameManager.instance.GetPlayers()
         )
         {
             if (Player.Value.name == holder.name)
@@ -31,7 +31,7 @@ public class Turtle : Bonus
         foreach (KeyValuePair<int, GameObject>
             Player
             in
-            LobbyScript.instance.getPlayers()
+            GameManager.instance.GetPlayers()
         )
         {
             PlayerMovements playerScript =

@@ -7,10 +7,6 @@ public class LobbyScript : MonoBehaviour
 {
     public static LobbyScript instance;
 
-    private GameObject[] playersScores;
-
-    private Dictionary<int, GameObject> Players;
-
     private PlayerController controller;
 
     private void Awake()
@@ -28,9 +24,7 @@ public class LobbyScript : MonoBehaviour
             }
         }
 
-        Players = new Dictionary<int, GameObject>();
-
-        controller = new PlayerController();
+        controller = GameManager.instance.GetController();
         controller.Gameplay.SOUTH.performed += ctx => BackAction();
     }
 
@@ -41,7 +35,7 @@ public class LobbyScript : MonoBehaviour
 
     void BackAction()
     {
-        if (getPlayers().Count < 1)
+        if (GameManager.instance.GetPlayers().Count < 1)
         {
             SceneManager.LoadScene("MainMenu");
         }
@@ -49,7 +43,7 @@ public class LobbyScript : MonoBehaviour
 
     public void Play()
     {
-        if (getPlayers().Count > 0)
+        if (GameManager.instance.GetPlayers().Count > 0)
         {
             controller.Disable();
             Time.timeScale = 1;
@@ -80,7 +74,11 @@ public class LobbyScript : MonoBehaviour
             else
             {
                 bool allReady = true;
-                foreach (KeyValuePair<int, GameObject> PlayerReady in Players)
+                foreach (KeyValuePair<int, GameObject>
+                    PlayerReady
+                    in
+                    GameManager.instance.GetPlayers()
+                )
                 {
                     PlayerMovements playerReadyScript =
                         PlayerReady.Value.GetComponent<PlayerMovements>();
@@ -112,7 +110,9 @@ public class LobbyScript : MonoBehaviour
                 playerLobbyUIScript.showBack(false);
                 playerLobbyUIScript.showReadyText(false);
 
-                foreach (KeyValuePair<int, GameObject> PlayerToD in Players)
+                Dictionary<int, GameObject> players =
+                    GameManager.instance.GetPlayers();
+                foreach (KeyValuePair<int, GameObject> PlayerToD in players)
                 {
                     PlayerMovements playerToDScript =
                         PlayerToD.Value.GetComponent<PlayerMovements>();
@@ -121,7 +121,8 @@ public class LobbyScript : MonoBehaviour
                     }
                 }
 
-                Players.Remove(playerScript.getNumber());
+                players.Remove(playerScript.getNumber());
+                GameManager.instance.SetPlayers (players);
                 Destroy(playerScript.gameObject);
                 ResetPlayers();
             }
@@ -137,7 +138,8 @@ public class LobbyScript : MonoBehaviour
             return;
         }
 
-        int PlayerCount = Players.Count + 1;
+        Dictionary<int, GameObject> players = GameManager.instance.GetPlayers();
+        int PlayerCount = players.Count + 1;
 
         GameObject playerLobbyUI =
             GameObject.Find("PlayerLobbyUI" + PlayerCount);
@@ -150,7 +152,8 @@ public class LobbyScript : MonoBehaviour
 
         DontDestroyOnLoad (playerScript);
 
-        Players.Add(PlayerCount, playerScript.gameObject);
+        players.Add(PlayerCount, playerScript.gameObject);
+        GameManager.instance.SetPlayers (players);
 
         ResetPlayers();
     }
@@ -166,9 +169,14 @@ public class LobbyScript : MonoBehaviour
                 playerLobbyUI.GetComponent<PlayerLobbyUI>();
             playerLobbyUIScript.reset();
         }
+
         Dictionary<int, GameObject> NewPlayers =
             new Dictionary<int, GameObject>();
-        foreach (KeyValuePair<int, GameObject> Player in Players)
+        foreach (KeyValuePair<int, GameObject>
+            Player
+            in
+            GameManager.instance.GetPlayers()
+        )
         {
             PlayerMovements playerScript =
                 Player.Value.GetComponent<PlayerMovements>();
@@ -223,20 +231,6 @@ public class LobbyScript : MonoBehaviour
             playerReCount++;
         }
 
-        Players = NewPlayers;
-    }
-
-    public void hidePlayers()
-    {
-        foreach (KeyValuePair<int, GameObject> Player in Players)
-        {
-            //Player.SetActive(false);
-            Player.Value.transform.position = new Vector3(-100, -100, -100);
-        }
-    }
-
-    public Dictionary<int, GameObject> getPlayers()
-    {
-        return Players;
+        GameManager.instance.SetPlayers (NewPlayers);
     }
 }
