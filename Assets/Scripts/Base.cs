@@ -7,36 +7,40 @@ public class Base : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
-    void OnTriggerEnter2D (Collider2D collider) {
-        if (collider.tag == "Player" ) {
-            PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Player")
+        {
+            PlayerMovements playerScript =
+                collider.gameObject.GetComponent<PlayerMovements>();
             playerScript.setTracked(false);
-            if ( playerScript.isHoldingCoin() ) {
+            if (playerScript.isHoldingCoin())
+            {
                 playerScript.increaseScore();
                 playerScript.setIsHoldingCoin(false);
                 Main.instance.GenerateCoin();
             }
-         }
+        }
     }
 
-    void OnTriggerExit2D(Collider2D collider) {
-        if (collider.tag == "Player" ) {
-            PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.tag == "Player")
+        {
+            PlayerMovements playerScript =
+                collider.gameObject.GetComponent<PlayerMovements>();
             playerScript.setTracked(true);
-         }
+        }
     }
 
     void OnTriggerStay2D(Collider2D collider)
     {
-        
     }
 }

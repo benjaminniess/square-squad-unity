@@ -5,41 +5,48 @@ using UnityEngine;
 public abstract class Bonus : MonoBehaviour
 {
     protected abstract void onTriggerBonus();
+
     protected abstract void onBonusEnd();
 
     protected Sprite BonusSprite;
+
     protected PlayerMovements holder;
 
-    public void start() {
+    public void start()
+    {
         BonusSprite = transform.GetComponent<SpriteRenderer>().sprite;
     }
 
-    public void triggerBonus() {
+    public void triggerBonus()
+    {
         Main.instance.removeBonusFromPlayer(holder.getNumber(), BonusSprite);
         onTriggerBonus();
-    
 
         getHolder().setIsHoldingBonus(false);
     }
 
-    public void StopBonus() {
+    public void StopBonus()
+    {
         onBonusEnd();
 
-        if ( gameObject != null ) {
-            Destroy(gameObject);
+        if (gameObject != null)
+        {
+            Destroy (gameObject);
         }
-        
     }
 
-    public float getDuration() {
+    public float getDuration()
+    {
         return 3;
     }
 
-    public void setHolder( PlayerMovements holderPlayer ) {
+    public void setHolder(PlayerMovements holderPlayer)
+    {
         holder = holderPlayer;
     }
 
-    public PlayerMovements getHolder() {
+    public PlayerMovements getHolder()
+    {
         return holder;
     }
 
@@ -50,22 +57,30 @@ public abstract class Bonus : MonoBehaviour
             return;
         }
 
-        PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
+        PlayerMovements playerScript =
+            collider.gameObject.GetComponent<PlayerMovements>();
 
-        if ( playerScript.isHoldingBonus()  ) {
+        if (playerScript.isHoldingBonus())
+        {
             return;
         }
 
         playerScript.setIsHoldingBonus(true);
-        
-        setHolder(playerScript);
-        Main.instance.setBonusForPlayer(holder.getNumber(), transform.GetComponent<SpriteRenderer>().sprite);
-        Main.instance.GenerateBonus();
-        transform.position = new Vector3(-100,-100,-100);
 
-        if (!playerScript.isUsingBonus() ) {
+        setHolder (playerScript);
+        Main
+            .instance
+            .setBonusForPlayer(holder.getNumber(),
+            transform.GetComponent<SpriteRenderer>().sprite);
+        Main.instance.GenerateBonus();
+        transform.position = new Vector3(-100, -100, -100);
+
+        if (!playerScript.isUsingBonus())
+        {
             playerScript.setBonus(this);
-        } else {
+        }
+        else
+        {
             playerScript.setStashedBonus(this);
         }
     }

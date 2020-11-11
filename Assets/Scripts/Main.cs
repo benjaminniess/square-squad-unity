@@ -1,28 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
-using TMPro;
 using System.Linq;
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class Main : MonoBehaviour
 {
-
     public static Main instance;
 
     public GameObject Coin;
+
     public GameObject Player;
 
     private GameObject[] playersScores;
 
     private float timeRemaining = 60;
+
     private TextMeshProUGUI countDownText;
+
     private GameObject GameOverMenu;
+
     private GameObject PauseMenu;
+
     private GameObject FinalScore1;
+
     private GameObject FinalScore2;
+
     private GameObject FinalScore3;
+
     private GameObject FinalScore4;
 
     private bool gameIsPaused = false;
@@ -30,8 +37,11 @@ public class Main : MonoBehaviour
     private PlayerController controller;
 
     private bool isFrozenVal = true;
+
     private GameObject StartCountdown;
+
     private float startCountDownTime = 4f;
+
     private TextMeshProUGUI startCountDownText;
 
     private Tilemap map;
@@ -60,8 +70,12 @@ public class Main : MonoBehaviour
         map = FindObjectOfType<Tilemap>();
         Time.timeScale = 0;
 
-        countDownText = GameObject.Find("Countdown").GetComponent<TMPro.TextMeshProUGUI>();
-        startCountDownText = GameObject.Find("StartCountdownTxt").GetComponent<TMPro.TextMeshProUGUI>();
+        countDownText =
+            GameObject.Find("Countdown").GetComponent<TMPro.TextMeshProUGUI>();
+        startCountDownText =
+            GameObject
+                .Find("StartCountdownTxt")
+                .GetComponent<TMPro.TextMeshProUGUI>();
         StartCountdown = GameObject.Find("StartCountdown");
 
         GenerateCoin();
@@ -86,10 +100,12 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( isFrozen() ) {
+        if (isFrozen())
+        {
             startCountDownTime -= Time.fixedDeltaTime;
-            startCountDownText.SetText(((int)startCountDownTime).ToString());
-            if ( startCountDownTime < 1 ) {
+            startCountDownText.SetText(((int) startCountDownTime).ToString());
+            if (startCountDownTime < 1)
+            {
                 isFrozenVal = false;
                 StartCountdown.SetActive(false);
                 Time.timeScale = 1;
@@ -105,40 +121,46 @@ public class Main : MonoBehaviour
         }
     }
 
-        void OnEnable() {
+    void OnEnable()
+    {
         controller.Enable();
     }
 
-    void BackAction() {
-        if (Time.timeScale == 1 || Main.instance.isFrozen()) {
+    void BackAction()
+    {
+        if (Time.timeScale == 1 || Main.instance.isFrozen())
+        {
             return;
         }
 
         Menu();
     }
 
-    void ConfirmAction() {
-        if (Time.timeScale == 1 || Main.instance.isFrozen()) {
+    void ConfirmAction()
+    {
+        if (Time.timeScale == 1 || Main.instance.isFrozen())
+        {
             return;
         }
 
-        if (gameIsPaused) {
+        if (gameIsPaused)
+        {
             Resume();
-        } else {
+        }
+        else
+        {
             Play();
         }
-
     }
 
-    
     public void StartAction()
     {
         togglePause();
     }
 
-
-    public void togglePause() {
-        if (gameIsPaused) 
+    public void togglePause()
+    {
+        if (gameIsPaused)
         {
             Resume();
         }
@@ -152,38 +174,40 @@ public class Main : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Arena2");
-        
     }
 
     public void Resume()
     {
-        if (!gameIsPaused) {
+        if (!gameIsPaused)
+        {
             return;
         }
 
-        if (PauseMenu == null) {
+        if (PauseMenu == null)
+        {
             return;
         }
 
         PauseMenu.SetActive(false);
-        
+
         Time.timeScale = 1;
         gameIsPaused = false;
     }
 
     void Paused()
     {
-        if ( gameIsPaused ) {
+        if (gameIsPaused)
+        {
             return;
         }
 
-        if (PauseMenu == null) {
+        if (PauseMenu == null)
+        {
             return;
         }
 
         PauseMenu.SetActive(true);
-    
-        
+
         Time.timeScale = 0;
         gameIsPaused = true;
     }
@@ -194,14 +218,15 @@ public class Main : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public bool isFrozen() {
+    public bool isFrozen()
+    {
         return isFrozenVal;
     }
 
     public void gameOver()
     {
         timeRemaining -= Time.deltaTime;
-        countDownText.SetText(((int)timeRemaining).ToString());
+        countDownText.SetText(((int) timeRemaining).ToString());
         if (timeRemaining <= 0)
         {
             Time.timeScale = 0;
@@ -210,7 +235,7 @@ public class Main : MonoBehaviour
             coins = GameObject.FindGameObjectsWithTag("Coin");
             foreach (GameObject coin in coins)
             {
-                Destroy(coin);
+                Destroy (coin);
             }
 
             GameOverMenu.SetActive(true);
@@ -220,13 +245,20 @@ public class Main : MonoBehaviour
             FinalScore3.SetActive(false);
             FinalScore4.SetActive(false);
 
-            Dictionary<PlayerMovements, int> ScoresDictionnary = new Dictionary<PlayerMovements, int>();
+            Dictionary<PlayerMovements, int> ScoresDictionnary =
+                new Dictionary<PlayerMovements, int>();
 
-            foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
+            foreach (KeyValuePair<int, GameObject>
+                Player
+                in
+                LobbyScript.instance.getPlayers()
+            )
             {
-                PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
+                PlayerMovements playerScript =
+                    Player.Value.GetComponent<PlayerMovements>();
                 ScoresDictionnary.Add(playerScript, playerScript.getScore());
-                GameObject pInfos = GameObject.Find("InfosPlayer" + playerScript.getNumber());
+                GameObject pInfos =
+                    GameObject.Find("InfosPlayer" + playerScript.getNumber());
                 if (pInfos != null)
                 {
                     pInfos.SetActive(false);
@@ -234,38 +266,89 @@ public class Main : MonoBehaviour
             }
 
             int i = 1;
-            foreach (KeyValuePair<PlayerMovements, int> playerData in ScoresDictionnary.OrderByDescending(key => key.Value))
+            foreach (KeyValuePair<PlayerMovements, int>
+                playerData
+                in
+                ScoresDictionnary.OrderByDescending(key => key.Value)
+            )
             {
                 int playerScore = playerData.Value;
 
                 if (i == 1)
                 {
                     FinalScore1.SetActive(true);
-                    FinalScore1.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
-                    FinalScore1.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
-                    FinalScore1.transform.Find("Color").GetComponent<SpriteRenderer>().color = playerData.Key.getColor();
-
+                    FinalScore1
+                        .transform
+                        .Find("Score/ScoreText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText(playerData.Key.getScore().ToString());
+                    FinalScore1
+                        .transform
+                        .Find("Position/PositionText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText("#" + i.ToString());
+                    FinalScore1
+                        .transform
+                        .Find("Color")
+                        .GetComponent<SpriteRenderer>()
+                        .color = playerData.Key.getColor();
                 }
                 else if (i == 2)
                 {
                     FinalScore2.SetActive(true);
-                    FinalScore2.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
-                    FinalScore2.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
-                    FinalScore2.transform.Find("Color").GetComponent<SpriteRenderer>().color = playerData.Key.getColor();
+                    FinalScore2
+                        .transform
+                        .Find("Score/ScoreText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText(playerData.Key.getScore().ToString());
+                    FinalScore2
+                        .transform
+                        .Find("Position/PositionText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText("#" + i.ToString());
+                    FinalScore2
+                        .transform
+                        .Find("Color")
+                        .GetComponent<SpriteRenderer>()
+                        .color = playerData.Key.getColor();
                 }
                 else if (i == 3)
                 {
                     FinalScore3.SetActive(true);
-                    FinalScore3.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
-                    FinalScore3.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
-                    FinalScore3.transform.Find("Color").GetComponent<SpriteRenderer>().color = playerData.Key.getColor();
+                    FinalScore3
+                        .transform
+                        .Find("Score/ScoreText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText(playerData.Key.getScore().ToString());
+                    FinalScore3
+                        .transform
+                        .Find("Position/PositionText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText("#" + i.ToString());
+                    FinalScore3
+                        .transform
+                        .Find("Color")
+                        .GetComponent<SpriteRenderer>()
+                        .color = playerData.Key.getColor();
                 }
                 else
                 {
                     FinalScore4.SetActive(true);
-                    FinalScore4.transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerData.Key.getScore().ToString());
-                    FinalScore4.transform.Find("Position/PositionText").GetComponent<TMPro.TextMeshProUGUI>().SetText("#" + i.ToString());
-                    FinalScore4.transform.Find("Color").GetComponent<SpriteRenderer>().color = playerData.Key.getColor();
+                    FinalScore4
+                        .transform
+                        .Find("Score/ScoreText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText(playerData.Key.getScore().ToString());
+                    FinalScore4
+                        .transform
+                        .Find("Position/PositionText")
+                        .GetComponent<TMPro.TextMeshProUGUI>()
+                        .SetText("#" + i.ToString());
+                    FinalScore4
+                        .transform
+                        .Find("Color")
+                        .GetComponent<SpriteRenderer>()
+                        .color = playerData.Key.getColor();
                 }
 
                 i++;
@@ -278,23 +361,33 @@ public class Main : MonoBehaviour
         playersScores = new GameObject[4];
         for (int i = 0; i < 4; i++)
         {
-
             playersScores[i] = GameObject.Find("InfosPlayer" + (i + 1));
             playersScores[i].SetActive(false);
         }
 
-        foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
+        foreach (KeyValuePair<int, GameObject>
+            Player
+            in
+            LobbyScript.instance.getPlayers()
+        )
         {
             if (null == Player.Value || !Player.Value.CompareTag("Player"))
             {
                 continue;
             }
-            PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
+            PlayerMovements playerScript =
+                Player.Value.GetComponent<PlayerMovements>();
             playerScript.initState();
-            GameObject spawnPosition = GameObject.Find("SpawnPositionForPlayer" + playerScript.getNumber());
+            GameObject spawnPosition =
+                GameObject
+                    .Find("SpawnPositionForPlayer" + playerScript.getNumber());
             Rigidbody2D rb = playerScript.getRigidbody();
             playersScores[playerScript.getNumber() - 1].SetActive(true);
-            playersScores[playerScript.getNumber() - 1].transform.Find("Bonus").gameObject.SetActive(false);
+            playersScores[playerScript.getNumber() - 1]
+                .transform
+                .Find("Bonus")
+                .gameObject
+                .SetActive(false);
             rb.transform.position = spawnPosition.transform.position;
             playerScript.resetScore();
         }
@@ -329,28 +422,55 @@ public class Main : MonoBehaviour
 
         int BonusKey = Random.Range(0, (BonusTypes.Length));
 
-        Instantiate(BonusTypes[BonusKey], new Vector3(spawnX, spawnY, 0), Quaternion.identity);
+        Instantiate(BonusTypes[BonusKey],
+        new Vector3(spawnX, spawnY, 0),
+        Quaternion.identity);
     }
 
     public void setBonusForPlayer(int playerNumber, Sprite sprite)
     {
-        playersScores[playerNumber - 1].transform.Find("Bonus").gameObject.SetActive(true);
-        playersScores[playerNumber - 1].transform.Find("Bonus").GetComponent<SpriteRenderer>().sprite = sprite;
+        playersScores[playerNumber - 1]
+            .transform
+            .Find("Bonus")
+            .gameObject
+            .SetActive(true);
+        playersScores[playerNumber - 1]
+            .transform
+            .Find("Bonus")
+            .GetComponent<SpriteRenderer>()
+            .sprite = sprite;
     }
 
     public void removeBonusFromPlayer(int playerNumber, Sprite sprite)
     {
-        playersScores[playerNumber - 1].transform.Find("Bonus").gameObject.SetActive(false);
+        playersScores[playerNumber - 1]
+            .transform
+            .Find("Bonus")
+            .gameObject
+            .SetActive(false);
     }
 
     public void UpdateScores()
     {
         int i = 0;
-        foreach ( KeyValuePair<int, GameObject> Player in LobbyScript.instance.getPlayers() )
+        foreach (KeyValuePair<int, GameObject>
+            Player
+            in
+            LobbyScript.instance.getPlayers()
+        )
         {
-            PlayerMovements playerScript = Player.Value.GetComponent<PlayerMovements>();
-            playersScores[i].transform.Find("Score/ScoreText").GetComponent<TMPro.TextMeshProUGUI>().SetText(playerScript.getScore().ToString());
-            playersScores[i].transform.Find("Color").GetComponent<SpriteRenderer>().color = playerScript.getColor();
+            PlayerMovements playerScript =
+                Player.Value.GetComponent<PlayerMovements>();
+            playersScores[i]
+                .transform
+                .Find("Score/ScoreText")
+                .GetComponent<TMPro.TextMeshProUGUI>()
+                .SetText(playerScript.getScore().ToString());
+            playersScores[i]
+                .transform
+                .Find("Color")
+                .GetComponent<SpriteRenderer>()
+                .color = playerScript.getColor();
 
             i++;
         }

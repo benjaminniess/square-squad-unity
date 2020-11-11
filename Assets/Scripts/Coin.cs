@@ -7,21 +7,23 @@ public class Coin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
-    void OnTriggerEnter2D (Collider2D collider) {
-        if (collider.tag == "Player" ) {
-            PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
-            if ( ! playerScript.isHoldingCoin() ) {
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Player")
+        {
+            PlayerMovements playerScript =
+                collider.gameObject.GetComponent<PlayerMovements>();
+            if (!playerScript.isHoldingCoin())
+            {
                 playerScript.setIsHoldingCoin(true);
-                Destroy(gameObject);
+                Destroy (gameObject);
             }
         }
     }

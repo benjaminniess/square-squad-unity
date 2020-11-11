@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Arena1 : Arena
 {
-
-    void Start() {
-
+    void Start()
+    {
     }
 }

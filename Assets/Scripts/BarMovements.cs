@@ -17,16 +17,21 @@ public class BarMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if ( flip == true ) {
-           transform.Translate(Vector2.down * Time.deltaTime * 5, Space.World);
-           if ( transform.position.y < ( barStartYPos - 25 ) ) {
-               flip = false;
-           }
-       } else {
-           transform.Translate(Vector2.up * Time.deltaTime * 5, Space.World);
-           if ( transform.position.y >= barStartYPos ) {
-               flip = true;
-           }
-       }
+        if (flip == true)
+        {
+            transform.Translate(Vector2.down * Time.deltaTime * 5, Space.World);
+            if (transform.position.y < (barStartYPos - 25))
+            {
+                flip = false;
+            }
+        }
+        else
+        {
+            transform.Translate(Vector2.up * Time.deltaTime * 5, Space.World);
+            if (transform.position.y >= barStartYPos)
+            {
+                flip = true;
+            }
+        }
     }
 }

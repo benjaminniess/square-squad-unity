@@ -1,22 +1,28 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
+using UnityEngine.UI;
 
 public class PlayerMovements : MonoBehaviour
 {
-
     private float currentSpeed;
+
     private int score = 0;
+
     private int playerNumber;
+
     private Rigidbody2D rb;
+
     private bool isTrackedVal = true;
+
     private bool isReadyVal = false;
 
     private string playerHealth = "ok";
 
     private bool isHoldingCoinVal = false;
+
     private GameObject fakeCoin;
+
     private GameObject dashStatus;
 
     private Vector2 playerStartPos;
@@ -24,36 +30,56 @@ public class PlayerMovements : MonoBehaviour
     PlayerController controls;
 
     private float speed = 1000;
+
     private float currentPlayerSpeed;
 
     // DASH SYSTEM
     float dashTimer = 0.0f;
+
     float dashSleepTimer = 0.0f;
+
     private float dashDuration = 0.05f;
+
     private float dashSpeed = 3000;
+
     private float dashSleepDuration = 2;
+
     private bool isDashingVal = false;
 
     // KO SYSTEM
     float koTimer = 0.0f;
+
     private float koDuration = 1f;
+
     private GameObject koStatus;
+
     private GameObject recoverStatus;
 
     // BONUS SYSTEM
     private bool isHoldingBonusVal = false;
+
     private bool isUsingBonusVal = false;
+
     private Bonus bonus;
+
     private Bonus stashedBonus;
+
     private float bonusTimer;
 
     private bool upButton = false;
+
     private bool downButton = false;
+
     private bool leftButton = false;
+
     private bool rightButton = false;
+
     private bool dashButton = false;
+
     private bool bonusButton = false;
+
     private bool northButton = false;
+
     private bool southButton = false;
 
     private SpriteRenderer playerColor;
@@ -81,12 +107,16 @@ public class PlayerMovements : MonoBehaviour
     public void pressDash(InputAction.CallbackContext ctx)
     {
         float ctxvalue = ctx.ReadValue<float>();
-        if ( ctxvalue == 1 ) {
-            if ( dashButton != true ) {
+        if (ctxvalue == 1)
+        {
+            if (dashButton != true)
+            {
                 LobbyScript.instance.isButtonPressed(this, "Dash");
             }
             dashButton = true;
-        } else {
+        }
+        else
+        {
             dashButton = false;
         }
     }
@@ -96,7 +126,6 @@ public class PlayerMovements : MonoBehaviour
         bonusButton = 1 == ctx.ReadValue<float>() ? true : false;
     }
 
-
     public void pressNorth(InputAction.CallbackContext ctx)
     {
         northButton = 1 == ctx.ReadValue<float>() ? true : false;
@@ -105,12 +134,16 @@ public class PlayerMovements : MonoBehaviour
     public void pressSouth(InputAction.CallbackContext ctx)
     {
         float ctxvalue = ctx.ReadValue<float>();
-        if ( ctxvalue == 1 ) {
-            if ( southButton != true ) {
+        if (ctxvalue == 1)
+        {
+            if (southButton != true)
+            {
                 LobbyScript.instance.isButtonPressed(this, "South");
             }
             southButton = true;
-        } else {
+        }
+        else
+        {
             southButton = false;
         }
     }
@@ -123,8 +156,11 @@ public class PlayerMovements : MonoBehaviour
         dashStatus = transform.Find("DashStatus").gameObject;
         recoverStatus = transform.Find("RecoverStatus").gameObject;
         currentPlayerSpeed = speed;
-        playerColor = transform.Find("MainColor").gameObject.GetComponent<SpriteRenderer>();
-
+        playerColor =
+            transform
+                .Find("MainColor")
+                .gameObject
+                .GetComponent<SpriteRenderer>();
 
         LobbyScript.instance.initPlayer(this);
     }
@@ -149,7 +185,8 @@ public class PlayerMovements : MonoBehaviour
         return playerHealth;
     }
 
-    public bool isReady() {
+    public bool isReady()
+    {
         return isReadyVal;
     }
 
@@ -214,7 +251,6 @@ public class PlayerMovements : MonoBehaviour
         return isHoldingBonusVal;
     }
 
-
     public bool isUsingBonus()
     {
         return isUsingBonusVal;
@@ -230,14 +266,16 @@ public class PlayerMovements : MonoBehaviour
         return stashedBonus;
     }
 
-    public void initState() {
+    public void initState()
+    {
         setIsHoldingBonus(false);
         setIsHoldingCoin(false);
         setOK();
         resetPlayerSpeed();
     }
 
-    public void setReady(bool ready) {
+    public void setReady(bool ready)
+    {
         isReadyVal = ready;
     }
 
@@ -251,8 +289,10 @@ public class PlayerMovements : MonoBehaviour
         stashedBonus = newBonus;
     }
 
-    public void loadStashedBonus() {
-        if ( getStashedBonus() != null) {
+    public void loadStashedBonus()
+    {
+        if (getStashedBonus() != null)
+        {
             setBonus(getStashedBonus());
         }
 
@@ -261,7 +301,6 @@ public class PlayerMovements : MonoBehaviour
 
     public void setIsHoldingBonus(bool isHolding)
     {
-
         isHoldingBonusVal = isHolding;
     }
 
@@ -270,7 +309,8 @@ public class PlayerMovements : MonoBehaviour
         playerNumber = number;
     }
 
-    public Color getColor() {
+    public Color getColor()
+    {
         return playerColor.color;
     }
 
@@ -372,7 +412,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void setIsHoldingCoin(bool isHoldingCoin)
     {
-        fakeCoin.SetActive(isHoldingCoin);
+        fakeCoin.SetActive (isHoldingCoin);
         isHoldingCoinVal = isHoldingCoin;
     }
 
@@ -419,7 +459,6 @@ public class PlayerMovements : MonoBehaviour
 
     public void updateDashStatus()
     {
-
         // Dashing time expiration
         if (isDashingVal && dashTimer > dashDuration)
         {
@@ -458,11 +497,13 @@ public class PlayerMovements : MonoBehaviour
         if (bonusTimer > bonus.getDuration() || isKO())
         {
             isUsingBonusVal = false;
-            if ( bonus != null ) {
+            if (bonus != null)
+            {
                 bonus.StopBonus();
             }
 
-            if ( getStashedBonus() != null ) {
+            if (getStashedBonus() != null)
+            {
                 setBonus(getStashedBonus());
             }
         }
@@ -509,7 +550,6 @@ public class PlayerMovements : MonoBehaviour
         if (isDashing())
         {
             currentSpeed = dashSpeed;
-
         }
         else
         {
@@ -517,7 +557,14 @@ public class PlayerMovements : MonoBehaviour
             dashSleepTimer += Time.deltaTime;
         }
 
-        rb.velocity = Vector3.ClampMagnitude(new Vector3(getHorizontalAxe(), getVerticalAxe(), 0) * currentSpeed, currentSpeed) * Time.deltaTime;
+        rb.velocity =
+            Vector3
+                .ClampMagnitude(new Vector3(getHorizontalAxe(),
+                    getVerticalAxe(),
+                    0) *
+                currentSpeed,
+                currentSpeed) *
+            Time.deltaTime;
 
         dashStatus.SetActive(isDashAvailable());
     }
@@ -528,7 +575,8 @@ public class PlayerMovements : MonoBehaviour
         {
             if (collider.tag == "Player")
             {
-                PlayerMovements playerScript = collider.gameObject.GetComponent<PlayerMovements>();
+                PlayerMovements playerScript =
+                    collider.gameObject.GetComponent<PlayerMovements>();
                 if (playerScript.isDashingVal)
                 {
                     playerScript.setIsHoldingCoin(true);
