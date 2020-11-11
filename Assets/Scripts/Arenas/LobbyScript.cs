@@ -13,7 +13,6 @@ public class LobbyScript : MonoBehaviour
     {
         if (instance == null)
         {
-            DontDestroyOnLoad (gameObject);
             instance = this;
         }
         else
@@ -28,8 +27,14 @@ public class LobbyScript : MonoBehaviour
         controller.Gameplay.SOUTH.performed += ctx => BackAction();
     }
 
+    void Start()
+    {
+        StartCoroutine(GameManager.instance.FadeLoadingScreen());
+    }
+
     void OnEnable()
     {
+        Debug.Log("start");
         controller.Enable();
     }
 

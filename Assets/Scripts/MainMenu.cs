@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     public static MainMenu instance;
 
-    private void Awake()
+    public void Awake()
     {
         if (instance != null && instance != this)
         {
@@ -15,9 +16,14 @@ public class MainMenu : MonoBehaviour
         instance = this;
     }
 
+    public void Start()
+    {
+        StartCoroutine(GameManager.instance.FadeLoadingScreen());
+    }
+
     public void Lobby()
     {
-        SceneManager.LoadScene("Lobby");
+        StartCoroutine(GameManager.instance.LoadScene("Lobby"));
     }
 
     public void Exit()

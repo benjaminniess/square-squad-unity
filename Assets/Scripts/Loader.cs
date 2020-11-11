@@ -19,7 +19,6 @@ public class Loader : MonoBehaviour
 
         while (!asyncLoad.isDone)
         {
-            // If necessary
             slider.value = Mathf.Clamp01(asyncLoad.progress / 0.9f);
             yield return null;
         }
