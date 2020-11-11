@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,15 +13,21 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy (gameObject);
         }
 
         instance = this;
 
+        DontDestroyOnLoad (gameObject);
         controller = new PlayerController();
         players = new Dictionary<int, GameObject>();
+    }
+
+    void Start()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public PlayerController GetController()
