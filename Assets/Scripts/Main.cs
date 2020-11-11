@@ -133,12 +133,24 @@ public class Main : MonoBehaviour
             return;
         }
 
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "Lobby")
+        {
+            return;
+        }
+
         Menu();
     }
 
     void ConfirmAction()
     {
         if (Time.timeScale == 1 || Main.instance.isFrozen())
+        {
+            return;
+        }
+
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "Lobby")
         {
             return;
         }
