@@ -25,11 +25,6 @@ public class GameManager : MonoBehaviour
         players = new Dictionary<int, GameObject>();
     }
 
-    void Start()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-
     public PlayerController GetController()
     {
         return controller;
