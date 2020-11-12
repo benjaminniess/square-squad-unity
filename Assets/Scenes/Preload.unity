@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fef7a1f1dc5ee27d9d07a71bff80383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionsDuration: 1
+  transitionsDuration: 0.5
 --- !u!4 &618562709
 Transform:
   m_ObjectHideFlags: 0
