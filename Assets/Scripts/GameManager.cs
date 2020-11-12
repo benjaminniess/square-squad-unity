@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<int, GameObject> players;
 
+    private Dictionary<string, Arena> arenas;
+
     private void Awake()
     {
         if (instance != null)
@@ -25,6 +27,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad (gameObject);
         controller = new PlayerController();
         players = new Dictionary<int, GameObject>();
+        GenerateArenasDictionnaty();
+    }
+
+    public void GenerateArenasDictionnaty()
+    {
+        arenas = new Dictionary<string, Arena>();
+        arenas.Add("arena1", new Arena1());
+        arenas.Add("arena2", new Arena2());
+    }
+
+    public Dictionary<string, Arena> GetArenas()
+    {
+        return arenas;
     }
 
     public PlayerController GetController()

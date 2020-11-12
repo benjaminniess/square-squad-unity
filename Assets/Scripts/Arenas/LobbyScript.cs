@@ -50,8 +50,7 @@ public class LobbyScript : MonoBehaviour
         if (GameManager.instance.GetPlayers().Count > 0)
         {
             controller.Disable();
-            Time.timeScale = 1;
-            StartCoroutine(GameManager.instance.LoadScene("Arena2"));
+            StartCoroutine(GameManager.instance.LoadScene("LevelSelect"));
         }
     }
 
