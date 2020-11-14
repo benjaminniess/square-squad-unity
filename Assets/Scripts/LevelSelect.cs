@@ -29,6 +29,16 @@ public class LevelSelect : MonoBehaviour
 
     public void EastAction()
     {
-        StartCoroutine(GameManager.instance.LoadScene("Arena1"));
+        foreach (KeyValuePair<string, Arena>
+            ArenaObject
+            in
+            GameManager.instance.GetArenas()
+        )
+        {
+            StartCoroutine(GameManager
+                .instance
+                .LoadScene(ArenaObject.Value.GetSceneName()));
+            return;
+        }
     }
 }
