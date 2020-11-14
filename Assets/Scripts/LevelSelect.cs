@@ -1,58 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
     public static LevelSelect instance;
 
-    private PlayerController controller;
-
     private void Awake()
     {
-        if (instance == null)
+        if (instance != null)
         {
-            instance = this;
-        }
-        else
-        {
-            if (instance != this)
-            {
-                Destroy (gameObject);
-            }
+            Destroy (gameObject);
         }
 
-        controller = GameManager.instance.GetController();
-        controller.Gameplay.SOUTH.performed += ctx => BackAction();
+        instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
-
-        Debug.Log(GameManager.instance.GetArenas());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    void OnEnable()
-    {
-        controller.Enable();
-    }
-
-    void BackAction()
+    public void SouthAction()
     {
         StartCoroutine(GameManager.instance.LoadScene("Lobby"));
     }
 
-    void PlayAction()
+    public void EastAction()
     {
-        controller.Disable();
-        Time.timeScale = 1;
         StartCoroutine(GameManager.instance.LoadScene("Arena1"));
     }
 }

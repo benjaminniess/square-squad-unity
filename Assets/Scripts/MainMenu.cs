@@ -14,10 +14,7 @@ public class MainMenu : MonoBehaviour
         }
 
         instance = this;
-    }
 
-    public void Start()
-    {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
     }
 

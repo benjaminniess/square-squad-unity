@@ -25,9 +25,43 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad (gameObject);
+    }
+
+    void Start()
+    {
         controller = new PlayerController();
+        controller.Gameplay.SOUTH.performed += ctx => SouthAction();
+        controller.Gameplay.DASH.performed += ctx => EastAction();
+        controller.Enable();
+
         players = new Dictionary<int, GameObject>();
         GenerateArenasDictionnaty();
+    }
+
+    void SouthAction()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "Lobby")
+        {
+            LobbyScript.instance.SouthAction();
+        }
+        else if (scene.name == "LevelSelect")
+        {
+            LevelSelect.instance.SouthAction();
+        }
+    }
+
+    void EastAction()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "Lobby")
+        {
+            LobbyScript.instance.EastAction();
+        }
+        else if (scene.name == "LevelSelect")
+        {
+            LevelSelect.instance.EastAction();
+        }
     }
 
     public void GenerateArenasDictionnaty()

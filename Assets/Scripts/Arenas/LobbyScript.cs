@@ -7,24 +7,14 @@ public class LobbyScript : MonoBehaviour
 {
     public static LobbyScript instance;
 
-    private PlayerController controller;
-
     private void Awake()
     {
-        if (instance == null)
+        if (instance != null)
         {
-            instance = this;
-        }
-        else
-        {
-            if (instance != this)
-            {
-                Destroy (gameObject);
-            }
+            Destroy (gameObject);
         }
 
-        controller = GameManager.instance.GetController();
-        controller.Gameplay.SOUTH.performed += ctx => BackAction();
+        instance = this;
     }
 
     void Start()
@@ -32,12 +22,7 @@ public class LobbyScript : MonoBehaviour
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
     }
 
-    void OnEnable()
-    {
-        controller.Enable();
-    }
-
-    void BackAction()
+    public void SouthAction()
     {
         if (GameManager.instance.GetPlayers().Count < 1)
         {
@@ -45,11 +30,14 @@ public class LobbyScript : MonoBehaviour
         }
     }
 
+    public void EastAction()
+    {
+    }
+
     public void Play()
     {
         if (GameManager.instance.GetPlayers().Count > 0)
         {
-            controller.Disable();
             StartCoroutine(GameManager.instance.LoadScene("LevelSelect"));
         }
     }
