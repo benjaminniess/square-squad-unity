@@ -9,6 +9,10 @@ public class LevelSelect : MonoBehaviour
 
     public GameObject LevelUIHolder;
 
+    public GameObject ArrowPrev;
+
+    public GameObject ArrowNext;
+
     private int currentLevel = 1;
 
     private GameObject levelsUIContainer;
@@ -27,6 +31,8 @@ public class LevelSelect : MonoBehaviour
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
 
+        ArrowPrev.SetActive(false);
+        ArrowNext.SetActive(true);
         levelsUIContainer = GameObject.Find("LevelsUIContainer");
 
         int spawnX = 0;
@@ -61,6 +67,9 @@ public class LevelSelect : MonoBehaviour
                 levelsUIContainer.transform.position.y,
                 levelsUIContainer.transform.position.z);
         currentLevel -= 1;
+
+        ArrowPrev.SetActive(currentLevel != 1);
+        ArrowNext.SetActive(true);
     }
 
     public void RightAction()
@@ -74,6 +83,10 @@ public class LevelSelect : MonoBehaviour
                 levelsUIContainer.transform.position.y,
                 levelsUIContainer.transform.position.z);
         currentLevel += 1;
+
+        ArrowNext
+            .SetActive(currentLevel != GameManager.instance.GetArenas().Count);
+        ArrowPrev.SetActive(true);
     }
 
     public void SouthAction()

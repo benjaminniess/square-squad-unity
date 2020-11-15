@@ -366,6 +366,18 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e3f323e7-0615-43f6-84b6-b64341198660
     m_ActionName: Gameplay/SOUTH[/Gamepad/buttonSouth,/Gamepad/buttonSouth,/Gamepad/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f57a727d-2800-4b7c-b3af-9ab25ab8a231
+    m_ActionName: Gameplay/STICK[/Gamepad/leftStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: db6a721d-6758-42de-bd1e-73f6b29b37df
+    m_ActionName: Gameplay/CLICK[/Mouse/press]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c4c06d9-2c54-4921-942a-9df41f672718
+    m_ActionName: Gameplay/POINT[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -444,7 +456,7 @@ SpriteRenderer:
   m_SortingOrder: 60
   m_Sprite: {fileID: 7223950226953391895, guid: b37473b6d75781c69b34ecbbe86ce2d9,
     type: 3}
-  m_Color: {r: 0.23719627, g: 0.754717, b: 0, a: 1}
+  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -776,7 +788,7 @@ SpriteRenderer:
   m_SortingOrder: 50
   m_Sprite: {fileID: 1561205615984820651, guid: b37473b6d75781c69b34ecbbe86ce2d9,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9254902, g: 0.40784314, b: 0.03529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
