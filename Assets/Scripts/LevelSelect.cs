@@ -6,8 +6,13 @@ using UnityEngine.SceneManagement;
 public class LevelSelect : MonoBehaviour
 {
     public static LevelSelect instance;
+
     public GameObject LevelUIHolder;
-    
+
+    private int currentLevel = 1;
+
+    private GameObject levelsUIContainer;
+
     private void Awake()
     {
         if (instance != null)
@@ -22,19 +27,53 @@ public class LevelSelect : MonoBehaviour
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
 
-        int imageWidth = Screen.width;
+        levelsUIContainer = GameObject.Find("LevelsUIContainer");
+
         int spawnX = 0;
         int spawnY = 0;
-        foreach (KeyValuePair<string, Arena>
+        foreach (KeyValuePair<int, Arena>
             ArenaObject
             in
             GameManager.instance.GetArenas()
         )
         {
-            
-            GameObject LevelUIObjeect = Instantiate(LevelUIHolder, new Vector3(spawnX, spawnY, 0), Quaternion.identity, gameObject.transform);
-            LevelUIScript LevelUIScript = LevelUIObjeect.GetComponent<LevelUIScript>();
+            GameObject LevelUIObjeect =
+                Instantiate(LevelUIHolder,
+                new Vector3(spawnX, spawnY, 0),
+                Quaternion.identity,
+                levelsUIContainer.transform);
+            LevelUIScript LevelUIScript =
+                LevelUIObjeect.GetComponent<LevelUIScript>();
+            LevelUIScript.SetImage(ArenaObject.Value.GetPreviewImage());
+            LevelUIScript.SetTitle(ArenaObject.Value.GetName());
+            spawnX += Screen.width;
         }
+    }
+
+    public void LeftAction()
+    {
+        if (currentLevel <= 1)
+        {
+            return;
+        }
+        levelsUIContainer.transform.position =
+            new Vector3(levelsUIContainer.transform.position.x + Screen.width,
+                levelsUIContainer.transform.position.y,
+                levelsUIContainer.transform.position.z);
+        currentLevel -= 1;
+    }
+
+    public void RightAction()
+    {
+        if (currentLevel >= GameManager.instance.GetArenas().Count)
+        {
+            return;
+        }
+        levelsUIContainer.transform.position =
+            new Vector3(levelsUIContainer.transform.position.x - Screen.width,
+                levelsUIContainer.transform.position.y,
+                levelsUIContainer.transform.position.z);
+        currentLevel += 1;
     }
 
     public void SouthAction()
@@ -44,16 +83,19 @@ public class LevelSelect : MonoBehaviour
 
     public void EastAction()
     {
-        foreach (KeyValuePair<string, Arena>
+        foreach (KeyValuePair<int, Arena>
             ArenaObject
             in
             GameManager.instance.GetArenas()
         )
         {
-            StartCoroutine(GameManager
-                .instance
-                .LoadScene(ArenaObject.Value.GetSceneName()));
-            return;
+            if (ArenaObject.Key == currentLevel)
+            {
+                StartCoroutine(GameManager
+                    .instance
+                    .LoadScene(ArenaObject.Value.GetSceneName()));
+                return;
+            }
         }
     }
 }

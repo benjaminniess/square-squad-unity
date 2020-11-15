@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<int, GameObject> players;
 
-    private Dictionary<string, Arena> arenas;
+    private Dictionary<int, Arena> arenas;
 
     private void Awake()
     {
@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
         controller = new PlayerController();
         controller.Gameplay.SOUTH.performed += ctx => SouthAction();
         controller.Gameplay.DASH.performed += ctx => EastAction();
+        controller.Gameplay.LEFT.performed += ctx => LeftAction();
+        controller.Gameplay.RIGHT.performed += ctx => RightAction();
         controller.Enable();
 
         players = new Dictionary<int, GameObject>();
@@ -64,14 +66,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GenerateArenasDictionnaty()
+    void LeftAction()
     {
-        arenas = new Dictionary<string, Arena>();
-        arenas.Add("Arena1", new Arena("Arena1", "Arena 1 - The first One"));
-        arenas.Add("Arena2", new Arena("Arena2", "Arena 2 - The second One"));
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "LevelSelect")
+        {
+            LevelSelect.instance.LeftAction();
+        }
     }
 
-    public Dictionary<string, Arena> GetArenas()
+    void RightAction()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "LevelSelect")
+        {
+            LevelSelect.instance.RightAction();
+        }
+    }
+
+    public void GenerateArenasDictionnaty()
+    {
+        arenas = new Dictionary<int, Arena>();
+        arenas.Add(1, new Arena("Arena1", "Arena 1 - The first One"));
+        arenas.Add(2, new Arena("Arena2", "Arena 2 - The second One"));
+    }
+
+    public Dictionary<int, Arena> GetArenas()
     {
         return arenas;
     }
