@@ -16,7 +16,7 @@ public class Main : MonoBehaviour
 
     private GameObject[] playersScores;
 
-    private float timeRemaining = 60;
+    private float timeRemaining = 10;
 
     private TextMeshProUGUI countDownText;
 
@@ -151,7 +151,7 @@ public class Main : MonoBehaviour
         }
 
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Lobby")
+        if (scene.name == "Lobby" || scene.name == "MainMenu")
         {
             return;
         }
@@ -164,6 +164,12 @@ public class Main : MonoBehaviour
         {
             Play();
         }
+    }
+
+    public void Play()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void StartAction()
@@ -181,12 +187,6 @@ public class Main : MonoBehaviour
         {
             Paused();
         }
-    }
-
-    public void Play()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene("Arena2");
     }
 
     public void Resume()
