@@ -135,7 +135,7 @@ public class Main : MonoBehaviour
         }
 
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Lobby")
+        if (scene.name == "Lobby" || scene.name == "LevelSelect")
         {
             return;
         }

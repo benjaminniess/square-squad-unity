@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<int, Arena> arenas;
 
+    private int currentArena = 1;
+
     private void Awake()
     {
         if (instance != null)
@@ -89,6 +91,16 @@ public class GameManager : MonoBehaviour
         arenas = new Dictionary<int, Arena>();
         arenas.Add(1, new Arena("Arena1", "Arena 1 - The first One"));
         arenas.Add(2, new Arena("Arena2", "Arena 2 - The second One"));
+    }
+
+    public int GetCurrentArenaID()
+    {
+        return currentArena;
+    }
+
+    public void setCurrentArenaID(int ArenaID)
+    {
+        currentArena = ArenaID;
     }
 
     public Dictionary<int, Arena> GetArenas()

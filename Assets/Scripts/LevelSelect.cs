@@ -54,6 +54,21 @@ public class LevelSelect : MonoBehaviour
             LevelUIScript.SetTitle(ArenaObject.Value.GetName());
             spawnX += Screen.width;
         }
+
+        // Set the slider to the latest savec level
+        currentLevel = GameManager.instance.GetCurrentArenaID();
+        if (currentLevel > 1)
+        {
+            levelsUIContainer.transform.position =
+                new Vector3(levelsUIContainer.transform.position.x -
+                    ((currentLevel - 1) * Screen.width),
+                    levelsUIContainer.transform.position.y,
+                    levelsUIContainer.transform.position.z);
+            ArrowPrev.SetActive(currentLevel != 1);
+            ArrowNext
+                .SetActive(currentLevel !=
+                GameManager.instance.GetArenas().Count);
+        }
     }
 
     public void LeftAction()
@@ -70,6 +85,7 @@ public class LevelSelect : MonoBehaviour
 
         ArrowPrev.SetActive(currentLevel != 1);
         ArrowNext.SetActive(true);
+        GameManager.instance.setCurrentArenaID (currentLevel);
     }
 
     public void RightAction()
@@ -87,6 +103,7 @@ public class LevelSelect : MonoBehaviour
         ArrowNext
             .SetActive(currentLevel != GameManager.instance.GetArenas().Count);
         ArrowPrev.SetActive(true);
+        GameManager.instance.setCurrentArenaID (currentLevel);
     }
 
     public void SouthAction()
