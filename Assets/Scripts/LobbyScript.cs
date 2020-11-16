@@ -20,6 +20,7 @@ public class LobbyScript : MonoBehaviour
     void Start()
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
+        ResetPlayers(true);
     }
 
     public void SouthAction()
