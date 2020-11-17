@@ -14,18 +14,6 @@ public class PlayerLobbyUI : MonoBehaviour
 
     GameObject spawnPosition;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        pressToJoin = transform.Find("PressToJoin").gameObject;
-        ready = transform.Find("Ready").gameObject;
-        readyText = transform.Find("IsReady").gameObject;
-        back = transform.Find("Back").gameObject;
-        spawnPosition = transform.Find("SpawnPosition").gameObject;
-
-        reset();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -33,6 +21,11 @@ public class PlayerLobbyUI : MonoBehaviour
 
     public void reset()
     {
+        pressToJoin = transform.Find("PressToJoin").gameObject;
+        ready = transform.Find("Ready").gameObject;
+        readyText = transform.Find("IsReady").gameObject;
+        back = transform.Find("Back").gameObject;
+        spawnPosition = transform.Find("SpawnPosition").gameObject;
         showPressToJoin(true);
         showBack(false);
         showReadyButton(false);
