@@ -32,57 +32,34 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         controller = new PlayerController();
-        controller.Gameplay.SOUTH.performed += ctx => SouthAction();
-        controller.Gameplay.DASH.performed += ctx => EastAction();
-        controller.Gameplay.LEFT.performed += ctx => LeftAction();
-        controller.Gameplay.RIGHT.performed += ctx => RightAction();
+        controller.Gameplay.SOUTH.performed += ctx => ButtonPerformed("south");
+        controller.Gameplay.DASH.performed += ctx => ButtonPerformed("east");
+        controller.Gameplay.LEFT.performed += ctx => ButtonPerformed("left");
+        controller.Gameplay.RIGHT.performed += ctx => ButtonPerformed("right");
+        controller.Gameplay.START.performed += ctx => ButtonPerformed("start");
         controller.Enable();
 
         players = new Dictionary<int, GameObject>();
         GenerateArenasDictionnaty();
     }
 
-    void SouthAction()
+    void ButtonPerformed(string button)
     {
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Lobby")
+        switch (scene.name)
         {
-            LobbyScript.instance.SouthAction();
-        }
-        else if (scene.name == "LevelSelect")
-        {
-            LevelSelect.instance.SouthAction();
-        }
-    }
-
-    void EastAction()
-    {
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Lobby")
-        {
-            LobbyScript.instance.EastAction();
-        }
-        else if (scene.name == "LevelSelect")
-        {
-            LevelSelect.instance.EastAction();
-        }
-    }
-
-    void LeftAction()
-    {
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "LevelSelect")
-        {
-            LevelSelect.instance.LeftAction();
-        }
-    }
-
-    void RightAction()
-    {
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "LevelSelect")
-        {
-            LevelSelect.instance.RightAction();
+            case "Lobby":
+                LobbyScript.instance.ButtonPerformed (button);
+                break;
+            case "LevelSelect":
+                LevelSelect.instance.ButtonPerformed (button);
+                break;
+            case "MainMenu":
+            case "Preload":
+                break;
+            default:
+                Main.instance.ButtonPerformed (button);
+                break;
         }
     }
 

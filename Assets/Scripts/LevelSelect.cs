@@ -71,61 +71,65 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    public void LeftAction()
+    public void ButtonPerformed(string button)
     {
-        if (currentLevel <= 1)
+        switch (button)
         {
-            return;
-        }
-        levelsUIContainer.transform.position =
-            new Vector3(levelsUIContainer.transform.position.x + Screen.width,
-                levelsUIContainer.transform.position.y,
-                levelsUIContainer.transform.position.z);
-        currentLevel -= 1;
+            case "left":
+                if (currentLevel <= 1)
+                {
+                    return;
+                }
+                levelsUIContainer.transform.position =
+                    new Vector3(levelsUIContainer.transform.position.x +
+                        Screen.width,
+                        levelsUIContainer.transform.position.y,
+                        levelsUIContainer.transform.position.z);
+                currentLevel -= 1;
 
-        ArrowPrev.SetActive(currentLevel != 1);
-        ArrowNext.SetActive(true);
-        GameManager.instance.setCurrentArenaID (currentLevel);
-    }
+                ArrowPrev.SetActive(currentLevel != 1);
+                ArrowNext.SetActive(true);
+                GameManager.instance.setCurrentArenaID (currentLevel);
+                break;
+            case "right":
+                if (currentLevel >= GameManager.instance.GetArenas().Count)
+                {
+                    return;
+                }
+                levelsUIContainer.transform.position =
+                    new Vector3(levelsUIContainer.transform.position.x -
+                        Screen.width,
+                        levelsUIContainer.transform.position.y,
+                        levelsUIContainer.transform.position.z);
+                currentLevel += 1;
 
-    public void RightAction()
-    {
-        if (currentLevel >= GameManager.instance.GetArenas().Count)
-        {
-            return;
-        }
-        levelsUIContainer.transform.position =
-            new Vector3(levelsUIContainer.transform.position.x - Screen.width,
-                levelsUIContainer.transform.position.y,
-                levelsUIContainer.transform.position.z);
-        currentLevel += 1;
-
-        ArrowNext
-            .SetActive(currentLevel != GameManager.instance.GetArenas().Count);
-        ArrowPrev.SetActive(true);
-        GameManager.instance.setCurrentArenaID (currentLevel);
-    }
-
-    public void SouthAction()
-    {
-        StartCoroutine(GameManager.instance.LoadScene("Lobby"));
-    }
-
-    public void EastAction()
-    {
-        foreach (KeyValuePair<int, Arena>
-            ArenaObject
-            in
-            GameManager.instance.GetArenas()
-        )
-        {
-            if (ArenaObject.Key == currentLevel)
-            {
-                StartCoroutine(GameManager
-                    .instance
-                    .LoadScene(ArenaObject.Value.GetSceneName()));
-                return;
-            }
+                ArrowNext
+                    .SetActive(currentLevel !=
+                    GameManager.instance.GetArenas().Count);
+                ArrowPrev.SetActive(true);
+                GameManager.instance.setCurrentArenaID (currentLevel);
+                break;
+            case "south":
+                StartCoroutine(GameManager.instance.LoadScene("Lobby"));
+                break;
+            case "east":
+                foreach (KeyValuePair<int, Arena>
+                    ArenaObject
+                    in
+                    GameManager.instance.GetArenas()
+                )
+                {
+                    if (ArenaObject.Key == currentLevel)
+                    {
+                        StartCoroutine(GameManager
+                            .instance
+                            .LoadScene(ArenaObject.Value.GetSceneName()));
+                        return;
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 }

@@ -24,16 +24,19 @@ public class LobbyScript : MonoBehaviour
         ResetPlayers(true);
     }
 
-    public void SouthAction()
+    public void ButtonPerformed(string button)
     {
-        if (GameManager.instance.GetPlayers().Count < 1)
+        switch (button)
         {
-            StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
+            case "south":
+                if (GameManager.instance.GetPlayers().Count < 1)
+                {
+                    StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
+                }
+                break;
+            default:
+                break;
         }
-    }
-
-    public void EastAction()
-    {
     }
 
     public void Play()

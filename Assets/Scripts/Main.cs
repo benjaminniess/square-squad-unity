@@ -34,8 +34,6 @@ public class Main : MonoBehaviour
 
     private bool gameIsPaused = false;
 
-    private PlayerController controller;
-
     private bool isFrozenVal = true;
 
     private GameObject StartCountdown;
@@ -50,18 +48,12 @@ public class Main : MonoBehaviour
 
     private void Awake()
     {
-        // if the singleton hasn't been initialized yet
-        if (instance != null && instance != this)
+        if (instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy (gameObject);
         }
 
         instance = this;
-
-        controller = GameManager.instance.GetController();
-        controller.Gameplay.SOUTH.performed += ctx => BackAction();
-        controller.Gameplay.DASH.performed += ctx => ConfirmAction();
-        controller.Gameplay.START.performed += ctx => StartAction();
     }
 
     // Start is called before the first frame update
@@ -122,47 +114,38 @@ public class Main : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    public void ButtonPerformed(string button)
     {
-        controller.Enable();
-    }
-
-    void BackAction()
-    {
-        if (Time.timeScale == 1 || Main.instance.isFrozen())
+        switch (button)
         {
-            return;
-        }
+            case "south":
+                if (Time.timeScale == 1 || Main.instance.isFrozen())
+                {
+                    break;
+                }
 
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Lobby" || scene.name == "LevelSelect")
-        {
-            return;
-        }
+                Menu();
+                break;
+            case "east":
+                if (Time.timeScale == 1 || Main.instance.isFrozen())
+                {
+                    return;
+                }
 
-        Menu();
-    }
-
-    void ConfirmAction()
-    {
-        if (Time.timeScale == 1 || Main.instance.isFrozen())
-        {
-            return;
-        }
-
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Lobby" || scene.name == "MainMenu")
-        {
-            return;
-        }
-
-        if (gameIsPaused)
-        {
-            Resume();
-        }
-        else
-        {
-            Play();
+                if (gameIsPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Play();
+                }
+                break;
+            case "start":
+                togglePause();
+                break;
+            default:
+                break;
         }
     }
 
@@ -170,11 +153,6 @@ public class Main : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void StartAction()
-    {
-        togglePause();
     }
 
     public void togglePause()
