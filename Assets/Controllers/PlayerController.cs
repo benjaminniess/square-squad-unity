@@ -327,17 +327,6 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""020e21da-5d8a-481b-b1bb-b519c4c2fe4d"",
-                    ""path"": ""<Joystick>/stick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LEFT"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""b7289007-c166-452f-ac92-ba581ad793c6"",
                     ""path"": ""<HID::Unknown Joy-Con (R)>/hat/left"",
                     ""interactions"": """",
@@ -471,7 +460,7 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2d874682-ecab-4ed3-bb40-880bb056850f"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

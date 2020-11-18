@@ -165,7 +165,7 @@ MonoBehaviour:
     type: 3}
   m_CancelAction: {fileID: -4443948867207127683, guid: 8ebdfe90f3c2144f3a3bc86decef72d4,
     type: 3}
-  m_LeftClickAction: {fileID: 2290592956358116933, guid: 8ebdfe90f3c2144f3a3bc86decef72d4,
+  m_LeftClickAction: {fileID: -2869666767315633599, guid: 8ebdfe90f3c2144f3a3bc86decef72d4,
     type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}

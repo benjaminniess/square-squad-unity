@@ -19,6 +19,7 @@ public class LobbyScript : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
         ResetPlayers(true);
     }

@@ -319,19 +319,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/RIGHT[/Unknown Joy-Con (L)/hat/right,/Unknown Joy-Con
       (R)/hat/right]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 491578336404137707}
-        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
-        m_MethodName: pressStart
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 51ef5993-8eda-4527-a3c5-4a5e58959092
     m_ActionName: Gameplay/START[/Gamepad/start,/Gamepad/start,/Gamepad/start]
   - m_PersistentCalls:
