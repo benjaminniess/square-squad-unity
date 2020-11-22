@@ -34,9 +34,13 @@ public class GameManager : MonoBehaviour
         controller = new PlayerController();
         controller.Gameplay.SOUTH.performed += ctx => ButtonPerformed("south");
         controller.Gameplay.DASH.performed += ctx => ButtonPerformed("east");
+        controller.Gameplay.UP.performed += ctx => ButtonPerformed("up");
+        controller.Gameplay.DOWN.performed += ctx => ButtonPerformed("down");
         controller.Gameplay.LEFT.performed += ctx => ButtonPerformed("left");
         controller.Gameplay.RIGHT.performed += ctx => ButtonPerformed("right");
         controller.Gameplay.START.performed += ctx => ButtonPerformed("start");
+
+        // controller.Gameplay.CLICK.performed += ctx => ButtonPerformed("click");
         controller.Enable();
 
         players = new Dictionary<int, GameObject>();
@@ -55,6 +59,8 @@ public class GameManager : MonoBehaviour
                 LevelSelect.instance.ButtonPerformed (button);
                 break;
             case "MainMenu":
+                MainMenu.instance.ButtonPerformed (button);
+                break;
             case "Preload":
                 break;
             default:
