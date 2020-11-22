@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -14,6 +15,10 @@ public class GameManager : MonoBehaviour
     private Dictionary<int, GameObject> players;
 
     private Dictionary<int, Arena> arenas;
+
+    private bool downFlag = false;
+
+    private bool upFlag = false;
 
     private int currentArena = 1;
 
@@ -35,7 +40,9 @@ public class GameManager : MonoBehaviour
         controller.Gameplay.SOUTH.performed += ctx => ButtonPerformed("south");
         controller.Gameplay.DASH.performed += ctx => ButtonPerformed("east");
         controller.Gameplay.UP.performed += ctx => ButtonPerformed("up");
+        controller.Gameplay.UP.canceled += ctx => upFlag = false;
         controller.Gameplay.DOWN.performed += ctx => ButtonPerformed("down");
+        controller.Gameplay.DOWN.canceled += ctx => downFlag = false;
         controller.Gameplay.LEFT.performed += ctx => ButtonPerformed("left");
         controller.Gameplay.RIGHT.performed += ctx => ButtonPerformed("right");
         controller.Gameplay.START.performed += ctx => ButtonPerformed("start");
@@ -49,6 +56,25 @@ public class GameManager : MonoBehaviour
 
     void ButtonPerformed(string button)
     {
+        // Fix analog stick behaviour
+        if (button == "down")
+        {
+            if (downFlag == true)
+            {
+                return;
+            }
+            downFlag = true;
+        }
+
+        if (button == "up")
+        {
+            if (upFlag == true)
+            {
+                return;
+            }
+            upFlag = true;
+        }
+
         Scene scene = SceneManager.GetActiveScene();
         switch (scene.name)
         {
