@@ -27,6 +27,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
         GameObject eventSystemGameObject = GameObject.Find("EventSystem");
         eventSystem =
