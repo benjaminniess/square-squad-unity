@@ -66,6 +66,7 @@ public class LobbyScript : MonoBehaviour
                 playerLobbyUIScript.showReadyButton(false);
                 playerLobbyUIScript.showReadyText(true);
                 playerScript.setReady(true);
+                playerScript.setMovementEnabled(false);
             }
             else
             {
@@ -98,6 +99,7 @@ public class LobbyScript : MonoBehaviour
                 playerLobbyUIScript.showBack(true);
                 playerLobbyUIScript.showReadyText(false);
                 playerScript.setReady(false);
+                playerScript.setMovementEnabled(true);
             }
             else
             {
@@ -190,6 +192,7 @@ public class LobbyScript : MonoBehaviour
             int prevNumber = playerScript.getNumber();
             playerScript.setNumber (playerReCount);
             playerScript.setIsHoldingBonus(false);
+            playerScript.setMovementEnabled(!playerScript.isReady());
 
             Rigidbody2D rb = playerScript.getRigidbody();
 

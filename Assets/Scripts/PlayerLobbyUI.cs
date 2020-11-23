@@ -21,7 +21,6 @@ public class PlayerLobbyUI : MonoBehaviour
 
     public void reset()
     {
-        Time.timeScale = 0;
         pressToJoin = transform.Find("PressToJoin").gameObject;
         ready = transform.Find("Ready").gameObject;
         readyText = transform.Find("IsReady").gameObject;

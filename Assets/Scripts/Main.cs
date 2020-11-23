@@ -374,6 +374,7 @@ public class Main : MonoBehaviour
                     .Find("SpawnPositionForPlayer" + playerScript.getNumber());
             Rigidbody2D rb = playerScript.getRigidbody();
             playersScores[playerScript.getNumber() - 1].SetActive(true);
+            playerScript.setMovementEnabled(true);
             playersScores[playerScript.getNumber() - 1]
                 .transform
                 .Find("Bonus")

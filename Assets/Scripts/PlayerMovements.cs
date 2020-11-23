@@ -31,6 +31,8 @@ public class PlayerMovements : MonoBehaviour
 
     private float speed = 1000;
 
+    private bool movementEnabled = true;
+
     private float currentPlayerSpeed;
 
     // DASH SYSTEM
@@ -266,12 +268,22 @@ public class PlayerMovements : MonoBehaviour
         return stashedBonus;
     }
 
+    public bool isMovementEnabled()
+    {
+        return movementEnabled;
+    }
+
     public void initState()
     {
         setIsHoldingBonus(false);
         setIsHoldingCoin(false);
         setOK();
         resetPlayerSpeed();
+    }
+
+    public void setMovementEnabled(bool enabled)
+    {
+        movementEnabled = enabled;
     }
 
     public void setReady(bool ready)
@@ -539,6 +551,11 @@ public class PlayerMovements : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!isMovementEnabled())
+        {
+            return;
+        }
+
         updatePlayerStatus();
         updateDashStatus();
         updateBonusStatus();
