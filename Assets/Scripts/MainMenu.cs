@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
 
     private EventSystem eventSystem;
 
-    private int selectedButton = 1;
+    private int selectedButton;
 
     private Dictionary<int, GameObject> buttons;
 
@@ -29,11 +29,13 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1;
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
+
         GameObject eventSystemGameObject = GameObject.Find("EventSystem");
         eventSystem =
             eventSystemGameObject
                 .GetComponent<UnityEngine.EventSystems.EventSystem>();
 
+        eventSystem.SetSelectedGameObject(null);
         buttons = new Dictionary<int, GameObject>();
         GameObject[] buttonsGO = GameObject.FindGameObjectsWithTag("Button");
         int i = 1;
@@ -47,6 +49,7 @@ public class MainMenu : MonoBehaviour
 
             if (buttonGO.name == "Multi")
             {
+                selectedButton = i;
                 eventSystem.SetSelectedGameObject (buttonGO);
                 selectedButton = i;
             }
