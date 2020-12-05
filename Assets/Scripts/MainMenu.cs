@@ -48,6 +48,7 @@ public class MainMenu : MonoBehaviour
             if (buttonGO.name == "Multi")
             {
                 eventSystem.SetSelectedGameObject (buttonGO);
+                selectedButton = i;
             }
             buttons.Add (i, buttonGO);
 
