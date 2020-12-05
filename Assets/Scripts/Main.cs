@@ -60,7 +60,7 @@ public class Main : MonoBehaviour
     void Start()
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
-        map = FindObjectOfType<Tilemap>();
+        map = GameObject.Find("BackgroundPadding").GetComponent<Tilemap>();
         Time.timeScale = 0;
 
         countDownText =
@@ -72,10 +72,6 @@ public class Main : MonoBehaviour
         StartCountdown = GameObject.Find("StartCountdown");
 
         GenerateCoin();
-        GenerateBonus();
-        GenerateBonus();
-        GenerateBonus();
-        GenerateBonus();
         GenerateBonus();
         GenerateBonus();
         GeneratePlayers();
@@ -391,6 +387,8 @@ public class Main : MonoBehaviour
         int spawnX = Random.Range(-32, 32);
 
         TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
+        Debug.Log(map);
+        Debug.Log(tile);
         if (null != tile)
         {
             GenerateCoin();

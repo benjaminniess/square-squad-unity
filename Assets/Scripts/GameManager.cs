@@ -98,8 +98,8 @@ public class GameManager : MonoBehaviour
     public void GenerateArenasDictionnaty()
     {
         arenas = new Dictionary<int, Arena>();
-        arenas.Add(1, new Arena("Arena1", "Arena 1 - The first One"));
-        arenas.Add(2, new Arena("Arena2", "Arena 2 - The second One"));
+        arenas.Add(1, new Arena("Arena1", "Welcome arena"));
+        arenas.Add(2, new Arena("Arena2", "Dust"));
     }
 
     public int GetCurrentArenaID()
