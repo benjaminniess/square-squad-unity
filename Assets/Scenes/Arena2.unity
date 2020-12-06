@@ -50603,6 +50603,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 4703000698045298435, guid: dd33f9467af321b7884ba770de42295e,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4703000698045298684, guid: dd33f9467af321b7884ba770de42295e,
         type: 3}
       propertyPath: m_LocalPosition.x

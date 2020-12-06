@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
 
     private bool upFlag = false;
 
+    private bool rightFlag = false;
+
+    private bool leftFlag = false;
+
     private int currentArena = 1;
 
     private void Awake()
@@ -44,7 +48,9 @@ public class GameManager : MonoBehaviour
         controller.Gameplay.DOWN.performed += ctx => ButtonPerformed("down");
         controller.Gameplay.DOWN.canceled += ctx => downFlag = false;
         controller.Gameplay.LEFT.performed += ctx => ButtonPerformed("left");
+        controller.Gameplay.LEFT.canceled += ctx => leftFlag = false;
         controller.Gameplay.RIGHT.performed += ctx => ButtonPerformed("right");
+        controller.Gameplay.RIGHT.canceled += ctx => rightFlag = false;
         controller.Gameplay.START.performed += ctx => ButtonPerformed("start");
 
         // controller.Gameplay.CLICK.performed += ctx => ButtonPerformed("click");
@@ -75,6 +81,24 @@ public class GameManager : MonoBehaviour
             upFlag = true;
         }
 
+        if (button == "right")
+        {
+            if (rightFlag == true)
+            {
+                return;
+            }
+            rightFlag = true;
+        }
+
+        if (button == "left")
+        {
+            if (leftFlag == true)
+            {
+                return;
+            }
+            leftFlag = true;
+        }
+
         Scene scene = SceneManager.GetActiveScene();
         switch (scene.name)
         {
@@ -103,6 +127,7 @@ public class GameManager : MonoBehaviour
         arenas = new Dictionary<int, Arena>();
         arenas.Add(1, new Arena("Arena1", "Welcome arena"));
         arenas.Add(2, new Arena("Arena2", "Dust"));
+        arenas.Add(3, new Arena("Arena3", "Double spot"));
     }
 
     public int GetCurrentArenaID()
