@@ -18,7 +18,7 @@ public class EnnemyMovements : MonoBehaviour
 
     public void setKO()
     {
-        Debug.Log("KO");
+        //Debug.Log("KO");
     }
 
     // Update is called once per frame

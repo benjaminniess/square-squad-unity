@@ -387,8 +387,6 @@ public class Main : MonoBehaviour
         int spawnX = Random.Range(-32, 32);
 
         TileBase tile = map.GetTile(new Vector3Int(spawnX, spawnY, 0));
-        Debug.Log(map);
-        Debug.Log(tile);
         if (null != tile)
         {
             GenerateCoin();

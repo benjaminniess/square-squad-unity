@@ -87,6 +87,9 @@ public class GameManager : MonoBehaviour
             case "MainMenu":
                 MainMenu.instance.ButtonPerformed (button);
                 break;
+            case "HowTo":
+                HowTo.instance.ButtonPerformed (button);
+                break;
             case "Preload":
                 break;
             default:
