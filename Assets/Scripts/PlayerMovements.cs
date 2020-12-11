@@ -331,6 +331,28 @@ public class PlayerMovements : MonoBehaviour
         playerColor.color = color;
     }
 
+    public void SetAlpha(float alpha) {
+        Color color = getColor();
+        color.a = alpha;
+        playerColor.color = color;
+
+        SpriteRenderer playerBackground = gameObject.GetComponent<SpriteRenderer>();
+        Color bgColor = playerBackground.color;
+        bgColor.a = alpha;
+        playerBackground.color = bgColor;
+    }
+
+    public void ResetPlayerAlpha() {
+        Color color = getColor();
+        color.a = 1;
+        playerColor.color = color;
+
+        SpriteRenderer playerBackground = gameObject.GetComponent<SpriteRenderer>();
+        Color bgColor = playerBackground.color;
+        bgColor.a = 1;
+        playerBackground.color = bgColor;
+    }
+
     public bool isDashPressed()
     {
         return dashButton == true;

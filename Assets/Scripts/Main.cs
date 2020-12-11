@@ -73,7 +73,6 @@ public class Main : MonoBehaviour
 
         GenerateCoin();
         GenerateBonus();
-        GenerateBonus();
         GeneratePlayers();
 
         GameOverMenu = GameObject.Find("GameOverMenu");
