@@ -34,6 +34,12 @@ public class Bullet : MonoBehaviour
         {
             PlayerMovements playerScript =
                 collider.gameObject.GetComponent<PlayerMovements>();
+
+            // Don't hit invisible playerss
+            if (!playerScript.isTracked())
+            {
+                return;
+            }
             if (!playerScript.isRecovering() && playerScript.setKO())
             {
                 playerScript.decreaseScore();

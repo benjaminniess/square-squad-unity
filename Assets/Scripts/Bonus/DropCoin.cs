@@ -28,6 +28,12 @@ public class DropCoin : Bonus
             }
 
             victim = playerScript;
+
+            // Don't drop coin of invisible players
+            if (!victim.isTracked())
+            {
+                return;
+            }
             victim.setIsHoldingCoin(false);
             victim.setCanHoldCoin(false);
             Main
