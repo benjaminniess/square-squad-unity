@@ -20,7 +20,7 @@ public class Coin : MonoBehaviour
         {
             PlayerMovements playerScript =
                 collider.gameObject.GetComponent<PlayerMovements>();
-            if (!playerScript.isHoldingCoin())
+            if (!playerScript.isHoldingCoin() && playerScript.canHoldCoin())
             {
                 playerScript.setIsHoldingCoin(true);
                 Destroy (gameObject);

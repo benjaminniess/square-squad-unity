@@ -72,6 +72,13 @@ public class Main : MonoBehaviour
         StartCountdown = GameObject.Find("StartCountdown");
 
         GenerateCoin();
+
+        /** Debug
+        for (int i = 0; i < 50; i++)
+        {
+            GenerateBonus();
+        }
+        */
         GenerateBonus();
         GeneratePlayers();
 
@@ -392,6 +399,11 @@ public class Main : MonoBehaviour
             return;
         }
 
+        AddCoinAtPosition (spawnX, spawnY);
+    }
+
+    public void AddCoinAtPosition(int spawnX, int spawnY)
+    {
         Instantiate(Coin, new Vector3(spawnX, spawnY, 0), Quaternion.identity);
     }
 
