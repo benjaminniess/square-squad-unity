@@ -106,8 +106,7 @@ public class MainMenu : MonoBehaviour
 
     public void Lobby()
     {
-        Debug.Log("LOBBY");
-        //StartCoroutine(GameManager.instance.LoadScene("Lobby"));
+        StartCoroutine(GameManager.instance.LoadScene("Lobby"));
     }
 
     public void Settings()
