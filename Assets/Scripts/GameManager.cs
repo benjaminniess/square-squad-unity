@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public float transitionsDuration;
+
+    public AudioMixer musicAudioMixer;
+
+    public AudioMixer fxAudioMixer;
 
     public static GameManager instance;
 
@@ -111,6 +116,9 @@ public class GameManager : MonoBehaviour
             case "MainMenu":
                 MainMenu.instance.ButtonPerformed (button);
                 break;
+            case "SettingsMenu":
+                SettingsMenu.instance.ButtonPerformed (button);
+                break;
             case "HowTo":
                 HowTo.instance.ButtonPerformed (button);
                 break;
@@ -212,5 +220,15 @@ public class GameManager : MonoBehaviour
             // Mathf.Clamp01(asyncLoad.progress / 0.9f);
             yield return null;
         }
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        musicAudioMixer.SetFloat("musicVolume", volume);
+    }
+
+    public void SetFXVolume(float volume)
+    {
+        fxAudioMixer.SetFloat("fxVolume", volume);
     }
 }

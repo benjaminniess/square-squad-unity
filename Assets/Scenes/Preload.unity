@@ -219,6 +219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionsDuration: 0.5
+  musicAudioMixer: {fileID: 24100000, guid: 6b1aa41fa1b4f5bfab4d0984e42dca95, type: 2}
+  fxAudioMixer: {fileID: 24100000, guid: 2859f1628a135d3ab9f870cfbf4c5e54, type: 2}
 --- !u!4 &618562709
 Transform:
   m_ObjectHideFlags: 0
