@@ -43,6 +43,14 @@ public class LobbyScript : MonoBehaviour
     {
         if (GameManager.instance.GetPlayers().Count > 0)
         {
+            foreach (KeyValuePair<int, GameObject>
+                Player
+                in
+                GameManager.instance.GetPlayers()
+            )
+            {
+                Player.Value.transform.position = new Vector3(-40, -40, 0);
+            }
             StartCoroutine(GameManager.instance.LoadScene("LevelSelect"));
         }
     }
