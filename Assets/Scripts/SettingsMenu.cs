@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     public static SettingsMenu instance;
+
+    public Slider musicSlider;
+
+    public Slider fxSlider;
 
     private void Awake()
     {
@@ -20,6 +25,11 @@ public class SettingsMenu : MonoBehaviour
     void Start()
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
+
+        SaveData gameData = GameManager.instance.GetGameData();
+        Debug.Log(gameData.GetMusicVolume());
+        musicSlider.value = gameData.GetMusicVolume();
+        fxSlider.value = gameData.GetFXVolume();
     }
 
     void Update()
@@ -47,13 +57,11 @@ public class SettingsMenu : MonoBehaviour
 
     public void HandleMusicChange(float value)
     {
-        int volumeLevel = (int)(value * 100);
-        GameManager.instance.SetMusicVolume (volumeLevel);
+        GameManager.instance.SetMusicVolume((int) value);
     }
 
     public void HandleFXChange(float value)
     {
-        int volumeLevel = (int)(value * 100);
-        GameManager.instance.SetFXVolume (volumeLevel);
+        GameManager.instance.SetFXVolume((int) value);
     }
 }

@@ -238,15 +238,17 @@ public class GameManager : MonoBehaviour
 
     public void SetMusicVolume(int volume)
     {
-        musicAudioMixer.SetFloat("musicVolume", -80 + volume);
+        musicAudioMixer.SetFloat("musicVolume", volume);
         SaveData gameData = GetGameData();
+
         gameData.SetMusicVolume (volume);
+        Debug.Log (volume);
         SaveGameData (gameData);
     }
 
     public void SetFXVolume(int volume)
     {
-        fxAudioMixer.SetFloat("fxVolume", -80 + volume);
+        fxAudioMixer.SetFloat("fxVolume", volume);
         SaveData gameData = GetGameData();
         gameData.SetFXVolume (volume);
         SaveGameData (gameData);
