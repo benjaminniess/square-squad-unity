@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
 
         players = new Dictionary<int, GameObject>();
         GenerateArenasDictionnaty();
+
+        SaveData gameData = GetGameData();
+        SetMusicVolume(gameData.GetMusicVolume());
+        SetFXVolume(gameData.GetFXVolume());
     }
 
     void ButtonPerformed(string button)
@@ -222,13 +226,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetMusicVolume(float volume)
+    public SaveData GetGameData()
     {
-        musicAudioMixer.SetFloat("musicVolume", volume);
+        return SaveLoad.Load();
     }
 
-    public void SetFXVolume(float volume)
+    public void SaveGameData(SaveData gameData)
     {
-        fxAudioMixer.SetFloat("fxVolume", volume);
+        SaveLoad.Save (gameData);
+    }
+
+    public void SetMusicVolume(int volume)
+    {
+        musicAudioMixer.SetFloat("musicVolume", -80 + volume);
+        SaveData gameData = GetGameData();
+        gameData.SetMusicVolume (volume);
+        SaveGameData (gameData);
+    }
+
+    public void SetFXVolume(int volume)
+    {
+        fxAudioMixer.SetFloat("fxVolume", -80 + volume);
+        SaveData gameData = GetGameData();
+        gameData.SetFXVolume (volume);
+        SaveGameData (gameData);
     }
 }

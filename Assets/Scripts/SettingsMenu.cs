@@ -44,4 +44,16 @@ public class SettingsMenu : MonoBehaviour
                 break;
         }
     }
+
+    public void HandleMusicChange(float value)
+    {
+        int volumeLevel = (int)(value * 100);
+        GameManager.instance.SetMusicVolume (volumeLevel);
+    }
+
+    public void HandleFXChange(float value)
+    {
+        int volumeLevel = (int)(value * 100);
+        GameManager.instance.SetFXVolume (volumeLevel);
+    }
 }
