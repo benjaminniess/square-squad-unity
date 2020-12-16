@@ -27,7 +27,6 @@ public class SettingsMenu : MonoBehaviour
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
 
         SaveData gameData = GameManager.instance.GetGameData();
-        Debug.Log(gameData.GetMusicVolume());
         musicSlider.value = gameData.GetMusicVolume();
         fxSlider.value = gameData.GetFXVolume();
     }

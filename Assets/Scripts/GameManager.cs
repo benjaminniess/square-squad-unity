@@ -242,7 +242,6 @@ public class GameManager : MonoBehaviour
         SaveData gameData = GetGameData();
 
         gameData.SetMusicVolume (volume);
-        Debug.Log (volume);
         SaveGameData (gameData);
     }
 
