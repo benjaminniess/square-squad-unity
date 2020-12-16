@@ -23,6 +23,7 @@ public class Base : MonoBehaviour
             playerScript.setTracked(false);
             if (playerScript.isHoldingCoin())
             {
+                FindObjectOfType<AudioManager>().Play("Score");
                 playerScript.increaseScore();
                 playerScript.setIsHoldingCoin(false);
                 Main.instance.GenerateCoin();

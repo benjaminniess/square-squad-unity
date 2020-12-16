@@ -65,6 +65,7 @@ public abstract class Bonus : MonoBehaviour
             return;
         }
 
+        FindObjectOfType<AudioManager>().Play("Hit");
         playerScript.setIsHoldingBonus(true);
 
         setHolder (playerScript);

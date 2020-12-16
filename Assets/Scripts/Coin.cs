@@ -22,6 +22,7 @@ public class Coin : MonoBehaviour
                 collider.gameObject.GetComponent<PlayerMovements>();
             if (!playerScript.isHoldingCoin() && playerScript.canHoldCoin())
             {
+                FindObjectOfType<AudioManager>().Play("Buzz");
                 playerScript.setIsHoldingCoin(true);
                 Destroy (gameObject);
             }

@@ -400,8 +400,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Fire
-    clip: {fileID: 8300000, guid: 73cb7fcd206049b8b93373b6d314afa1, type: 3}
-    volume: 0.585
+    clip: {fileID: 8300000, guid: d4ea9b9948d259fe295ac5c9dd944ea2, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 8300000, guid: a014b7e7c4ab4c833bcf9c1463ffb694, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Buzz
+    clip: {fileID: 8300000, guid: dc5c16b343a6b0d2b87700075b953cca, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Score
+    clip: {fileID: 8300000, guid: 0049cbde12547b0f0a5139efb87d718e, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  audioMixerG: {fileID: 24300002, guid: 2859f1628a135d3ab9f870cfbf4c5e54, type: 2}
 --- !u!4 &1123012223
 Transform:
   m_ObjectHideFlags: 0
