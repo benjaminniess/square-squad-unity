@@ -13,6 +13,14 @@ public class SettingsMenu : MonoBehaviour
 
     public Slider fxSlider;
 
+    public Slider ennemiesCountSlider;
+
+    public Slider ennemiesSpeedSlider;
+
+    public Slider bonusCountSlider;
+
+    public Slider coinsCountSlider;
+
     private void Awake()
     {
         if (instance != null)
@@ -28,8 +36,13 @@ public class SettingsMenu : MonoBehaviour
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
 
         SaveData gameData = GameManager.instance.GetGameData();
+
         musicSlider.value = gameData.GetMusicVolume();
         fxSlider.value = gameData.GetFXVolume();
+        ennemiesCountSlider.value = gameData.GetEnnemmiesCount();
+        ennemiesSpeedSlider.value = gameData.GetEnnemiesSpeed();
+        bonusCountSlider.value = gameData.GetBonusCount();
+        coinsCountSlider.value = gameData.GetCoinsCount();
     }
 
     void Update()
@@ -65,5 +78,37 @@ public class SettingsMenu : MonoBehaviour
     public void HandleFXChange(float value)
     {
         GameManager.instance.SetFXVolume((int) value);
+    }
+
+    public void HandleEnnemiesSpeedChange(float value)
+    {
+        SaveData gameData = GameManager.instance.GetGameData();
+
+        gameData.SetEnnemiesSpeed((int) value);
+        GameManager.instance.SaveGameData (gameData);
+    }
+
+    public void HandleEnnemiesNumberChange(float value)
+    {
+        SaveData gameData = GameManager.instance.GetGameData();
+
+        gameData.SetEnnemiesCount((int) value);
+        GameManager.instance.SaveGameData (gameData);
+    }
+
+    public void HandlBonusNumberChange(float value)
+    {
+        SaveData gameData = GameManager.instance.GetGameData();
+
+        gameData.SetBonusCount((int) value);
+        GameManager.instance.SaveGameData (gameData);
+    }
+
+    public void HandleSquaresNumberChange(float value)
+    {
+        SaveData gameData = GameManager.instance.GetGameData();
+
+        gameData.SetCoinsCount((int) value);
+        GameManager.instance.SaveGameData (gameData);
     }
 }

@@ -1,9 +1,17 @@
 ﻿[System.Serializable]
 public class SaveData
 {
-    private int musicVolume = 80;
+    private int musicVolume = 0;
 
-    private int fxVolume = -20;
+    private int fxVolume = 0;
+
+    private int ennemiesSpeed = 5;
+
+    private int ennemiesCount = 3;
+
+    private int bonusCount = 2;
+
+    private int coinsCount = 1;
 
     public int GetMusicVolume()
     {
@@ -15,6 +23,26 @@ public class SaveData
         return fxVolume;
     }
 
+    public int GetEnnemiesSpeed()
+    {
+        return ennemiesSpeed;
+    }
+
+    public int GetEnnemmiesCount()
+    {
+        return ennemiesCount;
+    }
+
+    public int GetBonusCount()
+    {
+        return bonusCount;
+    }
+
+    public int GetCoinsCount()
+    {
+        return coinsCount;
+    }
+
     public void SetMusicVolume(int volume)
     {
         musicVolume = volume;
@@ -23,5 +51,25 @@ public class SaveData
     public void SetFXVolume(int volume)
     {
         fxVolume = volume;
+    }
+
+    public void SetEnnemiesSpeed(int speed)
+    {
+        ennemiesSpeed = speed;
+    }
+
+    public void SetEnnemiesCount(int count)
+    {
+        ennemiesCount = count;
+    }
+
+    public void SetBonusCount(int count)
+    {
+        bonusCount = count;
+    }
+
+    public void SetCoinsCount(int count)
+    {
+        coinsCount = count;
     }
 }
