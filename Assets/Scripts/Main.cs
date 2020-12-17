@@ -71,15 +71,22 @@ public class Main : MonoBehaviour
                 .GetComponent<TMPro.TextMeshProUGUI>();
         StartCountdown = GameObject.Find("StartCountdown");
 
-        GenerateCoin();
-
-        /** Debug
-        for (int i = 0; i < 50; i++)
+        SaveData gameData = GameManager.instance.GetGameData();
+        int coinNumbers = gameData.GetCoinsCount();
+        for (int i = 1; i <= coinNumbers; i++)
         {
-            GenerateBonus();
+            GenerateCoin();
         }
-        */
-        GenerateBonus();
+
+        int bonusNumbers = gameData.GetBonusCount();
+        if (bonusNumbers > 0)
+        {
+            for (int i = 0; i <= bonusNumbers; i++)
+            {
+                GenerateBonus();
+            }
+        }
+
         GeneratePlayers();
 
         GameOverMenu = GameObject.Find("GameOverMenu");
