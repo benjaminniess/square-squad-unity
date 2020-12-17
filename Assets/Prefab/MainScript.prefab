@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Coin: {fileID: 1989060042501414387, guid: ebf2cd37b6bf69ae1a5f0c20ee542ce2, type: 3}
-  Player: {fileID: 0}
+  Player: {fileID: 491578336404137710, guid: b0fbd67e12498451fbceb99ea0fb0bae, type: 3}
+  Ennemy: {fileID: 681744152755235893, guid: 960e3933ac1014da9a8c8d2e00c9c6aa, type: 3}
   BonusTypes:
   - {fileID: 4016743242160764426, guid: 89b378545a64e434fad657e8ea00523b, type: 3}
   - {fileID: 4016743242160764426, guid: e8bb09700e3984cad941fafb53af5804, type: 3}

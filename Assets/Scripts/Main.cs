@@ -14,6 +14,8 @@ public class Main : MonoBehaviour
 
     public GameObject Player;
 
+    public GameObject Ennemy;
+
     private GameObject[] playersScores;
 
     private float timeRemaining = 60;
@@ -87,6 +89,14 @@ public class Main : MonoBehaviour
             }
         }
 
+        int ennemiesNumber = gameData.GetEnnemmiesCount();
+        if (ennemiesNumber > 0)
+        {
+            for (int i = 0; i <= ennemiesNumber; i++)
+            {
+                GenerateEnnemy();
+            }
+        }
         GeneratePlayers();
 
         GameOverMenu = GameObject.Find("GameOverMenu");
@@ -407,6 +417,12 @@ public class Main : MonoBehaviour
         }
 
         AddCoinAtPosition (spawnX, spawnY);
+    }
+
+    void GenerateEnnemy()
+    {
+        GameObject spawnSpot = GameObject.Find("EnnemySpawn");
+        Instantiate(Ennemy, spawnSpot.transform.position, Quaternion.identity);
     }
 
     public void AddCoinAtPosition(int spawnX, int spawnY)
