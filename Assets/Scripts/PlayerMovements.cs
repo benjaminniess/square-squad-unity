@@ -44,7 +44,7 @@ public class PlayerMovements : MonoBehaviour
 
     private float dashDuration = 0.05f;
 
-    private float dashSpeed = 3000;
+    private float dashSpeed;
 
     private float dashSleepDuration = 2;
 
@@ -160,6 +160,7 @@ public class PlayerMovements : MonoBehaviour
         dashStatus = transform.Find("DashStatus").gameObject;
         recoverStatus = transform.Find("RecoverStatus").gameObject;
         currentPlayerSpeed = speed;
+
         playerColor =
             transform
                 .Find("MainColor")
@@ -282,6 +283,9 @@ public class PlayerMovements : MonoBehaviour
 
     public void initState()
     {
+        int speedSetting = GameManager.instance.GetGameData().GetPlayersSpeed();
+        speed = 535 + (int)(2800 * speedSetting / 20);
+        dashSpeed = 3 * speed;
         setIsHoldingBonus(false);
         setIsHoldingCoin(false);
         setOK();

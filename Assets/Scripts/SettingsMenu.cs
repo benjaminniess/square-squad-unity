@@ -13,6 +13,8 @@ public class SettingsMenu : MonoBehaviour
 
     public Slider fxSlider;
 
+    public Slider playersSpeedSlider;
+
     public Slider ennemiesCountSlider;
 
     public Slider ennemiesSpeedSlider;
@@ -39,6 +41,7 @@ public class SettingsMenu : MonoBehaviour
 
         musicSlider.value = gameData.GetMusicVolume();
         fxSlider.value = gameData.GetFXVolume();
+        playersSpeedSlider.value = gameData.GetPlayersSpeed();
         ennemiesCountSlider.value = gameData.GetEnnemmiesCount();
         ennemiesSpeedSlider.value = gameData.GetEnnemiesSpeed();
         bonusCountSlider.value = gameData.GetBonusCount();
@@ -85,6 +88,14 @@ public class SettingsMenu : MonoBehaviour
         SaveData gameData = GameManager.instance.GetGameData();
 
         gameData.SetEnnemiesSpeed((int) value);
+        GameManager.instance.SaveGameData (gameData);
+    }
+
+    public void HandlePlayersSpeedChange(float value)
+    {
+        SaveData gameData = GameManager.instance.GetGameData();
+
+        gameData.SetPlayersSpeed((int) value);
         GameManager.instance.SaveGameData (gameData);
     }
 

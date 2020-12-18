@@ -13,6 +13,8 @@ public class SaveData
 
     private int coinsCount = 1;
 
+    private int playersSpeed = 10;
+
     public int GetMusicVolume()
     {
         return musicVolume;
@@ -23,9 +25,14 @@ public class SaveData
         return fxVolume;
     }
 
+    public int GetPlayersSpeed()
+    {
+        return playersSpeed;
+    }
+
     public int GetEnnemiesSpeed()
     {
-        return (int)(ennemiesSpeed * 1.3);
+        return ennemiesSpeed;
     }
 
     public int GetEnnemmiesCount()
@@ -51,6 +58,11 @@ public class SaveData
     public void SetFXVolume(int volume)
     {
         fxVolume = volume;
+    }
+
+    public void SetPlayersSpeed(int speed)
+    {
+        playersSpeed = speed;
     }
 
     public void SetEnnemiesSpeed(int speed)
