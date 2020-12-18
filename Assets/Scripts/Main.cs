@@ -92,9 +92,9 @@ public class Main : MonoBehaviour
         int ennemiesNumber = gameData.GetEnnemmiesCount();
         if (ennemiesNumber > 0)
         {
-            for (int i = 0; i <= ennemiesNumber; i++)
+            for (int i = 1; i < ennemiesNumber; i++)
             {
-                GenerateEnnemy();
+                GenerateEnnemy (i);
             }
         }
         GeneratePlayers();
@@ -419,9 +419,9 @@ public class Main : MonoBehaviour
         AddCoinAtPosition (spawnX, spawnY);
     }
 
-    void GenerateEnnemy()
+    void GenerateEnnemy(int SpawnNumber = 1)
     {
-        GameObject spawnSpot = GameObject.Find("EnnemySpawn");
+        GameObject spawnSpot = GameObject.Find("EnnemySpawn" + SpawnNumber);
         Instantiate(Ennemy, spawnSpot.transform.position, Quaternion.identity);
     }
 
