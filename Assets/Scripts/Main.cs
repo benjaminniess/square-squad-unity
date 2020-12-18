@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
@@ -422,7 +423,12 @@ public class Main : MonoBehaviour
     void GenerateEnnemy(int SpawnNumber = 1)
     {
         GameObject spawnSpot = GameObject.Find("EnnemySpawn" + SpawnNumber);
-        Instantiate(Ennemy, spawnSpot.transform.position, Quaternion.identity);
+        GameObject ennemyGO =
+            Instantiate(Ennemy,
+            spawnSpot.transform.position,
+            Quaternion.identity);
+        ennemyGO.GetComponent<NavMeshAgent>().speed =
+            GameManager.instance.GetGameData().GetEnnemiesSpeed();
     }
 
     public void AddCoinAtPosition(int spawnX, int spawnY)

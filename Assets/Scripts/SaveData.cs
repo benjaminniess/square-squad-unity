@@ -25,7 +25,7 @@ public class SaveData
 
     public int GetEnnemiesSpeed()
     {
-        return ennemiesSpeed;
+        return (int)(ennemiesSpeed * 1.3);
     }
 
     public int GetEnnemmiesCount()
