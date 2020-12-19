@@ -427,8 +427,7 @@ public class Main : MonoBehaviour
             Instantiate(Ennemy,
             spawnSpot.transform.position,
             Quaternion.identity);
-        ennemyGO.GetComponent<NavMeshAgent>().speed =
-            (int)(GameManager.instance.GetGameData().GetEnnemiesSpeed() * 1.3);
+        //ennemyGO.GetComponent<NavMeshAgent>().speed = (int)(GameManager.instance.GetGameData().GetEnnemiesSpeed() * 1.3);
     }
 
     public void AddCoinAtPosition(int spawnX, int spawnY)
