@@ -1,14 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnnemyMovements : MonoBehaviour
 {
-    public string health;
+    public float nextWaypointDistance = 3f;
+
+    private int currentWaypoint = 0;
+
+    private Path path;
+
+    private Rigidbody2D rb;
+
+    private GameObject Player;
+
+    private bool reachedPlayer = false;
+
+    private Seeker seeker;
+
+    private int speed;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        seeker = GetComponent<Seeker>();
+        InvokeRepeating("UpdatePath", 0f, .2f);
+    }
+
+    void UpdatePath()
+    {
+        if (!seeker.IsDone())
+        {
+            return;
+        }
+
+        Player = FindClosestPlayer();
+        if (Player)
+        {
+            seeker
+                .StartPath(rb.position,
+                Player.transform.position,
+                OnPathComplete);
+        }
+        else
+        {
+            //agent.SetDestination(agent.transform.position);
+        }
+    }
+
+    void OnPathComplete(Path p)
+    {
+        if (!p.error)
+        {
+            path = p;
+            currentWaypoint = 0;
+        }
     }
 
     public void setKO()
@@ -16,20 +64,47 @@ public class EnnemyMovements : MonoBehaviour
         //Debug.Log("KO");
     }
 
+    public void SetSpeed(int speedVal)
+    {
+        speed = speedVal;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        GameObject Player = FindClosestPlayer();
-        if (Player)
+        if (path == null)
         {
-            //agent.SetDestination(new Vector3(Player.transform.position.x,Player.transform.position.y,agent.transform.position.z));
-            //transform.LookAt(Player.transform.position);
-            //transform.Rotate(new Vector3(0, -90, -90), Space.Self);
-            //transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+            return;
+        }
+
+        if (currentWaypoint >= path.vectorPath.Count)
+        {
+            reachedPlayer = true;
+            return;
         }
         else
         {
-            //agent.SetDestination(agent.transform.position);
+            reachedPlayer = false;
+        }
+
+        Vector2 direction =
+            ((Vector2) path.vectorPath[currentWaypoint] - rb.position)
+                .normalized;
+        Vector2 force = direction * speed * Time.deltaTime;
+        if (Player != null)
+        {
+            transform.LookAt((Vector2) path.vectorPath[currentWaypoint]);
+
+            transform.Rotate(0, -90, -90, Space.Self);
+        }
+
+        rb.velocity = force;
+
+        float distance =
+            Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        if (distance < nextWaypointDistance)
+        {
+            currentWaypoint++;
         }
     }
 
