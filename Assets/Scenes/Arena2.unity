@@ -316,6 +316,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainScript
       objectReference: {fileID: 0}
+    - target: {fileID: 7243379585300911115, guid: dc5202082f855477e83d53705c093a74,
+        type: 3}
+      propertyPath: data.dataString
+      value: UEsDBBQAAAgIAAAIIewYtsBlTgIAAPMEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VEtv2zAM/iuBzuvguEmL7rY5abpDH2hW9OILa9GxEFky9GiSFvnvo2Q7djPsFIbfR/LjQ/5kQtkGC6fNygh+rzmyHxMWbPZtMoB3uIeNVmvxgT3nVXBXBRJEzjM4ock/DWFW1+iMKH6qjQzkhJxeiVKbesk3mGnrLLlLkBYJMtqFaEWuzwnb08/FTQg5kJVeB+uDrJtkciSzQOXQDNSe2NNalleFhLpBHiQP5OuePUsjTVEzHSMIL7SUwnZKmDs0sdMMGuupDyJwAdRZLB/4FYpN5YLKcfBjWVp0nSQDh4UwNKA2K/ul26nVYLetrneQPtSZT1tNbdL7f/CLaYRLo+u7vu40CTVcJYrtMxwKsG401rF78VW4VzuQW3iT+FqhetAro73iBDrjQ6i3mC6Gv6fWsgqL7eBvpfbOvq5v/r+d0MQxtr/PpKjfAvR91jrWUseBx92jodX8JsXxMmyXgrxBxovFP7AZn1AH3ApjHUFdmyroe9PeBCpbxqGFdrzLtFEY3V0rDSqQ7vBEadz5Ds+wUdkz5BbCY+mKd1j/Bs5ConvgJ8kZ9KR3p23ZSu/u0VaP3kmhcBAdgAeaU6aVak9sPJM+bO1NCcUobOMF/3pb7OpmNoUEr5I5phxSuLi8KlJI+eXsskjnfIYsHp9Q1CfIp1ZoNx7amhqSKzq0/hsyWRlo4rlzA7uV+Kj1aORClXpdGET12GY4CUdDRehZ8iUXNKA1OidU3Df7zJnUxRZ5fkqUx06Xe2cgH7LkrBHv2gVPzrL40cjZkR3/AlBLAwQUAAAICAAACCHsk5rOmG0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0kpmliWGiQaqZgWmqUUqiUaKusVmyUaJRirGJcbKRaYpJqlIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAACCHsGLbAZU4CAADzBAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsk5rOmG0AAAB4AAAACQAkAAAAAAAAAAAAAACbAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAFMDAAAAAA==
+      objectReference: {fileID: 0}
+    - target: {fileID: 7243379585300911115, guid: dc5202082f855477e83d53705c093a74,
+        type: 3}
+      propertyPath: debugRoof
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -8295666644453849824, guid: dc5202082f855477e83d53705c093a74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dc5202082f855477e83d53705c093a74, type: 3}
@@ -27800,7 +27810,7 @@ GameObject:
   - component: {fileID: 1135250139}
   - component: {fileID: 1135250138}
   - component: {fileID: 1135250140}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
