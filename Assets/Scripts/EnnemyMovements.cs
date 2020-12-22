@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,7 +27,7 @@ public class EnnemyMovements : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
-        InvokeRepeating("UpdatePath", 0f, .2f);
+        InvokeRepeating("UpdatePath", 0f, .1f);
     }
 
     void UpdatePath()
@@ -55,7 +56,7 @@ public class EnnemyMovements : MonoBehaviour
         if (!p.error)
         {
             path = p;
-            currentWaypoint = 0;
+            currentWaypoint = 1;
         }
     }
 
@@ -91,11 +92,17 @@ public class EnnemyMovements : MonoBehaviour
             ((Vector2) path.vectorPath[currentWaypoint] - rb.position)
                 .normalized;
         Vector2 force = direction * speed * Time.deltaTime;
+
+        float angle =
+            (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+
+        transform.rotation =
+            Quaternion
+                .Lerp(transform.rotation,
+                Quaternion.AngleAxis(angle, Vector3.forward),
+                Time.deltaTime * 10);
         if (Player != null)
         {
-            transform.LookAt((Vector2) path.vectorPath[currentWaypoint]);
-
-            transform.Rotate(0, -90, -90, Space.Self);
         }
 
         rb.velocity = force;
