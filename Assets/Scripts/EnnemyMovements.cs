@@ -13,6 +13,8 @@ public class EnnemyMovements : MonoBehaviour
 
     private Path path;
 
+    public GameObject radar;
+
     private Rigidbody2D rb;
 
     private GameObject Player;
@@ -21,12 +23,16 @@ public class EnnemyMovements : MonoBehaviour
 
     private Seeker seeker;
 
+    Vector2 direction;
+    Vector2 force;
+
     private int speed;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
+    
         InvokeRepeating("UpdatePath", 0f, .1f);
     }
 
@@ -88,24 +94,29 @@ public class EnnemyMovements : MonoBehaviour
             reachedPlayer = false;
         }
 
-        Vector2 direction =
-            ((Vector2) path.vectorPath[currentWaypoint] - rb.position)
-                .normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
-
-        float angle =
-            (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
-
-        transform.rotation =
-            Quaternion
-                .Lerp(transform.rotation,
-                Quaternion.AngleAxis(angle, Vector3.forward),
-                Time.deltaTime * 10);
         if (Player != null)
         {
+            radar.SetActive(false);
+            direction =
+                ((Vector2) path.vectorPath[currentWaypoint] - rb.position)
+                    .normalized;
+            force = direction * speed * Time.deltaTime;
+
+            float angle =
+                (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+
+            transform.rotation =
+                Quaternion
+                    .Lerp(transform.rotation,
+                    Quaternion.AngleAxis(angle, Vector3.forward),
+                    Time.deltaTime * 10);
+        
+            rb.velocity = force;
+        } else {
+            radar.SetActive(true);
+            rb.velocity = force / 2;
         }
 
-        rb.velocity = force;
 
         float distance =
             Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
@@ -138,7 +149,7 @@ public class EnnemyMovements : MonoBehaviour
 
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
+            if (curDistance < distance && curDistance < 400 )
             {
                 closest = go;
                 distance = curDistance;
@@ -149,6 +160,7 @@ public class EnnemyMovements : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
+        Debug.Log(collider.tag);
         if (collider.tag == "Player")
         {
             PlayerMovements playerScript =
