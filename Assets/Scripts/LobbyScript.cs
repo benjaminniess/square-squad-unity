@@ -220,7 +220,7 @@ public class LobbyScript : MonoBehaviour
             else if (playerReCount == 2)
             {
                 playerScript
-                    .setColor(new Color(242f / 255f, 118f / 255f, 46f / 255f));
+                    .setColor(new Color(88f / 255f, 109f / 255f, 245f / 255f));
             }
             else if (playerReCount == 3)
             {
@@ -230,7 +230,7 @@ public class LobbyScript : MonoBehaviour
             else
             {
                 playerScript
-                    .setColor(new Color(88f / 255f, 109f / 255f, 245f / 255f));
+                    .setColor(new Color(219 / 255f, 194f / 255f, 34f / 255f));
             }
 
             NewPlayers.Add(playerReCount, playerScript.gameObject);
