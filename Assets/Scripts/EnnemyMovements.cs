@@ -15,15 +15,18 @@ public class EnnemyMovements : MonoBehaviour
 
     public GameObject radar;
 
+    public GameObject topPoint;
+
+    public GameObject bottomPoint;
+
     private Rigidbody2D rb;
 
     private GameObject Player;
 
-    private bool reachedPlayer = false;
-
     private Seeker seeker;
 
     Vector2 direction;
+
     Vector2 force;
 
     private int speed;
@@ -32,7 +35,7 @@ public class EnnemyMovements : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
-    
+
         InvokeRepeating("UpdatePath", 0f, .1f);
     }
 
@@ -50,10 +53,6 @@ public class EnnemyMovements : MonoBehaviour
                 .StartPath(rb.position,
                 Player.transform.position,
                 OnPathComplete);
-        }
-        else
-        {
-            //agent.SetDestination(agent.transform.position);
         }
     }
 
@@ -79,24 +78,19 @@ public class EnnemyMovements : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (path == null)
-        {
-            return;
-        }
-
-        if (currentWaypoint >= path.vectorPath.Count)
-        {
-            reachedPlayer = true;
-            return;
-        }
-        else
-        {
-            reachedPlayer = false;
-        }
-
         if (Player != null)
         {
             radar.SetActive(false);
+
+            if (path == null)
+            {
+                return;
+            }
+
+            if (currentWaypoint >= path.vectorPath.Count)
+            {
+                return;
+            }
             direction =
                 ((Vector2) path.vectorPath[currentWaypoint] - rb.position)
                     .normalized;
@@ -110,19 +104,24 @@ public class EnnemyMovements : MonoBehaviour
                     .Lerp(transform.rotation,
                     Quaternion.AngleAxis(angle, Vector3.forward),
                     Time.deltaTime * 10);
-        
+
             rb.velocity = force;
-        } else {
-            radar.SetActive(true);
-            rb.velocity = force / 2;
+
+            float distance =
+                Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+            if (distance < nextWaypointDistance)
+            {
+                currentWaypoint++;
+            }
         }
-
-
-        float distance =
-            Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-        if (distance < nextWaypointDistance)
+        else
         {
-            currentWaypoint++;
+            radar.SetActive(true);
+
+            direction =
+                (topPoint.transform.position - bottomPoint.transform.position)
+                    .normalized;
+            rb.velocity = direction * speed * Time.deltaTime;
         }
     }
 
@@ -149,7 +148,7 @@ public class EnnemyMovements : MonoBehaviour
 
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance && curDistance < 400 )
+            if (curDistance < distance && curDistance < 400)
             {
                 closest = go;
                 distance = curDistance;
@@ -160,8 +159,17 @@ public class EnnemyMovements : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.tag);
-        if (collider.tag == "Player")
+        if (collider.tag == "Tiles")
+        {
+            Debug.Log("Collitile");
+            rb.transform.rotation =
+                Quaternion
+                    .AngleAxis(rb.transform.rotation.z +
+                    180 +
+                    Random.Range(-60, 60),
+                    Vector3.forward);
+        }
+        else if (collider.tag == "Player")
         {
             PlayerMovements playerScript =
                 collider.gameObject.GetComponent<PlayerMovements>();

@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - Canvas
   - Button
+  - Tiles
   layers:
   - Default
   - TransparentFX
