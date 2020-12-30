@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class MainMenu : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class MainMenu : MonoBehaviour
         eventSystem.SetSelectedGameObject(null);
         buttons = new Dictionary<int, GameObject>();
         GameObject[] buttonsGO = GameObject.FindGameObjectsWithTag("Button");
+        Array.Sort( buttonsGO, sortByName );
         int i = 1;
         foreach (GameObject buttonGO in buttonsGO)
         {
@@ -57,6 +59,11 @@ public class MainMenu : MonoBehaviour
 
             i++;
         }
+    }
+
+    public int sortByName( GameObject x, GameObject y )
+    {
+        return x.name.CompareTo( y.name );
     }
 
     public void ButtonPerformed(string button)
