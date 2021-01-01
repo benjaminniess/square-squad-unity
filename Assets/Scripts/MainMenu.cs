@@ -49,7 +49,7 @@ public class MainMenu : MonoBehaviour
                 continue;
             }
 
-            if (buttonGO.name == "Multi")
+            if (buttonGO.name == "1Multi")
             {
                 selectedButton = i;
                 eventSystem.SetSelectedGameObject (buttonGO);
