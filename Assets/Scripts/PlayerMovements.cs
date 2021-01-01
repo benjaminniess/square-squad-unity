@@ -288,6 +288,7 @@ public class PlayerMovements : MonoBehaviour
         dashSpeed = 3 * speed;
         setIsHoldingBonus(false);
         setIsHoldingCoin(false);
+        setCanHoldCoin(true);
         setOK();
         resetPlayerSpeed();
     }
