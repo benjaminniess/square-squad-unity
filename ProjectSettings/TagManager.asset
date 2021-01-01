@@ -9,6 +9,7 @@ TagManager:
   - Canvas
   - Button
   - Tiles
+  - Base
   layers:
   - Default
   - TransparentFX
@@ -18,10 +19,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Ennemy
   - DoNotPassThrough
-  - 
-  - 
+  - Player
+  - Base
   - 
   - 
   - 

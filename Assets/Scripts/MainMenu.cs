@@ -86,6 +86,10 @@ public class MainMenu : MonoBehaviour
 
     void Submit()
     {
+        if ( ! buttons.ContainsKey(selectedButton) ) {
+            return;
+        }
+
         buttons[selectedButton].GetComponent<Button>().onClick.Invoke();
     }
 

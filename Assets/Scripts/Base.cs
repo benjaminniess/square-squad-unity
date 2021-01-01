@@ -7,6 +7,7 @@ public class Base : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        IgnorePlayersCollisions();
     }
 
     // Update is called once per frame
@@ -14,10 +15,23 @@ public class Base : MonoBehaviour
     {
     }
 
+    void IgnorePlayersCollisions() {
+        foreach (KeyValuePair<int, GameObject>
+                Player
+                in
+                GameManager.instance.GetPlayers()
+            )
+            {
+                Physics2D.IgnoreCollision(Player.Value.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+                Physics2D.IgnoreCollision(Player.Value.GetComponent<CircleCollider2D>(), GetComponent<Collider2D>());
+            }
+    }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Player")
         {
+            
             PlayerMovements playerScript =
                 collider.gameObject.GetComponent<PlayerMovements>();
             playerScript.setTracked(false);

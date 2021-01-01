@@ -117,11 +117,8 @@ public class EnnemyMovements : MonoBehaviour
         else
         {
             radar.SetActive(true);
-
-            direction =
-                (topPoint.transform.position - bottomPoint.transform.position)
-                    .normalized;
-            rb.velocity = direction * speed * Time.deltaTime;
+            rb.angularVelocity = 0f;
+            rb.velocity = transform.up * speed * Time.deltaTime;
         }
     }
 
@@ -159,17 +156,9 @@ public class EnnemyMovements : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Tiles")
-        {
-            Debug.Log("Collitile");
-            rb.transform.rotation =
-                Quaternion
-                    .AngleAxis(rb.transform.rotation.z +
-                    180 +
-                    Random.Range(-60, 60),
-                    Vector3.forward);
-        }
-        else if (collider.tag == "Player")
+        OnTriggerEnterAndStay(collider);
+        
+        if (collider.tag == "Player")
         {
             PlayerMovements playerScript =
                 collider.gameObject.GetComponent<PlayerMovements>();
@@ -178,6 +167,23 @@ public class EnnemyMovements : MonoBehaviour
             {
                 //playerScript.decreaseScore();
             }
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        OnTriggerEnterAndStay(collider);
+    }
+
+    void OnTriggerEnterAndStay(Collider2D collider) {
+        if (collider.tag == "Tiles" || collider.tag == "Base" || collider.tag == "Ennemy")
+        {
+            transform.Rotate(0f, 0f, Random.Range(130f, 210f), Space.World);
+            direction =
+                (topPoint.transform.position - bottomPoint.transform.position)
+                    .normalized;
+            rb.velocity = direction * speed * Time.deltaTime;
+            
         }
     }
 }
