@@ -284,7 +284,7 @@ public class PlayerMovements : MonoBehaviour
     public void initState()
     {
         int speedSetting = GameManager.instance.GetGameData().GetPlayersSpeed();
-        speed = 535 + (int)(2800 * speedSetting / 20);
+        speed = GameManager.instance.minPlayerSpeed + (int)(GameManager.instance.maxPlayerSpeed * speedSetting / 20);
         dashSpeed = 3 * speed;
         setIsHoldingBonus(false);
         setIsHoldingCoin(false);

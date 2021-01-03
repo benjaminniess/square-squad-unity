@@ -1,19 +1,29 @@
 ﻿[System.Serializable]
 public class SaveData
 {
-    private int musicVolume = 0;
+    private int musicVolume;
 
-    private int fxVolume = 0;
+    private int fxVolume;
 
-    private int ennemiesSpeed = 5;
+    private int ennemiesSpeed;
 
-    private int ennemiesCount = 3;
+    private int ennemiesCount;
 
-    private int bonusCount = 2;
+    private int bonusCount;
 
-    private int coinsCount = 1;
+    private int coinsCount;
 
-    private int playersSpeed = 10;
+    private int playersSpeed;
+
+    public void Reset() {
+        musicVolume = 0;
+        fxVolume = 0;
+        ennemiesSpeed = 2;
+        ennemiesCount = 3;
+        bonusCount = 2;
+        coinsCount = 1;
+        playersSpeed = 4;
+    }
 
     public int GetMusicVolume()
     {

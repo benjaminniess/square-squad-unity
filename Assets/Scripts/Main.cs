@@ -432,7 +432,7 @@ public class Main : MonoBehaviour
             .GetComponent<EnnemyMovements>()
             .SetSpeed((
             int
-            )(GameManager.instance.GetGameData().GetEnnemiesSpeed() * 100));
+            )(GameManager.instance.minEnnemySpeed + ( GameManager.instance.GetGameData().GetEnnemiesSpeed() * GameManager.instance.maxEnnemySpeed)));
     }
 
     public void AddCoinAtPosition(int spawnX, int spawnY)

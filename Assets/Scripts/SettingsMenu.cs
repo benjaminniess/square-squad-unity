@@ -23,6 +23,8 @@ public class SettingsMenu : MonoBehaviour
 
     public Slider coinsCountSlider;
 
+    private SaveData gameData;
+
     private void Awake()
     {
         if (instance != null)
@@ -37,15 +39,9 @@ public class SettingsMenu : MonoBehaviour
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
 
-        SaveData gameData = GameManager.instance.GetGameData();
+        gameData = GameManager.instance.GetGameData();
 
-        musicSlider.value = gameData.GetMusicVolume();
-        fxSlider.value = gameData.GetFXVolume();
-        playersSpeedSlider.value = gameData.GetPlayersSpeed();
-        ennemiesCountSlider.value = gameData.GetEnnemmiesCount();
-        ennemiesSpeedSlider.value = gameData.GetEnnemiesSpeed();
-        bonusCountSlider.value = gameData.GetBonusCount();
-        coinsCountSlider.value = gameData.GetCoinsCount();
+        SetSlidersPositionsFromValues();
     }
 
     void Update()
@@ -64,6 +60,9 @@ public class SettingsMenu : MonoBehaviour
                 break;
             case "south":
                 StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
+                break;
+            case "west":
+                ResetOptions();
                 break;
             case "east":
                 StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
@@ -121,5 +120,20 @@ public class SettingsMenu : MonoBehaviour
 
         gameData.SetCoinsCount((int) value);
         GameManager.instance.SaveGameData (gameData);
+    }
+
+    public void SetSlidersPositionsFromValues() {
+        musicSlider.value = gameData.GetMusicVolume();
+        fxSlider.value = gameData.GetFXVolume();
+        playersSpeedSlider.value = gameData.GetPlayersSpeed();
+        ennemiesCountSlider.value = gameData.GetEnnemmiesCount();
+        ennemiesSpeedSlider.value = gameData.GetEnnemiesSpeed();
+        bonusCountSlider.value = gameData.GetBonusCount();
+        coinsCountSlider.value = gameData.GetCoinsCount();
+    }
+
+    public void ResetOptions() {
+        gameData.Reset();
+        SetSlidersPositionsFromValues();
     }
 }

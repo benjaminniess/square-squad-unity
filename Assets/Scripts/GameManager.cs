@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
 
     public AudioMixer fxAudioMixer;
 
+    public int minPlayerSpeed;
+    public int maxPlayerSpeed;
+    public int minEnnemySpeed;
+    public int maxEnnemySpeed;
+
     public static GameManager instance;
 
     private PlayerController controller;
@@ -48,6 +53,7 @@ public class GameManager : MonoBehaviour
         controller = new PlayerController();
         controller.Gameplay.SOUTH.performed += ctx => ButtonPerformed("south");
         controller.Gameplay.DASH.performed += ctx => ButtonPerformed("east");
+        controller.Gameplay.BONUS.performed += ctx => ButtonPerformed("west");
         controller.Gameplay.UP.performed += ctx => ButtonPerformed("up");
         controller.Gameplay.UP.canceled += ctx => upFlag = false;
         controller.Gameplay.DOWN.performed += ctx => ButtonPerformed("down");
