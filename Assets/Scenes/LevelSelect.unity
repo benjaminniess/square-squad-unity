@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 1347248422}
   - component: {fileID: 1347248423}
   m_Layer: 0
-  m_Name: Confirm
+  m_Name: Lets' play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,7 +877,7 @@ GameObject:
   - component: {fileID: 1358635112}
   - component: {fileID: 1358635111}
   m_Layer: 5
-  m_Name: ConfirmText
+  m_Name: playText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -899,7 +899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -28.3, y: 3.723329}
+  m_AnchoredPosition: {x: -30.2, y: 3.723329}
   m_SizeDelta: {x: 91.68042, y: 71.047226}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1358635111
@@ -922,9 +922,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Confirm
-
-'
+  m_text: Let's play!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 69448db6447c74c9d8599dea5b8d4dab, type: 2}
   m_sharedMaterial: {fileID: -1220488720577541440, guid: 69448db6447c74c9d8599dea5b8d4dab,

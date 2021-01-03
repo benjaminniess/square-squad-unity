@@ -29,24 +29,8 @@ public class HowTo : MonoBehaviour
         switch (button)
         {
             case "south":
-                StartCoroutine(GameManager.instance.LoadScene("LevelSelect"));
-                break;
             case "east":
-                foreach (KeyValuePair<int, Arena>
-                    ArenaObject
-                    in
-                    GameManager.instance.GetArenas()
-                )
-                {
-                    if (ArenaObject.Key == GameManager.instance.GetCurrentArenaID())
-                    {
-                        StartCoroutine(GameManager
-                            .instance
-                            .LoadScene(ArenaObject.Value.GetSceneName()));
-                        return;
-                    }
-                }
-                
+                StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
                 break;
             default:
                 break;

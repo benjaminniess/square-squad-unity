@@ -113,7 +113,20 @@ public class LevelSelect : MonoBehaviour
                 StartCoroutine(GameManager.instance.LoadScene("Lobby"));
                 break;
             case "east":
-                StartCoroutine(GameManager.instance.LoadScene("HowTo"));
+                foreach (KeyValuePair<int, Arena>
+                    ArenaObject
+                    in
+                    GameManager.instance.GetArenas()
+                )
+                {
+                    if (ArenaObject.Key == GameManager.instance.GetCurrentArenaID())
+                    {
+                        StartCoroutine(GameManager
+                            .instance
+                            .LoadScene(ArenaObject.Value.GetSceneName()));
+                        return;
+                    }
+                }
                 /*
                 foreach (KeyValuePair<int, Arena>
                     ArenaObject

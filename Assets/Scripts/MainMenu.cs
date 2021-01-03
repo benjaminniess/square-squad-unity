@@ -125,6 +125,11 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(GameManager.instance.LoadScene("SettingsMenu"));
     }
 
+    public void HowTo()
+    {
+        StartCoroutine(GameManager.instance.LoadScene("HowTo"));
+    }
+
     public void Exit()
     {
         Application.Quit();
