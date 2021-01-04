@@ -50,7 +50,13 @@ public class HowTo : MonoBehaviour
                 break;
             case "south":
             case "east":
-                StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
+                currentImage ++;
+                if ( currentImage >= images.Length ) {
+                    StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
+                }
+
+                renderer.sprite = images[currentImage];
+                
                 break;
             default:
                 break;
