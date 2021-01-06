@@ -122,7 +122,8 @@ public class SettingsMenu : MonoBehaviour
         GameManager.instance.SaveGameData (gameData);
     }
 
-    public void SetSlidersPositionsFromValues() {
+    public void SetSlidersPositionsFromValues()
+    {
         musicSlider.value = gameData.GetMusicVolume();
         fxSlider.value = gameData.GetFXVolume();
         playersSpeedSlider.value = gameData.GetPlayersSpeed();
@@ -132,7 +133,8 @@ public class SettingsMenu : MonoBehaviour
         coinsCountSlider.value = gameData.GetCoinsCount();
     }
 
-    public void ResetOptions() {
+    public void ResetOptions()
+    {
         gameData.Reset();
         SetSlidersPositionsFromValues();
     }

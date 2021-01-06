@@ -63,6 +63,11 @@ public class SaveData
 
     public void SetMusicVolume(int volume)
     {
+        if (volume <= -50)
+        {
+            volume = -80;
+        }
+
         musicVolume = volume;
     }
 
