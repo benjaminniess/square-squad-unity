@@ -15,14 +15,15 @@ public class SaveData
 
     private int playersSpeed;
 
-    public void Reset() {
+    public void Reset()
+    {
         musicVolume = 0;
         fxVolume = 0;
         ennemiesSpeed = 2;
         ennemiesCount = 3;
         bonusCount = 2;
         coinsCount = 1;
-        playersSpeed = 4;
+        playersSpeed = 3;
     }
 
     public int GetMusicVolume()
