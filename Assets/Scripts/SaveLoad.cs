@@ -31,6 +31,7 @@ public static class SaveLoad
         else
         {
             SaveData data = new SaveData();
+            data.Reset();
             return data;
         }
     }
