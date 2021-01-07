@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public AudioMixer fxAudioMixer;
 
+    public AudioSource globalMusic;
+
     public int minPlayerSpeed;
     public int maxPlayerSpeed;
     public int minEnnemySpeed;
@@ -242,6 +244,16 @@ public class GameManager : MonoBehaviour
         SaveLoad.Save (gameData);
     }
 
+    public void StopMusic() {
+        globalMusic.Stop();
+    }
+
+    public void StartMusic() {
+        if ( globalMusic.isPlaying ) {
+            return;
+        }
+        globalMusic.Play();
+    }
     public void SetMusicVolume(int volume)
     {
         musicAudioMixer.SetFloat("musicVolume", volume);

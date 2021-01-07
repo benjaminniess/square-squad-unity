@@ -31,6 +31,8 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1;
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
 
+        GameManager.instance.StartMusic();
+
         GameObject eventSystemGameObject = GameObject.Find("EventSystem");
         eventSystem =
             eventSystemGameObject

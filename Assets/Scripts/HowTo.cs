@@ -24,8 +24,7 @@ public class HowTo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GameManager.instance.FadeLoadingScreen());   
-        Debug.Log(images.Length);
+        StartCoroutine(GameManager.instance.FadeLoadingScreen());
     }
 
       public void ButtonPerformed(string button)

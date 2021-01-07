@@ -63,6 +63,8 @@ public class Main : MonoBehaviour
     void Start()
     {
         StartCoroutine(GameManager.instance.FadeLoadingScreen());
+
+        GameManager.instance.StopMusic();
         map = GameObject.Find("BackgroundPadding").GetComponent<Tilemap>();
         Time.timeScale = 0;
 
