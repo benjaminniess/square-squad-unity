@@ -256,6 +256,9 @@ public class GameManager : MonoBehaviour
     }
     public void SetMusicVolume(int volume)
     {
+        if ( volume <= -50 ) {
+            volume = -80;
+        }
         musicAudioMixer.SetFloat("musicVolume", volume);
         SaveData gameData = GetGameData();
 
