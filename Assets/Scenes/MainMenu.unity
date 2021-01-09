@@ -571,8 +571,8 @@ RectTransform:
   - {fileID: 1996272420}
   - {fileID: 1484465320}
   - {fileID: 2144781701}
-  - {fileID: 2087476102}
   - {fileID: 1823112152}
+  - {fileID: 2087476102}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1131,7 +1131,7 @@ Transform:
   m_LocalScale: {x: 67.5, y: 67.5, z: 45}
   m_Children: []
   m_Father: {fileID: 1492129367}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1996272419
 PrefabInstance:
@@ -1327,7 +1327,7 @@ RectTransform:
   m_LocalScale: {x: 936.5625, y: 552.35345, z: 62.5}
   m_Children: []
   m_Father: {fileID: 1492129367}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1373,7 +1373,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 200
   m_Sprite: {fileID: 7223950226953391895, guid: b37473b6d75781c69b34ecbbe86ce2d9,
     type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
