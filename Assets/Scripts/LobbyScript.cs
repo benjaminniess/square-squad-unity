@@ -31,6 +31,7 @@ public class LobbyScript : MonoBehaviour
             case "south":
                 if (GameManager.instance.GetPlayers().Count < 1)
                 {
+                    FindObjectOfType<AudioManager>().Play("Clack");
                     StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
                 }
                 break;
@@ -71,6 +72,7 @@ public class LobbyScript : MonoBehaviour
         {
             if (!playerScript.isReady())
             {
+                FindObjectOfType<AudioManager>().Play("Click");
                 playerLobbyUIScript.showReadyButton(false);
                 playerLobbyUIScript.showReadyText(true);
                 playerScript.setReady(true);
@@ -95,6 +97,7 @@ public class LobbyScript : MonoBehaviour
 
                 if (allReady == true)
                 {
+                    FindObjectOfType<AudioManager>().Play("DoubleClick");
                     Play();
                 }
             }
@@ -103,6 +106,7 @@ public class LobbyScript : MonoBehaviour
         {
             if (playerScript.isReady())
             {
+                FindObjectOfType<AudioManager>().Play("Clack");
                 playerLobbyUIScript.showReadyButton(true);
                 playerLobbyUIScript.showBack(true);
                 playerLobbyUIScript.showReadyText(false);
@@ -111,6 +115,7 @@ public class LobbyScript : MonoBehaviour
             }
             else
             {
+                FindObjectOfType<AudioManager>().Play("Clack");
                 playerLobbyUIScript.showPressToJoin(true);
                 playerLobbyUIScript.showReadyButton(false);
                 playerLobbyUIScript.showBack(false);

@@ -76,6 +76,7 @@ public class LevelSelect : MonoBehaviour
         switch (button)
         {
             case "left":
+                FindObjectOfType<AudioManager>().Play("Click");
                 if (currentLevel <= 1)
                 {
                     return;
@@ -92,6 +93,7 @@ public class LevelSelect : MonoBehaviour
                 GameManager.instance.setCurrentArenaID (currentLevel);
                 break;
             case "right":
+                FindObjectOfType<AudioManager>().Play("Click");
                 if (currentLevel >= GameManager.instance.GetArenas().Count)
                 {
                     return;
@@ -110,6 +112,7 @@ public class LevelSelect : MonoBehaviour
                 GameManager.instance.setCurrentArenaID (currentLevel);
                 break;
             case "south":
+                FindObjectOfType<AudioManager>().Play("Clack");
                 StartCoroutine(GameManager.instance.LoadScene("Lobby"));
                 break;
             case "east":
@@ -121,6 +124,7 @@ public class LevelSelect : MonoBehaviour
                 {
                     if (ArenaObject.Key == GameManager.instance.GetCurrentArenaID())
                     {
+                        FindObjectOfType<AudioManager>().Play("DoubleClick");
                         StartCoroutine(GameManager
                             .instance
                             .LoadScene(ArenaObject.Value.GetSceneName()));

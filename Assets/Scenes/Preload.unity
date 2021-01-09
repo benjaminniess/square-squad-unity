@@ -422,6 +422,18 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: PreStart
     clip: {fileID: 8300000, guid: b84903d2a902b417aa54d58fac13d659, type: 3}
+    volume: 0.798
+    source: {fileID: 0}
+  - name: Click
+    clip: {fileID: 8300000, guid: e8d9907368e5d415b8fdeec23c264e42, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: DoubleClick
+    clip: {fileID: 8300000, guid: 77585818aa4c24a1b8fa5ec2f7093dce, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Clack
+    clip: {fileID: 8300000, guid: d15756397ec33440c8e4bd67a8f4b781, type: 3}
     volume: 1
     source: {fileID: 0}
   audioMixerG: {fileID: 24300002, guid: 2859f1628a135d3ab9f870cfbf4c5e54, type: 2}

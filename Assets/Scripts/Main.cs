@@ -133,6 +133,7 @@ public class Main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            FindObjectOfType<AudioManager>().Play("Click");
             togglePause();
         }
     }
@@ -147,6 +148,13 @@ public class Main : MonoBehaviour
                     break;
                 }
 
+                // Special case when pressing esc to resume
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    break;
+                }    
+
+                FindObjectOfType<AudioManager>().Play("Clack");
                 Menu();
                 break;
             case "east":
@@ -157,6 +165,7 @@ public class Main : MonoBehaviour
 
                 if (gameIsPaused)
                 {
+                    FindObjectOfType<AudioManager>().Play("Clack");
                     Resume();
                 }
                 else
@@ -165,6 +174,7 @@ public class Main : MonoBehaviour
                 }
                 break;
             case "start":
+                FindObjectOfType<AudioManager>().Play("Click");
                 togglePause();
                 break;
             default:

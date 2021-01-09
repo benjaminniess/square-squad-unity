@@ -154,6 +154,7 @@ public class PlayerMovements : MonoBehaviour
 
     void Start()
     {
+        FindObjectOfType<AudioManager>().Play("Click");
         rb = gameObject.GetComponent<Rigidbody2D>();
         fakeCoin = transform.Find("FakeCoin").gameObject;
         koStatus = transform.Find("KOStatus").gameObject;

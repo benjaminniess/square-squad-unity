@@ -59,6 +59,7 @@ public class SettingsMenu : MonoBehaviour
                 FindObjectOfType<AudioManager>().Play("Fire");
                 break;
             case "south":
+                FindObjectOfType<AudioManager>().Play("Clack");
                 StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
                 break;
             case "west":

@@ -73,12 +73,15 @@ public class MainMenu : MonoBehaviour
         switch (button)
         {
             case "down":
+                FindObjectOfType<AudioManager>().Play("Click");
                 SelectNext();
                 break;
             case "up":
+                FindObjectOfType<AudioManager>().Play("Click");
                 SelectPrev();
                 break;
             case "east":
+                FindObjectOfType<AudioManager>().Play("DoubleClick");
                 Submit();
                 break;
             default:
