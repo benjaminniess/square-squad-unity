@@ -32,6 +32,7 @@ public class HowTo : MonoBehaviour
         switch (button)
         {
             case "right":
+                FindObjectOfType<AudioManager>().Play("Click");
                 currentImage ++;
                 if ( currentImage >= images.Length ) {
                     currentImage --;
@@ -40,6 +41,7 @@ public class HowTo : MonoBehaviour
                 renderer.sprite = images[currentImage];
                 break;
             case "left":
+                FindObjectOfType<AudioManager>().Play("Click");
                 currentImage --;
                 if ( currentImage <= 0 ) {
                     currentImage = 0;
@@ -48,12 +50,18 @@ public class HowTo : MonoBehaviour
                 renderer.sprite = images[currentImage];
                 break;
             case "south":
+                FindObjectOfType<AudioManager>().Play("Clack");
+                StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
+                break;
             case "east":
                 currentImage ++;
                 if ( currentImage >= images.Length ) {
+                    FindObjectOfType<AudioManager>().Play("Clack");
                     StartCoroutine(GameManager.instance.LoadScene("MainMenu"));
+                    return;
                 }
 
+                FindObjectOfType<AudioManager>().Play("Click");
                 renderer.sprite = images[currentImage];
                 
                 break;

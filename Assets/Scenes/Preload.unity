@@ -422,7 +422,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: PreStart
     clip: {fileID: 8300000, guid: b84903d2a902b417aa54d58fac13d659, type: 3}
-    volume: 0.798
+    volume: 0.265
     source: {fileID: 0}
   - name: Click
     clip: {fileID: 8300000, guid: e8d9907368e5d415b8fdeec23c264e42, type: 3}
