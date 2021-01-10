@@ -436,6 +436,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d15756397ec33440c8e4bd67a8f4b781, type: 3}
     volume: 1
     source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: 6513b0987a31d4aacb67c471c5bbf5b3, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Error
+    clip: {fileID: 8300000, guid: 40be402fa0dc14d29884019405d52039, type: 3}
+    volume: 1
+    source: {fileID: 0}
   audioMixerG: {fileID: 24300002, guid: 2859f1628a135d3ab9f870cfbf4c5e54, type: 2}
 --- !u!4 &1123012223
 Transform:

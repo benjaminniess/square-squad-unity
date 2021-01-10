@@ -529,6 +529,7 @@ public class PlayerMovements : MonoBehaviour
         {
             isDashingVal = true;
             dashTimer = 0f;
+            FindObjectOfType<AudioManager>().Play("Dash");
 
             return;
         }
@@ -540,11 +541,16 @@ public class PlayerMovements : MonoBehaviour
 
         if (!isUsingBonus())
         {
-            if (isBonusPressed() && isHoldingBonus())
+            if (isBonusPressed() )
             {
-                bonusTimer = 0;
-                isUsingBonusVal = true;
-                bonus.triggerBonus();
+                if ( isHoldingBonus() ) {
+                    bonusTimer = 0;
+                    isUsingBonusVal = true;
+                    bonus.triggerBonus();
+                } else {
+                    FindObjectOfType<AudioManager>().Play("Error");
+                }
+                
             }
 
             return;

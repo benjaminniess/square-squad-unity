@@ -148,6 +148,7 @@ public class GameManager : MonoBehaviour
         arenas.Add(1, new Arena("Arena1", "Welcome arena"));
         arenas.Add(2, new Arena("Arena2", "Dust"));
         arenas.Add(3, new Arena("Arena3", "Double spot"));
+        arenas.Add(4, new Arena("Arena4", "Deep blue"));
     }
 
     public int GetCurrentArenaID()
