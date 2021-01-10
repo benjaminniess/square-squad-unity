@@ -165,7 +165,7 @@ public class EnnemyMovements : MonoBehaviour
 
             if (!playerScript.isRecovering() && playerScript.setKO())
             {
-                //playerScript.decreaseScore();
+                playerScript.decreaseScore();
             }
         }
     }
