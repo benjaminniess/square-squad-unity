@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arena4.unity
     guid: cb2a9f897f9884d4e8fd32fd96cdc1d8
+  - enabled: 1
+    path: Assets/Scenes/Arena5.unity
+    guid: 299af1cbb19fe473ea9c462a1131042d
   m_configObjects: {}
