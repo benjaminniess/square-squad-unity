@@ -10,11 +10,11 @@ You can play up to 4 players using gamepads and if necessary, one player can use
 
 ### Technically ###
 
-This is a Unity game that has been developed for desktop devices (Windows, Mac os, Linux). It works with any PC controller/PS4 controllers and one player can user the keyboard.
+This is a Unity game that had been developed for desktop devices (Windows, Mac os, Linux). It works with any PC controller/PS4 controllers and one player can use the keyboard.
 
-### Graphics ###
+### Design ###
 
-Graphics are not my cup of tea. If this is yours and you want to make it look like something, please let me know!
+Design is not my cup of tea. If this is yours and you want to make it look like something, please let me know!
 
 ### Itch.io ###
 
